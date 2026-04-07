@@ -1,0 +1,252 @@
+{
+  "albums": [
+    {
+      "slug": "bedni-bugyal",
+      "title": "Bedni Bugyal",
+      "subtitle": "High altitude meadows in the Garhwal Himalayas",
+      "category": "Trek",
+      "cover": "images/bedni-bugyal/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "bhutan",
+      "title": "Bhutan",
+      "subtitle": "The last Himalayan kingdom, unfiltered",
+      "category": "Travel",
+      "cover": "images/bhutan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "centering-europe",
+      "title": "Center-ing Europe",
+      "subtitle": "Finding the middle in unexpected places",
+      "category": "Travel",
+      "cover": "images/centering-europe/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "corbett",
+      "title": "Corbett",
+      "subtitle": "India's oldest national park, through a lens",
+      "category": "Wildlife",
+      "cover": "images/corbett/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "denmark",
+      "title": "Denmark",
+      "subtitle": "Nordic light and quiet architecture",
+      "category": "Travel",
+      "cover": "images/denmark/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "derwentwater",
+      "title": "Derwentwater",
+      "subtitle": "The Lake District at its most elemental",
+      "category": "Landscape",
+      "cover": "images/derwentwater/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "dinapani",
+      "title": "Dinapani",
+      "subtitle": "A Himalayan village at the edge of the trail",
+      "category": "Trek",
+      "cover": "images/dinapani/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "dudhwa",
+      "title": "Dudhwa",
+      "subtitle": "Grasslands, tigers and the Terai frontier",
+      "category": "Wildlife",
+      "cover": "images/dudhwa/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "ebc-2017",
+      "title": "EBC 2017",
+      "subtitle": "The road to 5364m. Solo. Unguided.",
+      "category": "Trek",
+      "cover": "images/ebc-2017/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "experience-uk",
+      "title": "Experience United Kingdom",
+      "subtitle": "Britain through foreign eyes",
+      "category": "Travel",
+      "cover": "images/experience-uk/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "ibiza",
+      "title": "Ibiza",
+      "subtitle": "Beyond the noise, an island reveals itself",
+      "category": "Travel",
+      "cover": "images/ibiza/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "into-darkness",
+      "title": "Into Darkness",
+      "subtitle": "Astrophotography \u2014 when the sky becomes the subject",
+      "category": "Astrophotography",
+      "cover": "images/into-darkness/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "kheerganga",
+      "title": "Kheerganga",
+      "subtitle": "The trail that ends in a hot spring",
+      "category": "Trek",
+      "cover": "images/kheerganga/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "lake-vyrnwy",
+      "title": "Lake Vyrnwy",
+      "subtitle": "A Welsh reservoir and its quiet drama",
+      "category": "Landscape",
+      "cover": "images/lake-vyrnwy/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "lakshadweep",
+      "title": "Lakshadweep",
+      "subtitle": "Coral atolls at the edge of India",
+      "category": "Travel",
+      "cover": "images/lakshadweep/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "llansteffan",
+      "title": "Llansteffan",
+      "subtitle": "A Welsh village, a castle, and the sea",
+      "category": "Landscape",
+      "cover": "images/llansteffan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "lunar-scope",
+      "title": "Lunar Scope",
+      "subtitle": "The moon, magnified",
+      "category": "Astrophotography",
+      "cover": "images/lunar-scope/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "meghalaya",
+      "title": "Meghalaya",
+      "subtitle": "Living root bridges and clouds that stay",
+      "category": "Travel",
+      "cover": "images/meghalaya/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "moon-phases",
+      "title": "Moon Phases",
+      "subtitle": "One subject. Infinite expressions.",
+      "category": "Astrophotography",
+      "cover": "images/moon-phases/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "munsiyari",
+      "title": "Munsiyari",
+      "subtitle": "The frontier town beneath Panchachuli",
+      "category": "Trek",
+      "cover": "images/munsiyari/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "other-shots",
+      "title": "Other Shots",
+      "subtitle": "What doesn't fit in a box still fits in a frame",
+      "category": "Miscellaneous",
+      "cover": "images/other-shots/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "oxfam-women-lifeline",
+      "title": "Oxfam Women Lifeline",
+      "subtitle": "Documentary photo story for a cause",
+      "category": "Documentary",
+      "cover": "images/oxfam-women-lifeline/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "pen-y-fan",
+      "title": "Pen y Fan",
+      "subtitle": "The Brecon Beacons in all weathers",
+      "category": "Landscape",
+      "cover": "images/pen-y-fan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "phase-compiled",
+      "title": "Phase Compiled",
+      "subtitle": "The complete lunar archive, assembled",
+      "category": "Astrophotography",
+      "cover": "images/phase-compiled/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "pune-cochin",
+      "title": "Pune & Cochin",
+      "subtitle": "Two cities. Two rhythms.",
+      "category": "Travel",
+      "cover": "images/pune-cochin/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "rajasthan",
+      "title": "Rajasthan",
+      "subtitle": "Colour, geometry and ancient light",
+      "category": "Travel",
+      "cover": "images/rajasthan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "shimla-ladakh",
+      "title": "Shimla / Ladakh",
+      "subtitle": "Hill station to high desert in one journey",
+      "category": "Travel",
+      "cover": "images/shimla-ladakh/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "eagle-nest",
+      "title": "The Eagle Nest",
+      "subtitle": "A wildlife lodge at altitude",
+      "category": "Wildlife",
+      "cover": "images/eagle-nest/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "triund-snowline",
+      "title": "Triund / Snowline",
+      "subtitle": "The ridge above McLeod Ganj, winter 2017",
+      "category": "Trek",
+      "cover": "images/triund-snowline/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "ty-cipar",
+      "title": "Ty Cipar",
+      "subtitle": "A Welsh cottage and the land around it",
+      "category": "Landscape",
+      "cover": "images/ty-cipar/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "zoo-day",
+      "title": "Zoo Day",
+      "subtitle": "Animals, patience and the right moment",
+      "category": "Wildlife",
+      "cover": "images/zoo-day/cover.jpg",
+      "photos": []
+    }
+  ]
+}

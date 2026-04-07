@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writings — Raziul Hasnain</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1d3a;
+    --surface: #142847;
+    --b-subtle: rgba(255,255,255,0.07);
+    --b-mid: rgba(255,255,255,0.15);
+    --t-pri: rgba(255,255,255,0.95);
+    --t-mut: rgba(255,255,255,0.7);
+    --t-faint: rgba(255,255,255,0.4);
+    --c-main: #06d6a0;
+    --c-ebc: #ffe066;
+    --c-verse: #c77dff;
+    --grad: linear-gradient(90deg, #06d6a0 0%, #00b4d8 100%);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--t-pri); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+  h1, h2, h3, .sg { font-family: 'Outfit', sans-serif; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%;
+    padding: 24px 48px;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(11,29,58,0.98) 0%, rgba(11,29,58,0.7) 100%);
+    border-bottom: 1px solid var(--b-subtle);
+    z-index: 200; backdrop-filter: blur(12px);
+  }
+  .n-back { font-size: 0.75rem; letter-spacing: 0.2em; font-weight: 600; color: var(--t-mut); transition: color 0.3s; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  .n-back:hover { color: var(--c-main); }
+  .n-back::before { content: "←"; font-size: 1rem; }
+  .n-logo { justify-self: center; font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1rem; letter-spacing: 0.25em; color: #fff; text-transform: uppercase; }
+  .n-cta { justify-self: end; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); padding: 10px 24px; font-size: 0.75rem; font-weight: 600; color: #fff; border-radius: 30px; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.1em; }
+  .n-cta:hover { background: #fff; color: var(--bg); }
+
+  /* HERO */
+  .hero { padding: 160px 48px 80px; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+  .hero-over { display: inline-flex; align-items: center; gap: 16px; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--c-main); text-transform: uppercase; font-weight: 600; }
+  .hero-line { width: 40px; height: 1px; background: var(--c-main); }
+  .hero-title { font-size: clamp(3rem, 7vw, 6rem); font-weight: 900; line-height: 1; color: #fff; letter-spacing: -0.02em; }
+  .hero-title span { color: var(--c-main); }
+  .hero-sub { font-size: 1.1rem; color: var(--t-mut); max-width: 600px; line-height: 1.7; }
+  .hero-stats { display: flex; gap: 48px; margin-top: 16px; padding-top: 32px; border-top: 1px solid var(--b-subtle); flex-wrap: wrap; }
+  .h-stat-num { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 2.5rem; line-height: 1; color: #fff; }
+  .h-stat-lbl { font-size: 0.78rem; color: var(--t-mut); font-weight: 500; margin-top: 6px; }
+
+  /* MARQUEE */
+  .marquee { height: 52px; background: var(--surface); border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle); display: flex; align-items: center; overflow: hidden; white-space: nowrap; }
+  .mq-in { display: inline-block; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--t-mut); font-weight: 600; animation: scrollMq 40s linear infinite; text-transform: uppercase; }
+  @keyframes scrollMq { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* FEATURED PAIR */
+  .featured-pair { padding: 48px 48px 0; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .feat-card {
+    border-radius: 28px; overflow: hidden; display: flex; flex-direction: column;
+    justify-content: space-between; min-height: 260px; padding: 40px;
+    position: relative; border: 1px solid var(--b-subtle);
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
+                transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
+                box-shadow 0.3s, border-color 0.3s;
+    text-decoration: none; color: inherit;
+  }
+  .feat-card.vis { opacity: 1; transform: translateY(0); }
+  .feat-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,0,0,0.4); }
+
+  /* EBC card */
+  .feat-ebc {
+    background: linear-gradient(135deg, #0d2010 0%, #142847 60%, #0b1d3a 100%);
+    border-color: rgba(255,224,102,0.2);
+  }
+  .feat-ebc::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(255,224,102,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .feat-ebc:hover { border-color: rgba(255,224,102,0.4); }
+
+  /* Verse card */
+  .feat-verse {
+    background: linear-gradient(135deg, #120d1f 0%, #142847 60%, #0b1d3a 100%);
+    border-color: rgba(199,125,255,0.2);
+  }
+  .feat-verse::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top right, rgba(199,125,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .feat-verse:hover { border-color: rgba(199,125,255,0.4); }
+
+  .feat-over { font-size: 0.65rem; letter-spacing: 0.3em; font-weight: 600; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .feat-over-line { width: 24px; height: 1px; }
+  .feat-ebc .feat-over { color: var(--c-ebc); }
+  .feat-ebc .feat-over-line { background: var(--c-ebc); }
+  .feat-verse .feat-over { color: var(--c-verse); }
+  .feat-verse .feat-over-line { background: var(--c-verse); }
+
+  .feat-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(1.6rem, 3vw, 2.2rem); color: #fff; line-height: 1.1; margin-bottom: 12px; }
+  .feat-sub { font-size: 0.85rem; color: var(--t-mut); line-height: 1.7; max-width: 380px; margin-bottom: 28px; }
+  .feat-stats { display: flex; gap: 28px; margin-bottom: 28px; flex-wrap: wrap; }
+  .feat-stat-num { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.4rem; color: #fff; line-height: 1; }
+  .feat-ebc .feat-stat-num { color: var(--c-ebc); }
+  .feat-verse .feat-stat-num { color: var(--c-verse); }
+  .feat-stat-lbl { font-size: 0.62rem; color: var(--t-faint); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-top: 4px; }
+
+  .feat-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.78rem; font-weight: 700; padding: 12px 24px;
+    border-radius: 30px; text-transform: uppercase; letter-spacing: 0.1em;
+    transition: all 0.3s; font-family: 'Montserrat', sans-serif;
+    align-self: flex-start;
+  }
+  .feat-btn::after { content: "→"; transition: transform 0.3s; }
+  .feat-card:hover .feat-btn::after { transform: translateX(4px); }
+  .feat-ebc .feat-btn { background: var(--c-ebc); color: #000; }
+  .feat-ebc .feat-btn:hover { background: #fff; }
+  .feat-verse .feat-btn { background: var(--c-verse); color: #000; }
+  .feat-verse .feat-btn:hover { background: #fff; }
+
+  /* FILTERS */
+  .filters { padding: 48px 48px 32px; max-width: 1400px; margin: 0 auto; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .f-label { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--t-faint); text-transform: uppercase; font-weight: 600; margin-right: 8px; }
+  .filter-btn { background: transparent; border: 1px solid var(--b-mid); color: var(--t-mut); padding: 8px 20px; font-size: 0.75rem; font-weight: 600; font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: all 0.3s; }
+  .filter-btn:hover { border-color: var(--c-main); color: var(--c-main); }
+  .filter-btn.active { background: var(--c-main); border-color: var(--c-main); color: #000; font-weight: 700; }
+
+  /* GRID */
+  .grid-wrap { padding: 0 48px 100px; max-width: 1400px; margin: 0 auto; }
+  .w-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+  .w-card {
+    background: var(--surface); border: 1px solid var(--b-subtle);
+    border-radius: 24px; overflow: hidden; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
+                transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
+                border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+  .w-card.vis { opacity: 1; transform: translateY(0); }
+  .w-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .w-card.hidden { display: none; }
+  .w-card.featured { grid-column: span 2; }
+
+  .w-card-accent { height: 4px; background: var(--grad); }
+  .w-body { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; }
+  .w-cat { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--c-main); text-transform: uppercase; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+  .w-date { color: var(--t-faint); font-size: 0.65rem; }
+  .w-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.35rem; color: #fff; margin-bottom: 14px; line-height: 1.25; }
+  .w-card.featured .w-title { font-size: 1.7rem; }
+  .w-excerpt { font-size: 0.88rem; color: var(--t-mut); line-height: 1.7; flex-grow: 1; margin-bottom: 24px; font-style: italic; }
+  .w-preview { font-size: 0.82rem; color: var(--t-faint); line-height: 1.8; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .w-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+  .w-tag { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; border: 1px solid var(--b-mid); color: var(--t-faint); padding: 3px 10px; border-radius: 20px; }
+  .w-read { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 600; color: var(--c-main); text-transform: uppercase; letter-spacing: 0.1em; margin-top: auto; transition: gap 0.3s; }
+  .w-card:hover .w-read { gap: 14px; }
+  .w-read::after { content: "→"; }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(7,16,30,0.92); backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: var(--surface); border: 1px solid var(--b-mid); border-radius: 28px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; transform: translateY(24px) scale(0.97); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); padding: 52px; scrollbar-width: thin; scrollbar-color: var(--b-mid) transparent; }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-close { position: sticky; top: 0; float: right; margin: -20px -20px 20px 0; background: rgba(255,255,255,0.08); border: 1px solid var(--b-mid); color: var(--t-mut); width: 36px; height: 36px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; font-family: 'Montserrat', sans-serif; z-index: 10; }
+  .modal-close:hover { background: #fff; color: var(--bg); }
+  .modal-cat { font-size: 0.65rem; letter-spacing: 0.25em; color: var(--c-main); text-transform: uppercase; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+  .modal-cat-line { width: 30px; height: 1px; background: var(--c-main); }
+  .modal-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; line-height: 1.1; margin-bottom: 12px; }
+  .modal-date { font-size: 0.75rem; color: var(--t-faint); margin-bottom: 32px; }
+  .modal-divider { height: 1px; background: var(--b-subtle); margin-bottom: 32px; }
+  .modal-body { font-size: 1rem; color: var(--t-mut); line-height: 2.2; white-space: pre-line; }
+  .modal-body.prose { line-height: 1.9; }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--b-subtle); }
+
+  /* FOOTER */
+  footer { padding: 60px 48px 40px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--b-subtle); }
+  .ft-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 24px; }
+  .ft-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 2rem; color: #fff; }
+  .ft-soc { display: flex; gap: 32px; }
+  .ft-soc a { color: var(--t-mut); transition: color 0.3s; font-weight: 500; font-size: 0.9rem; }
+  .ft-soc a:hover { color: #fff; }
+  .ft-bot { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--t-faint); font-weight: 500; flex-wrap: wrap; gap: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .w-grid { grid-template-columns: repeat(2, 1fr); }
+    .w-card.featured { grid-column: span 2; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .n-logo { display: none; }
+    .hero { padding: 120px 24px 60px; }
+    .hero-stats { gap: 32px; }
+    .featured-pair { padding: 32px 24px 0; grid-template-columns: 1fr; }
+    .filters { padding: 32px 24px 24px; }
+    .grid-wrap { padding: 0 24px 80px; }
+    .w-grid { grid-template-columns: 1fr; }
+    .w-card.featured { grid-column: span 1; }
+    footer { padding: 48px 24px 32px; }
+    .modal { padding: 32px 24px; }
+  }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.8s ease forwards; }
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.25s; }
+  .fade-up:nth-child(3) { animation-delay: 0.4s; }
+  .fade-up:nth-child(4) { animation-delay: 0.55s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="n-back">Albatross</a>
+  <div class="n-logo">Writings</div>
+  <a href="mailto:hraziul@gmail.com?subject=Writings%20Inquiry" class="n-cta">Get in Touch</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-over fade-up"><div class="hero-line"></div>Poetry · Prose · Field Notes</div>
+  <h1 class="hero-title fade-up">Some doors<br>open <span>inward.</span></h1>
+  <p class="hero-sub fade-up">This one leads to the deepest room. Words written across years — poetry, prose, and everything in between.</p>
+  <div class="hero-stats fade-up">
+    <div>
+      <div class="h-stat-num sg" id="stat-count">—</div>
+      <div class="h-stat-lbl">Pieces written</div>
+    </div>
+    <div>
+      <div class="h-stat-num sg">2017 — Now</div>
+      <div class="h-stat-lbl">Years of writing</div>
+    </div>
+    <div>
+      <div class="h-stat-num sg">1</div>
+      <div class="h-stat-lbl">Published book</div>
+    </div>
+  </div>
+</div>
+
+<div class="marquee">
+  <div class="mq-in" id="mq-text"></div>
+</div>
+
+<!-- FEATURED PAIR: EBC + Journey Through Verse -->
+<div class="featured-pair">
+
+  <!-- EBC Card -->
+  <a href="ebc/index.html" class="feat-card feat-ebc obs">
+    <div>
+      <div class="feat-over"><div class="feat-over-line"></div>Field Notes · Solo Trek</div>
+      <div class="feat-title sg">Everest<br>Base Camp.</div>
+      <div class="feat-sub">13 days. 130km. Solo. Every meal ordered, every stranger met by name, every altitude gain documented in real time.</div>
+      <div class="feat-stats">
+        <div>
+          <div class="feat-stat-num">13</div>
+          <div class="feat-stat-lbl">Days Solo</div>
+        </div>
+        <div>
+          <div class="feat-stat-num">130km</div>
+          <div class="feat-stat-lbl">Trekked</div>
+        </div>
+        <div>
+          <div class="feat-stat-num">5364m</div>
+          <div class="feat-stat-lbl">Base Camp Alt.</div>
+        </div>
+      </div>
+    </div>
+    <div class="feat-btn">Read the Journey</div>
+  </a>
+
+  <!-- Journey Through Verse Card -->
+  <a href="https://www.amazon.in/Journey-Through-Verse-Reflection-Albatross/dp/9334333944" target="_blank" rel="noopener" class="feat-card feat-verse obs" style="transition-delay:100ms">
+    <div>
+      <div class="feat-over"><div class="feat-over-line"></div>Published Book · Poetry</div>
+      <div class="feat-title sg">Journey Through<br>Verse.</div>
+      <div class="feat-sub">Poetry and photography. A coffee table book that stays with you. Words that cast shadows. Images that speak.</div>
+      <div class="feat-stats">
+        <div>
+          <div class="feat-stat-num">1</div>
+          <div class="feat-stat-lbl">Published Book</div>
+        </div>
+        <div>
+          <div class="feat-stat-num">Print</div>
+          <div class="feat-stat-lbl">Format</div>
+        </div>
+        <div>
+          <div class="feat-stat-num">Amazon</div>
+          <div class="feat-stat-lbl">Available On</div>
+        </div>
+      </div>
+    </div>
+    <div class="feat-btn">Get on Amazon</div>
+  </a>
+
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <span class="f-label">Filter</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="Romance">Romance</button>
+  <button class="filter-btn" data-filter="Abstract">Abstract</button>
+  <button class="filter-btn" data-filter="Story">Story</button>
+</div>
+
+<div class="grid-wrap">
+  <div class="w-grid" id="wgrid"></div>
+</div>
+
+<footer>
+  <div class="ft-row">
+    <div class="ft-logo sg">ALBATROSS</div>
+    <div class="ft-soc">
+      <a href="https://www.instagram.com/albatrossamazedotcom" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://in.linkedin.com/in/raziul-hasnain-aaa457a1" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:hraziul@gmail.com">Email</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>&copy; 2026 Raziul Hasnain. All rights reserved.</span>
+    <span>Designed for impact.</span>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+
+// =============================================
+// ADD NEW POSTS AT THE TOP OF THIS ARRAY
+// =============================================
+const posts = [
+  { slug:"arches-of-hope", title:"Arches of hope", date:"2022-12-30", category:"Romance", excerpt:"A hope to belong.", tags:["Romance"], lines:["Under arches","Of hope","Any blue through and through","","I walk","I walk","I walk away","From arches","Feeling disdain","","Id like to belong","Left alone","Under arches of hope","Cozy & warm","","Hand-made","","Arches","So quaint","","To get lost within","The arches you make","And your hugs dont feign"] },
+  { slug:"lost-irrevocably", title:"Lost. Irrevocably?", date:"2022-11-27", category:"Abstract", excerpt:"A battle lost. Not given up yet.", tags:["Perspective","Hypocrisy"], lines:["Inks source bullpens","With stories traversing petty elements","of pain","In disdain","We could do more","More to living life","Within cruel bindings","Of madmen seeking bricks","On a land of soil, turmoil","And specks","Blood is emblued","Distances seen","Only at nuclear luxurious tents","Above and below","Innocents die","With questions unanswered","Living in a time","Bound by chains of havoc","Where turmoil is an art to live","To survive","To sustain","In the end,","To die"] },
+  { slug:"lest-we-forget", title:"Lest we forget", date:"2022-03-15", category:"Abstract", excerpt:"To not react is its own act of grace.", tags:[], lines:["Lest not react","Within moments","We can percept and perceive","Maybe they never meant to","Maybe its for the better end","In a world full of love, lust and jests","Who decides","To let go in assumptions and misconceptions","We slow down","To spread a word of intense love","For some, its no fault","Lets not react","Lets halt"] },
+  { slug:"resound-surround", title:"RESOUND SURROUND", date:"2022-07-09", category:"Romance", excerpt:"Abilities yet to find.", tags:["Romance","Memory","Music"], lines:["I never heard back from you","From the voice of a soul","Now sounds like","Emptiness","Footsteps","I can grow","I will not fold","Desires turn to passion","Stirring a blue-bed with fascination","Dormant strength I seemed to find","In my mind","Unlocked now","The fire you lit, not anymore","The fire now lit, with that ever-glow"] },
+  { slug:"leap-and-gone", title:"Leap and gone", date:"2021-01-12", category:"Abstract", excerpt:"When you have it all and its lost. If at all.", tags:["Romance","Memory","Perspective","Love","Loss"], lines:["Things last","Some of those never end","A world deprived of miracles","Living in entropy","Gaining wisdom of variance","Touching life in an animus","Slipping pills for comfort","Losing sanity","Lost what could last"] },
+  { slug:"materialising", title:"MaterialIsing", date:"2021-02-14", category:"Romance", excerpt:"Musing self.", tags:["Romance","Perspective","Love"], lines:["Oh you have that body of electricity","I touch you and you shock me with intensity","The others I met before you were calm, serene maybe","You felt like lightning, causing that jest, with fidelity","You set my night on rage and fire, with your tasteful desires","It would be untrue if I said, it doesnt burn down the forest, if Im a liar","Someone I seek lies in you, someone I see in you"] },
+  { slug:"mojo-risin", title:"— December 8, 2020", date:"2020-12-08", category:"Story", excerpt:"An origin story for a character from Jim Morrison's poetry from the song The End.", tags:["Perspective","Thoughts"], prose:true, lines:["[ Full prose — origin story for a character from Jim Morrison's The End. Content from original archive. ]"] },
+  { slug:"forbidding-fear", title:"Forbidding Fear", date:"2020-10-28", category:"Abstract", excerpt:"How long do we chain ourselves to ancient wisdoms?", tags:[], lines:["While opening doors for his friends","He found himself surrounded by ancient voices","Elaborating life and its expansion","With aching needs in turmoil","For few hands of blood and cult","It pushed him down","Bestowed upon him","Recognised blessings and save him from sin","Fading him pale","Fear had awoken in clenched chains","Isnt there more to this than what were told? He asked","Opening a door","Only to culminate celestially","His destiny","Forbidding fear"] },
+  { slug:"out-of-sight-out-of-mind", title:"Out of Sight Out of Mind", date:"2020-10-01", category:"Romance", excerpt:"Untethered ideas floating across, like patterns of the Milky Way.", tags:[], lines:["Untethered ideas floating across","Like patterns of the Milky Way","","Silenced were the legends","Leaders murdering thoughts abruptly","Untold mystics of life, its living, just ends,","Contained chaos, with war, no peace remotely","","Been made to forget, structures of glue and tar","I am conditioned, I am shackled","Men run through lands, of boundaries and bars","Distorted rights are just fading away in fights","","Amnestic of a vision, I had once","On a mission now, and dead child","I am dead now","I have died"] },
+  { slug:"recollecting-fortress", title:"Recollecting Fortress", date:"2020-07-10", category:"Romance", excerpt:"In times when memories are collated in a safe place, a fortress of memories.", tags:["Romance","Perspective","Drama","Love","Wait","Insecurities","Hate"], lines:["Ill just wait for a while","While you drown in a sliloquium of denial","Tucked away inside my fortress of memories","Walls of a vault crowded with vivid imagery","Soft, driven, harsh and mad, like some new language","I see a life, and its people, profoundly called bondage","Far away from materialistcs","Like a deer","Prone to wound","For jests can be feigned for the living","A tiger, a bush, cloaking","You stay in my fortress, bolted","Victimise myself as I see it all manifested","Maybe Ill just linger here for a while","Not to touch but to take, maybe it isnt mine"] },
+  { slug:"uncertain-times", title:"Uncertain times", date:"2020-04-12", category:"Abstract", excerpt:"As we face today — 2020.", tags:["World Order","Countries","Thoughts","Perspective","Drama","Wait","Insecurities"], lines:["Tragedy strikes in the land of the terrified","Someone knocked, in a weather too fair","Unknown guest, a resident, soul stood petrified","The walls have seen two souls and an heir","Furious, walking around a house rarely visited before","And days go by, stranded in rooms, impossible is the porch","Thoughts gather in time, maybe out of season","This time, unresolved pasts linger with conditioned reasons","Breaths feel like sardonic whispers in the halted air","Deaths are rising with panic infused boredom within confined layers","Idealistic thoughts can only so much help you foresee","Clouds, uncertain thoughts questioneth me, to be or not to be"] },
+  { slug:"out-of-sight", title:"Out of sight Out of mInd", date:"2020-10-01", category:"Romance", excerpt:"Eidetic? Virtue or curse? Subjective.", tags:["Romance","Memory"], lines:["To begin a few lines about my muse","As you come to see a man close and beside","Painful words shared with you, and confused","Cursed to see strong and eidetic, crucified","Watching the seasons fall and grow","Thought of the reasons which you never show","Cursed and blessed, like the foot of a rabbit","The mind","Wondering and wandering through terrains of copper and gold mines","Autumn leaves of memories that he made you rush through out of habit","Clock strikes, as does jest,","Soft, firm,","As time suggests,","Out of sight,","Out of mind"] },
+  { slug:"fearing-freedom", title:"Fearing Freedom", date:"2019-08-20", category:"Abstract", excerpt:"Living the life of purpose with no freedom.", tags:["Perspective","Insecurities","Wait"], lines:["Every day I live, I fear death","Living the life of purpose with no freedom","I try to join the army among them","Its a life to live they told me the saviours taught","Have the heart of a giant after youve fought","I live, I die, and death not ends it","Here I live every day, I fear death"] },
+  { slug:"letter-to-a-friend", title:"A Letter To a Friend", date:"2019-11-25", category:"Romance", excerpt:"What if this never fades out?", tags:["Nostalgia","Romance","Thoughts","Perspective","Drama","Love"], prose:true, lines:["It has been a quarter of the lives we should live through. A sequence of seamless times, time easy, times rough. Maybe it had it all, from times to mention again and times to be not spoken of again. Youve been there, you will. Ive talked about worlds past and will. To being the closest thing to my best friend, you mind stepping those shoes. Why is it that you dont see this in a new light? My pieces of conflict and complications occur because of you. I know it, I know you, Ive spoken to you in silence. To have explored landmarks left on the world on big cities. Doesnt it look exciting? You enjoy being part of memories. Dont realise how you dont remain in only one anymore, how youve denied yourself to keep distances casual.","How long would it be best for us to stay in a bubble of denial. Maybe lets meet again and revisit ourselves. Maybe this time you realise how youve scheduling a memory of you in many moments. Theres always a lot of world to see maybe differently. From someone to someone after endless battles with denials buried, a leap of faith to not let down again. For time has gone, with things happy and unknown, but for a seemless reality now. What if this never fades out?"] },
+  { slug:"mind-over-matter", title:"Mind Over Matter", date:"2019-04-02", category:"Abstract", excerpt:"A wait for salvation.", tags:["Patriarchy","Countries","Insecurities","Thoughts","Perspective"], lines:["Mind over matter","Triumphant","Fearless","He walks away without a frown","Stood tall in front of a crowd eagerly waiting","A saviour in the land of freedom","The crowd hungry, waiting for food and salvation","Damnation","Creatures of the land looking up to a figure, godlike","Greeting an ancient crucifix","Fearful of death, fearless of heartache and pain","Have we made it so far, structure of glue and tar","Shattered across time, we wait for him","His freedom of the real and reality"] },
+  { slug:"blessed-friend", title:"Blessed Friend", date:"2019-05-05", category:"Abstract", excerpt:"To welcome a new friend like an old one", tags:["Drama","Insecurities","Thoughts","Perspective"], lines:["Death my old friend","Death, my guardian angel","Take me away from this reproached sanctum","Guide me to a new era of waxed candles","Flames burn low","Mornings reflect gold","I looked over you in times of stress","Bless me as I come to you bearing gifts"] },
+  { slug:"relighting-love", title:"Relighting Love", date:"2019-09-06", category:"Romance", excerpt:"When feeling lost within, yet finding feelings of love.", tags:["Nostalgia","Romance","Thoughts","Love"], lines:["I was not very far away from home","Street lights dysfunctional and black","Could see the porch at bay, coloured chrome","Nothing to see beyond the junction, lost track","Have I lost my way, issuing decrees blatant and sublime","A new avenue along these crooked walls, walls unaligned","Writings on these walls fill spaces in those psychedelic lines","Writings on the wall wandering, relic not lost for lamour mine"] },
+  { slug:"tenants", title:"Tenants", date:"2019-02-16", category:"Story", excerpt:"What of the world we call our own, it never has been.", tags:["Thoughts","Politics","Countries","Perspective","Hate","Insecurities"], lines:["Welcome to a land of sparrows, sheep and snow leopards","We invite you to a holy place where we live and kill to procreate","They let us in sardonically into their sanctum, we the shepherds","We walk in to take over their kingdom divine as if it were desolate.","Strategise our advantage, lets kill one another over disputes and heartache","We survive in a taken land, with pride and honour,","Over boundaries that never existed, slowly killing ourselves with hate"] },
+  { slug:"forget-forgive", title:"Forget / Forgive", date:"2018-10-21", category:"Abstract", excerpt:"Do you raise your questions?", tags:["World Order","Perspective","Thoughts","Insecurities"], lines:["Are you a part of the vast reality","A place you need with open eyes and dignity","Let yourself chase a place of wisdom and freedom","That new place, a dry one, with only coyotes singing in the land","Let me take you there and feel the losses of mankind myths and the gods","Just forget sorrow you feel and be lost while you feel free in hand","Chase a new myth, one that takes you away, makes you a different soul, while you forget the forgiveness of the lords"] },
+  { slug:"faded-emotion", title:"Faded Emotion", date:"2018-12-08", category:"Romance", excerpt:"When theres no reason to, but you have got to.", tags:["Drama","Love","Romance","Perspective","Insecurities","Jealousy"], lines:["Why cant I love you","Till the end of time, to days when I need you","Cause you make me shy","Cause you make me smile","You make me fly","You get me high","Like two birds in sheets of time","Like a peacock in the clouded sunny sky","Dancing till the end of time, to days I find you","Why cant I now see you","We can jump in a puddle of joy","We can love, love, love and love","Let us love, dim the lights, time is not enough"] },
+  { slug:"miscalculations", title:"Miscalculations", date:"2018-09-14", category:"Romance", excerpt:"When thoughts seem unmatched with reasons, decisions and the conclusions.", tags:["Insecurities","Romance","Perspective"], lines:["Lets dissolve a past we lived together","The music helps it flow and circle perimeters unattainable but fine","Its the sound of the liquid gushing and oozing, forming miracles of its own feather","Soft, mild, warm and high, feeling of your flesh against mine","A feeling we share, like the greens in the divine garden, a garden not for the legions","Lets resolve that past, together, create a region, new seasons, based on our hopeless miscalculated reasons"] },
+  { slug:"29-june-2018", title:"29 June, 2018", date:"2018-08-22", category:"Abstract", excerpt:"Feelings of warmth and cold.", tags:["Thoughts","Travel","Perspective","Wait"], lines:["Another summer passes away strangely","A season of warmth, of presence, a feeling unlonely","Many a dream passes by, of clothes, of commitments in love","A sky with scattered clouds or none will stay no more","A sky covered, with dying hopes, all in dust","Imagined an affair with love, before","Coldness comes once before warm again, the winter","For summer shall reincarnate hopes, just after the lonely and cold splinter","A place to fall softly, or so it seems","A place with more love shows and scenes","The summer died this year, with a faint frown","A change of season taking place, thus, presently, summer drowned"] },
+  { slug:"weary-memory", title:"Weary Memory", date:"2018-06-21", category:"Romance", excerpt:"Memories are now old and weary.", tags:["Drama","Love","Perspective","Thoughts","Insecurities"], lines:["It was one hot summer afternoon in the year full of unrest","Walking in the sun was hard, a walk needed to calm the heavy chest","I had just met someone with a past, dark and full of fumes","Yet she felt like victory, satisfactory, a feeling of melodious tunes","The heat was a distraction from my feelings, felt so fast","The sun was just evilly smiling, for I felt disturbed by her past","She felt ashamed really, of her past so wild and soar","All I could see was her hair fall smoothly, as her feet were trembling on the floor","A gush of wind took me back in time, to a time where I was alone","It was then I felt the need to turn back and walk the mile again, a mile was difficult and long","I was wrong to think that her past was horrid, that I ran, lest I fall","Not two thoughts could make up for the aberrated scene I caused","Spoke about a time that was gone in the past and flames fiery","The flames were out now, clouds flew by and past was memories, memories are now old and weary"] },
+  { slug:"summer-afternoon", title:"Summer Afternoon", date:"2018-07-14", category:"Romance", excerpt:"A breezy and cold summer afternoon.", tags:["Romance","Travel","Thoughts"], lines:["It was one late summer afternoon atop a mountain","I sat there with a mellow heart and a heavy mind","My thoughts ran freely, inside out, my thoughts ran, of the general kind","Thoughts of times and seasons of all years","Thoughts with my childlike freedom and constrains","How gardens were as green as I lie on here","How growing up was rocky like the mountain terrains","I came close to you and clouds flew by","Realisations pierced my heart as there I lie","All this time, I came close to you yet you never felt it, none","The sun was strong, stranger than the city one","I wanted to feel warmer, and it was the perfect setup done,","The chill in the winds blew across my face, so disturbing, so cold and shrewd","All it made me realise, how similar it was to you"] },
+  { slug:"locked-away", title:"Locked Away", date:"2018-05-22", category:"Abstract", excerpt:"A child lost in the noise of growing up.", tags:["Perspective","Nostalgia","Insecurities"], lines:["Still remember the good old days in some little ways","How sweating the sun felt refreshed, how gentle were mothers breasts","It was all yesterday when we used to walk the grassy land, feet in sand","Walked many a mile, here we stand, with Apartments in place trees, car fumes breeze, a boy, young, screams","Terror on face his, all was lost in the mist, felt his pain, he didnt know rage, knees went weak in his cage","Had a life to live, a father to follow, lost his will, he was hollow","We still believed in the good old days that we remember in little ways","We still remember the confusion back in those days, where it was warm in many ways","A child was lost in the crowd as he did shout","Voice that went further for his age, yet it couldnt leave his cage"] },
+  { slug:"coffee-whiskey-glass", title:"Coffee in a Whiskey Glass", date:"2018-03-09", category:"Abstract", excerpt:"How one waits for their romance to return — eagerly, sadly, sleeplessly.", tags:["Drama","Patriarchy","World Order","Insecurities","Thoughts","Romance","Perspective","Love","Jealousy","Wait"], lines:["As I sit here with coffee in a whiskey glass","Hoping for the time spent apart to roll and pass","Hoping for my wait, the walk through a forest with smoking grass","Patriarchy, the man, running wild, for a prey, not in the distant mile","Seek for a you, a version of you, maybe you","Their drools swamp the ground as I wait and search, yet not found","This day you told me, youd return","Now it feels like a maybe, with that sun turn","I sit awake at night, waiting for you to knock on the door","I could find an island in your arms, poetry in your eyes and I sit here in pain hoping not for a lullaby","Its hard to numb the weight of my eyes, same feeling when Im mesmerised","Race to the door, please, as fast, as I sit here sipping my coffee in a whiskey glass"] },
+  { slug:"life-in-a-tree", title:"Life In A Tree", date:"2017-08-25", category:"Abstract", excerpt:"Then you rest your head in the dark.", tags:["Nostalgia"], lines:["Then you rest your head in the dark","Feel the brush lines of the tree bark","The tree in house garden you used to climb","Hang on the branches with dreams to grow tall and fine","Run around in that garden no matter the sun, the fireball","Play 7 tiles, blind mans bluff, and dodgeball","When you run inside to have one of the mothers fresh limes","A leap to the sofa with the lemonade your mom made","Still, you sip on that with a piercing headache after wine","Simpler days with fun, tv, and food to eat all the time","Months ended with Sundays or family dinner nights","Months that end with weekdays and hangover sunlight","A tear in your eye as you pray to the Lord with belief and fear and faith","Rewind a few years and your lord was the set of two, parenting, teaching and now gaining some weight","The sunlight comes, you rub your eyes and see those tiny optical illusions","Same were the ones when you questioned your humanness, your superpower delusions"] },
+  { slug:"kuekuatsu", title:"Kuekuatsu", date:"2017-03-13", category:"Abstract", excerpt:"She, the moon, cant find her lost cause.", tags:["Romance"], lines:["You never know where to end","You never find out where to begin","Things just go out of hand","That is when you give in","","A long start of a starry night","Yet they dim with the moon light","The lonely survivor with its might","She stands alone in her fight","","The lover the moon was","The lover she can never be","Dangling above a billion lives","She, the moon, cant find her lost cause","","A path weary and frail","She goes around searching like Nightingale","She is a light that brightens at night","Not because of the darkness","But just the will to fight","","To fight and find the piece she lost","The piece stolen, the piece gone","To find the peace that it holds for her","To hold on to it tight","","A little stroll forward","She stumbles on to someone","Someone close to her all this while","Someone she met after a long while","","The sun who traced her path","She stayed with joy and tears mix","That day was called an eclipse","Their story reigned for centuries","The Kuekuatsu couldnt beat destiny"] },
+  { slug:"day-of-the-doctor", title:"Day of the Doctor", date:"2017-10-22", category:"Story", excerpt:"A tribute to the doctor for his inspiring adventures.", tags:["Perspective","Thoughts"], lines:["I helped people","I helped others","I held everyone when noone was together","It has been a while since I came here","It has taken a while for people to come near.","","Time has its own pace","So does it have its space","When you bend it all","You twist and roll","You know, time has just begun.","","Years pass, days end","I have seen the world bend","The end of time","The end of space","When nothing was left but my own race.","","Time is all I have","Time is all I control","Time is the very essence in my bone.","","Friends and armies from across galaxies","Foe and enemies from the parallel worlds","They fear nothing, they kill all, they step on humanity with god knows what all.","The one, the last him all, they have time to choose","To flee or run or hide or face the might of The Doctor Who.","","I travel along with my arms alone","Nothing but the TARDIS to ride","The thrill, the chase, the fun","And the never ending daemons run..."] },
+  { slug:"dream-on", title:"Dream On", date:"2017-03-21", category:"Abstract", excerpt:"A dream that lingers past waking.", tags:["Romance"], lines:["[ content from original archive ]"] }
+];
+
+// =============================================
+// TO ADD A NEW POST — paste this at the TOP of the posts array above:
+// {
+//   slug: "your-slug",
+//   title: "Your Title",
+//   date: "2026-04-06",
+//   category: "Romance",  // Romance / Abstract / Story
+//   excerpt: "One line describing it.",
+//   tags: ["Tag1","Tag2"],
+//   lines: ["First line","Second line","","After break"]
+// },
+// =============================================
+
+const grid = document.getElementById('wgrid');
+document.getElementById('stat-count').textContent = posts.length;
+const sorted = [...posts].sort((a,b) => new Date(b.date) - new Date(a.date));
+
+sorted.forEach((p, i) => {
+  const card = document.createElement('div');
+  const featured = i === 0;
+  card.className = `w-card obs${featured ? ' featured' : ''}`;
+  card.dataset.filter = p.category;
+  card.style.transitionDelay = `${(i % 3) * 80}ms`;
+  const preview = p.lines ? p.lines.filter(l => l.trim()).slice(0,3).join('\n') : '';
+  const dateStr = new Date(p.date).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+  card.innerHTML = `
+    <div class="w-card-accent"></div>
+    <div class="w-body">
+      <div class="w-cat"><span>${p.category}</span><span class="w-date">${dateStr}</span></div>
+      <div class="w-title sg">${p.title}</div>
+      <div class="w-excerpt">"${p.excerpt}"</div>
+      ${preview ? `<div class="w-preview">${preview}</div>` : ''}
+      ${p.tags && p.tags.length ? `<div class="w-tags">${p.tags.map(t=>`<span class="w-tag">${t}</span>`).join('')}</div>` : ''}
+      <span class="w-read">Read</span>
+    </div>`;
+  card.addEventListener('click', () => openModal(p));
+  grid.appendChild(card);
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.w-card').forEach(c => {
+      c.classList.toggle('hidden', f !== 'all' && c.dataset.filter !== f);
+    });
+  });
+});
+
+function openModal(p) {
+  const dateStr = new Date(p.date).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+  const bodyText = p.lines ? p.lines.join('\n') : '';
+  document.getElementById('modal-content').innerHTML = `
+    <div class="modal-cat"><div class="modal-cat-line"></div>${p.category}</div>
+    <h2 class="modal-title sg">${p.title}</h2>
+    <div class="modal-date">${dateStr}</div>
+    <div class="modal-divider"></div>
+    <div class="modal-body${p.prose ? ' prose' : ''}">${bodyText}</div>
+    ${p.tags && p.tags.length ? `<div class="modal-tags">${p.tags.map(t=>`<span class="w-tag">${t}</span>`).join('')}</div>` : ''}`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if(e.target === document.getElementById('modal-overlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+const mqStr = ('POETRY · PROSE · ABSTRACT · ROMANCE · STORY · EBC FIELD NOTES · JOURNEY THROUGH VERSE · PUBLISHED · ALBATROSS · ').repeat(6);
+document.getElementById('mq-text').innerHTML = mqStr;
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.obs').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

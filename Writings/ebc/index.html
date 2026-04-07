@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EBC Field Notes — Raziul Hasnain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1d3a;
+    --surface: #142847;
+    --b-subtle: rgba(255,255,255,0.07);
+    --t-pri: rgba(255,255,255,0.95);
+    --t-mut: rgba(255,255,255,0.70);
+    --t-faint: rgba(255,255,255,0.40);
+    --c-ebc: #ffe066;
+    --c-ebc-dim: rgba(255,224,102,0.10);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--t-pri); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+  .sg { font-family: 'Outfit', sans-serif; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%;
+    padding: 22px 48px;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(11,29,58,0.98), rgba(11,29,58,0.75));
+    border-bottom: 1px solid var(--b-subtle);
+    z-index: 200; backdrop-filter: blur(12px);
+  }
+  .n-back {
+    font-size: 0.75rem; letter-spacing: 0.2em; font-weight: 600;
+    color: var(--t-mut); transition: color 0.3s; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .n-back::before { content: "←"; font-size: 1rem; }
+  .n-back:hover { color: var(--c-ebc); }
+  .n-logo {
+    justify-self: center; font-family: 'Outfit', sans-serif; font-weight: 900;
+    font-size: 0.9rem; letter-spacing: 0.3em; color: var(--c-ebc);
+    text-transform: uppercase; text-shadow: 0 0 20px rgba(255,224,102,0.35);
+  }
+  .n-cta {
+    justify-self: end; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18); padding: 9px 22px;
+    font-size: 0.72rem; font-weight: 600; color: #fff; border-radius: 30px;
+    transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .n-cta:hover { background: #fff; color: var(--bg); }
+
+  /* HERO */
+  .hero {
+    padding: 148px 48px 64px; max-width: 1400px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .hero-over {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 0.68rem; letter-spacing: 0.35em; color: var(--c-ebc);
+    text-transform: uppercase; font-weight: 600;
+  }
+  .hero-over-line { width: 36px; height: 1px; background: var(--c-ebc); flex-shrink: 0; }
+  .hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 900; line-height: 0.95; color: #fff; letter-spacing: -0.03em;
+  }
+  .hero-title span { color: var(--c-ebc); }
+  .hero-sub { font-size: 1rem; color: var(--t-mut); max-width: 560px; line-height: 1.85; }
+  .hero-sub strong { color: var(--c-ebc); font-weight: 600; }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--b-subtle); border-radius: 20px; overflow: hidden; margin-top: 8px;
+  }
+  .h-stat { padding: 28px 24px; border-right: 1px solid var(--b-subtle); transition: background 0.3s; }
+  .h-stat:last-child { border-right: none; }
+  .h-stat:hover { background: var(--c-ebc-dim); }
+  .h-stat-num { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 2rem; line-height: 1; color: var(--c-ebc); }
+  .h-stat-lbl { font-size: 0.68rem; color: var(--t-faint); font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+  /* MARQUEE */
+  .marquee {
+    height: 50px; background: var(--surface);
+    border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle);
+    display: flex; align-items: center; overflow: hidden; white-space: nowrap;
+  }
+  .mq-in {
+    display: inline-block; font-size: 0.72rem; letter-spacing: 0.22em;
+    color: var(--c-ebc); opacity: 0.65; font-weight: 600;
+    animation: scrollMq 55s linear infinite; text-transform: uppercase;
+  }
+  @keyframes scrollMq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* TABS */
+  .tab-wrap { max-width: 1400px; margin: 0 auto; padding: 0 48px; }
+  .tab-bar {
+    display: flex; border-bottom: 1px solid var(--b-subtle);
+    margin-top: 52px; position: sticky; top: 67px;
+    background: var(--bg); z-index: 100; backdrop-filter: blur(12px);
+  }
+  .tab-btn {
+    font-family: 'Montserrat', sans-serif; font-size: 0.72rem;
+    letter-spacing: 0.2em; font-weight: 700; text-transform: uppercase;
+    padding: 18px 28px; color: var(--t-faint); border: none; background: none;
+    cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all 0.25s; display: flex; align-items: center; gap: 8px;
+  }
+  .tab-btn .tab-count { font-size: 0.58rem; background: rgba(255,255,255,0.07); padding: 2px 7px; border-radius: 10px; }
+  .tab-btn:hover { color: var(--c-ebc); }
+  .tab-btn.active { color: var(--c-ebc); border-bottom-color: var(--c-ebc); }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; padding: 52px 0 120px; }
+  .tab-panel.active { display: block; }
+
+  /* DAY CARDS */
+  .days-grid { display: flex; flex-direction: column; }
+  .day-card {
+    display: grid; grid-template-columns: 220px 1fr;
+    border-bottom: 1px solid var(--b-subtle);
+    transition: background 0.25s;
+  }
+  .day-card:first-child { border-top: 1px solid var(--b-subtle); }
+  .day-card:hover { background: rgba(255,224,102,0.025); }
+  .day-meta {
+    padding: 36px 28px 36px 0;
+    border-right: 1px solid var(--b-subtle);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .day-num { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 0.62rem; letter-spacing: 0.32em; color: var(--c-ebc); text-transform: uppercase; }
+  .day-route { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.98rem; color: #fff; line-height: 1.35; }
+  .day-altitude { font-size: 0.7rem; color: var(--c-ebc); opacity: 0.65; font-weight: 600; }
+  .day-stat { font-size: 0.66rem; color: var(--t-faint); font-weight: 500; line-height: 1.6; }
+  .day-content { padding: 36px 0 36px 40px; }
+  .day-text { font-size: 0.9rem; color: var(--t-mut); line-height: 2.1; }
+  .day-text strong { color: var(--c-ebc); font-weight: 600; }
+  .day-text + .day-text { margin-top: 1.4rem; }
+  .day-moment {
+    margin-top: 24px; padding: 24px 28px;
+    border: 1px solid rgba(255,224,102,0.25);
+    background: rgba(255,224,102,0.03); border-radius: 14px;
+  }
+  .day-moment-label { font-size: 0.58rem; letter-spacing: 0.4em; color: var(--c-ebc); text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+  .day-moment-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.15rem; color: #fff; margin-bottom: 10px; line-height: 1.2; }
+  .day-moment-text { font-size: 0.85rem; color: var(--t-mut); line-height: 2; }
+  .day-fig { margin-top: 24px; }
+  .day-fig img { width: 100%; max-height: 440px; object-fit: cover; display: block; border-radius: 14px; border: 1px solid var(--b-subtle); }
+  .day-fig figcaption { font-size: 0.66rem; color: var(--t-faint); margin-top: 10px; font-style: italic; letter-spacing: 0.05em; }
+
+  /* GUIDE */
+  .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .guide-block {
+    background: var(--surface); border: 1px solid var(--b-subtle);
+    border-radius: 22px; padding: 36px;
+    transition: border-color 0.25s;
+  }
+  .guide-block:hover { border-color: rgba(255,224,102,0.2); }
+  .guide-block.full { grid-column: span 2; }
+  .guide-over {
+    font-size: 0.62rem; letter-spacing: 0.3em; color: var(--c-ebc);
+    text-transform: uppercase; font-weight: 600; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .guide-over::before { content: ""; display: block; width: 18px; height: 1px; background: var(--c-ebc); }
+  .guide-h { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.3rem; color: #fff; margin-bottom: 18px; line-height: 1.2; }
+  .guide-p { font-size: 0.86rem; color: var(--t-mut); line-height: 1.9; margin-bottom: 12px; }
+  .guide-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .guide-list li { font-size: 0.83rem; color: var(--t-mut); line-height: 1.8; padding-left: 18px; position: relative; }
+  .guide-list li::before { content: "—"; position: absolute; left: 0; color: var(--c-ebc); font-weight: 700; }
+  .guide-list li strong { color: #fff; font-weight: 600; }
+  .guide-note {
+    background: rgba(255,224,102,0.04); border: 1px solid rgba(255,224,102,0.18);
+    border-radius: 12px; padding: 18px 22px; margin-top: 18px;
+    font-size: 0.78rem; color: rgba(255,224,102,0.8); line-height: 1.85;
+  }
+  .guide-note strong { color: var(--c-ebc); }
+  .guide-fig { margin-top: 22px; }
+  .guide-fig img { width: 100%; max-height: 220px; object-fit: cover; display: block; border-radius: 12px; border: 1px solid var(--b-subtle); }
+  .guide-fig figcaption { font-size: 0.64rem; color: var(--t-faint); margin-top: 8px; font-style: italic; }
+
+  /* BUDGET TABLE */
+  .budget-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.8rem; }
+  .budget-table th { text-align: left; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--c-ebc); font-weight: 600; padding: 8px 0; border-bottom: 1px solid var(--b-subtle); }
+  .budget-table td { padding: 11px 0; border-bottom: 1px solid var(--b-subtle); color: var(--t-mut); vertical-align: top; }
+  .budget-table td:last-child { color: var(--t-faint); font-size: 0.76rem; }
+  .budget-table tr:last-child td { border-bottom: none; }
+
+  /* IMG PAIR */
+  .img-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px; }
+  .img-pair figure img { width: 100%; max-height: 200px; object-fit: cover; display: block; border-radius: 12px; border: 1px solid var(--b-subtle); }
+  .img-pair figure figcaption { font-size: 0.63rem; color: var(--t-faint); margin-top: 7px; font-style: italic; }
+
+  /* FOOTER */
+  footer { padding: 56px 48px 40px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--b-subtle); }
+  .ft-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; flex-wrap: wrap; gap: 20px; }
+  .ft-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.8rem; color: #fff; }
+  .ft-soc { display: flex; gap: 28px; }
+  .ft-soc a { color: var(--t-mut); transition: color 0.3s; font-weight: 500; font-size: 0.88rem; }
+  .ft-soc a:hover { color: #fff; }
+  .ft-bot { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--t-faint); font-weight: 500; flex-wrap: wrap; gap: 10px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .guide-grid { grid-template-columns: 1fr; }
+    .guide-block.full { grid-column: span 1; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 18px 20px; }
+    .n-logo { display: none; }
+    .hero { padding: 110px 20px 52px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .h-stat { border-bottom: 1px solid var(--b-subtle); }
+    .tab-wrap { padding: 0 20px; }
+    .tab-btn { padding: 14px 16px; font-size: 0.68rem; }
+    .day-card { grid-template-columns: 1fr; }
+    .day-meta { border-right: none; border-bottom: 1px solid var(--b-subtle); padding: 24px 0; flex-direction: row; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .day-content { padding: 24px 0; }
+    .img-pair { grid-template-columns: 1fr; }
+    footer { padding: 44px 20px 32px; }
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+  .fade-up { opacity:0; animation: fadeUp 0.75s ease forwards; }
+  .fade-up:nth-child(1){ animation-delay:0.08s; }
+  .fade-up:nth-child(2){ animation-delay:0.2s; }
+  .fade-up:nth-child(3){ animation-delay:0.34s; }
+  .fade-up:nth-child(4){ animation-delay:0.48s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="n-back">Writings</a>
+  <div class="n-logo">EBC Field Notes</div>
+  <a href="mailto:hraziul@gmail.com?subject=EBC%20Field%20Notes" class="n-cta">Get in Touch</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-over fade-up"><div class="hero-over-line"></div>Field Notes · Solo Trek · 2017</div>
+  <h1 class="hero-title sg fade-up">Everest<br><span>Base Camp.</span></h1>
+  <p class="hero-sub fade-up">13 days. 130 km. Solo. Every meal ordered by name, every stranger remembered, every altitude gain noted — <strong>documented in real time, one night at a time.</strong></p>
+  <div class="hero-stats fade-up">
+    <div class="h-stat"><div class="h-stat-num sg">13</div><div class="h-stat-lbl">Days Solo</div></div>
+    <div class="h-stat"><div class="h-stat-num sg">130 km</div><div class="h-stat-lbl">Trekked</div></div>
+    <div class="h-stat"><div class="h-stat-num sg">5364 m</div><div class="h-stat-lbl">Base Camp Alt.</div></div>
+    <div class="h-stat"><div class="h-stat-num sg">5644 m</div><div class="h-stat-lbl">Kala Patthar</div></div>
+  </div>
+</div>
+
+<div class="marquee">
+  <div class="mq-in" id="mq-text"></div>
+</div>
+
+<div class="tab-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('days', this)">Day by Day <span class="tab-count">13</span></button>
+    <button class="tab-btn" onclick="switchTab('guide', this)">Concise Guide</button>
+  </div>
+
+  <!-- ══ DAY BY DAY ══ -->
+  <div class="tab-panel active" id="tab-days">
+    <div class="days-grid">
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 01</div>
+          <div class="day-route">Lukla → Phakding</div>
+          <div class="day-altitude">2800 m → 2600 m</div>
+          <div class="day-stat">3.5 hrs · 5 km · ~8,500 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">The trek started very late. Joy-rode a chopper to Lukla with the Ahujas. Stopped at Mera Lodge in Lukla — could only afford mushroom soup for <strong>250 NPR</strong> after the chopper cost. At Chhutawa, a Sherpa girl offered a free boiled egg, tea, and boiled noodles. Set out alone at <strong>7 PM with a headlamp.</strong> Found Namaste Lodge in the dark — 100 NPR for a room. Noodles for dinner at 300 NPR. 9:30 PM — good night, good luck.</p>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 02</div>
+          <div class="day-route">Phakding → Namche Bazaar</div>
+          <div class="day-altitude">2600 m → 3400 m</div>
+          <div class="day-stat">8 hrs · 7 km · ~13,600 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Body clock set for mountains — woke at 5:30. Left at 7:30. Easy walking through Bengkar, reached Monjo at 11:30. TIMS card verified, entered Sagarmatha National Park. Chicken soup in Jorsale at 1 PM. Painkiller for chest pain — muscle strain. The final 3 km to Namche: <strong>straight up a mountain.</strong> Mixed veg and fried potato for 390 NPR. Accidentally slept at 5:30 PM straight through dinner.</p>
+          <figure class="day-fig">
+            <img src="./images/Fried-potato-with-veggies.jpeg" alt="Fried potato with veggies — Namche Bazaar" loading="lazy">
+            <figcaption>Fried potato with veggies — Namche Bazaar.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 03</div>
+          <div class="day-route">Namche Bazaar — Solo hike to Everest View Hotel</div>
+          <div class="day-altitude">Rest · Acclimatisation · Shyamboche 3880 m</div>
+          <div class="day-stat">Solo blind climb — no route, no guide</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Blue sky morning. Omelette for 350 NPR. Solo blind climb to Everest View Hotel in Shyamboche — asked every person along the way. Made a Malaysian friend named Tee. <strong>Eyes widened at the first sight of Everest</strong> — white, distant, real. Cheese omelette at the hotel cafe for 350 NPR. Clouds rolled in. Khumjung School visit cancelled. Descended back by 3 PM. Sherpa stew with meat for 300 NPR. Tomorrow — Tengboche, alone.</p>
+          <figure class="day-fig">
+            <img src="./images/Everest-View-Hotel-the-white-peak-in-the-centre-is-Everest.jpeg" alt="Everest View Hotel — the white peak in the centre is Everest" loading="lazy">
+            <figcaption>Everest View Hotel — the white peak in the centre is Everest.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 04</div>
+          <div class="day-route">Namche Bazaar → Tengboche</div>
+          <div class="day-altitude">3400 m → 3800 m</div>
+          <div class="day-stat">8 km · 7.5 hrs · ~14,000 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Late sleep but pushed off. Jam and toast, 300 NPR. Mrs. Ahuja insisted on a photograph before leaving. Left dazed and solo. Met Siddhartha from Mumbai at a tea stop — <strong>tagged ourselves as not solo anymore.</strong> Crossed Dudh Kosi river. Plain rice and cheese at the riverbank, 400 NPR. The final ascent to Tengboche: straight up in razor-thin air. Room 100 NPR. Sat by a fireplace with Amar, Spence, Emily, their guide. Ten rounds of Uno until midnight — Spence 3, guide 4, me 2, Amar 1.</p>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 05</div>
+          <div class="day-route">Tengboche → Dingboche</div>
+          <div class="day-altitude">3800 m → 4400 m</div>
+          <div class="day-stat">4 km · 6 hrs · ~7,500 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Pushed to the restaurant at 6 AM. Jam and toast. Waited for Siddharth. Easy trail through Deboche and Pangboche — bought sunscreen for <strong>900 NPR</strong> (pack it from home). First cup of tea — lemon — confirmed why I don't drink tea. Lunch at Somare: first Dal Bhaat of the trek. Met a German girl. Rain came lightly climbing toward Dingboche. Arrived with relief. Plywood room. Woke from a 20-minute nap feeling drugged. Plain rice with cheese, 450 NPR. Then — <strong>Everest, moonlit, through the window.</strong> Ran for the camera.</p>
+          <figure class="day-fig">
+            <img src="./images/Dal-Bhaat-in-Sonam-Restaurant-Somare.jpeg" alt="Dal Bhaat at Sonam Restaurant, Somare" loading="lazy">
+            <figcaption>Dal Bhaat at Sonam Restaurant, Somare.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 06</div>
+          <div class="day-route">Dingboche — Rest Day</div>
+          <div class="day-altitude">Rest · Acclimatisation · 4400 m</div>
+          <div class="day-stat">Legs warming for Lobuche</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Woke early, tried to sleep more, couldn't. Convinced Sid to find a better lodge. Visited the Dingboche Gompa — <strong>Sid taught me the Wim Hof breathing technique</strong> for acclimatisation, meditated while I explored. Migrated both bags to Bright Star Hotel. Walked around the hilly town to warm up the legs for tomorrow.</p>
+          <p class="day-text">Cheese toast 350 NPR. Plain rice with cheese 450 NPR. <strong>Potato cheese burger 500 NPR</strong> for dinner — a mini treat. By the fire, chatted with a French girl trekking with an Indian friend. Still hard to believe Base Camp is just days away.</p>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 07</div>
+          <div class="day-route">Dingboche → Lobuche</div>
+          <div class="day-altitude">4400 m → 4930 m</div>
+          <div class="day-stat">4 km · 7 hrs · ~7,500 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Rubbed sleepy eyes but pushed it. Corn flakes for 350 NPR. Left at 7:30. Gentle climb at first, then two trails, no markers — asked someone, headed into a plain spread of soulless land. Reached tiny Thukla — tomato soup at Kala Pathar Lodge, 450 NPR.</p>
+          <p class="day-text">Then the ascent to Lobuche began: <strong>steep, standing, thinning air,</strong> leading to a massive memorial for Sherpas lost on Everest. A real achievement just to stand there. New EBC Guest House — clean, newly built. Met a solo traveller from Peru. Woke at 12:30 AM with a headache, all paranoid. Painkiller over Diamox. Slept comfortably after.</p>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 08</div>
+          <div class="day-route">Lobuche → Gorak Shep → EBC</div>
+          <div class="day-altitude">4930 m → 5164 m → 5364 m</div>
+          <div class="day-stat">3 km · 5 hrs · ~5,000 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Omelette for 510 NPR. The trail to Gorak Shep felt endless on the flat moraine. Then the rocky trail to Base Camp — flags visible long before arrival. The glacier, the prayer flags, the silence.</p>
+          <div class="day-moment">
+            <div class="day-moment-label">10th June, 2017 — 5364 m</div>
+            <div class="day-moment-title sg">Everest Base Camp.</div>
+            <p class="day-moment-text">You stand at a place most people only read about. The glacier moves imperceptibly. The flags flap. Everything below this point suddenly makes sense.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 09</div>
+          <div class="day-route">Gorak Shep → Thukla</div>
+          <div class="day-altitude">5164 m → 4600 m</div>
+          <div class="day-stat">6 km · 6 hrs · ~15,000 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Set off at a fast pace — <strong>glorious feeling of having touched Base Camp.</strong> At the memorial stones it started pouring rain. Rushed back down the steep descent to Thukla — better to take refuge than push through cloud cover. Boiled egg and rice and cheese, 800 NPR. Then headed for Pheriche.</p>
+          <figure class="day-fig">
+            <img src="./images/Google-tried-locating-me-right.jpeg" alt="Google tried locating me right — Everest Base Camp 2017" loading="lazy">
+            <figcaption>Google tried locating me right — Everest Base Camp 2017.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 10</div>
+          <div class="day-route">Thukla → Namche Bazaar</div>
+          <div class="day-altitude">4600 m → 3400 m</div>
+          <div class="day-stat">15 km · 12 hrs · ~25,000 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Left Thukla at 5:30 AM. The longest day on the trail. Twelve hours of walking — the body descending through every altitude it had climbed across the previous week. <strong>The knees felt every stone.</strong> Namche by evening. Dal Bhaat, a proper lodge bed. Slept immediately.</p>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 11</div>
+          <div class="day-route">Namche Bazaar → Lukla</div>
+          <div class="day-altitude">3400 m → 2800 m</div>
+          <div class="day-stat">20 km · 7 hrs · ~34,000 steps</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Easy morning in Namche. The familiar trail in reverse — every descent now a memory of the climb up. Lukla by afternoon. The runway that shouldn't exist. The relief of arriving. <strong>Because I can.</strong></p>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 12</div>
+          <div class="day-route">Lukla — Weather Hold</div>
+          <div class="day-altitude">Lukla · 2800 m</div>
+          <div class="day-stat">No flights. Waiting.</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Clouded window. No flights out. The weather that rules Lukla Airport rules everything. Waited. Ate. Waited more. Slept hungry. The mountain holds you until it decides otherwise. <strong>It will be revisited.</strong></p>
+          <figure class="day-fig">
+            <img src="./images/Flight-to-kathmandu.jpeg" alt="Flight to Kathmandu — finally" loading="lazy">
+            <figcaption>Flight to Kathmandu — finally.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-meta">
+          <div class="day-num">Day 13</div>
+          <div class="day-route">Lukla → Kathmandu — Home</div>
+          <div class="day-altitude">2800 m → 1400 m</div>
+          <div class="day-stat">The notes are permanent</div>
+        </div>
+        <div class="day-content">
+          <p class="day-text">Starving. Flight out of Lukla. Kathmandu below. Thirteen days — solo, every meal accounted for, every stranger remembered by name. <strong>The roof of the world was real.</strong> Slept straight through till morning, entirely at peace.</p>
+          <div class="day-moment">
+            <div class="day-moment-label">Field Notes — Closed</div>
+            <div class="day-moment-title sg">130 km. 13 days. One life.</div>
+            <p class="day-moment-text">All figures — distances, footsteps, costs in NPR — are approximate, based on 2017 conditions. Prices and permit requirements change annually. Verify before you go.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ CONCISE GUIDE ══ -->
+  <div class="tab-panel" id="tab-guide">
+    <div class="guide-grid">
+
+      <div class="guide-block">
+        <div class="guide-over">Before You Go</div>
+        <h3 class="guide-h sg">Permits Required</h3>
+        <ul class="guide-list">
+          <li><strong>TIMS Card</strong> — Trekkers Information Management System. Obtain in Kathmandu or Lukla. Checked multiple times on trail.</li>
+          <li><strong>Sagarmatha National Park Permit</strong> — obtained at Monjo entry gate. Do not lose it.</li>
+          <li>Carry both in a waterproof sleeve. Both are verified repeatedly.</li>
+          <li>Costs and rules change annually — verify before departure.</li>
+        </ul>
+        <div class="guide-note"><strong>Note:</strong> All figures are based on 2017 conditions. Verify with a current source before you go.</div>
+      </div>
+
+      <div class="guide-block">
+        <div class="guide-over">Getting There</div>
+        <h3 class="guide-h sg">Getting to Lukla</h3>
+        <ul class="guide-list">
+          <li><strong>Fly Kathmandu → Lukla</strong> (Tenzing-Hillary Airport). One of the most dramatic runways in the world.</li>
+          <li>Flights are entirely <strong>weather-dependent.</strong> Build 1–2 buffer days in Kathmandu — and in Lukla on the return.</li>
+          <li>Helicopter option exists — faster, costlier, no acclimatisation advantage.</li>
+          <li>Book flights early. Season seats fill fast (March–May, Oct–Nov).</li>
+        </ul>
+        <figure class="guide-fig">
+          <img src="./images/Flight-to-kathmandu.jpeg" alt="Flight to Kathmandu" loading="lazy">
+          <figcaption>The flight into Kathmandu — the start of everything.</figcaption>
+        </figure>
+      </div>
+
+      <div class="guide-block">
+        <div class="guide-over">Altitude Safety</div>
+        <h3 class="guide-h sg">Acclimatisation</h3>
+        <ul class="guide-list">
+          <li>Rest days at <strong>Namche Bazaar (Day 3)</strong> and <strong>Dingboche (Day 6)</strong> are non-negotiable. Do not skip them.</li>
+          <li>On rest days — hike higher during the day, sleep at base altitude.</li>
+          <li>Never ascend more than <strong>400–500 m per day</strong> above 3000 m.</li>
+          <li>Headaches, nausea, appetite loss = AMS warning signs. <strong>Descend if symptoms worsen.</strong></li>
+          <li>Diamox is an option — consult a doctor before departure.</li>
+        </ul>
+      </div>
+
+      <div class="guide-block">
+        <div class="guide-over">What to Carry</div>
+        <h3 class="guide-h sg">Gear Essentials</h3>
+        <ul class="guide-list">
+          <li><strong>Layering system</strong> — moisture-wicking base, fleece mid, windproof outer shell.</li>
+          <li><strong>Down jacket</strong> — essential above Namche. -10°C and below near EBC at night.</li>
+          <li><strong>Trekking poles</strong> — your knees will thank you on every descent.</li>
+          <li><strong>Sunscreen SPF 50</strong> — UV at altitude is brutal. Buy it in Kathmandu, not at 4000 m for 900 NPR.</li>
+          <li><strong>Headlamp + spare batteries</strong> — you will use it.</li>
+          <li><strong>Cash in Nepali Rupees</strong> — no ATMs beyond Namche Bazaar.</li>
+        </ul>
+      </div>
+
+      <div class="guide-block full">
+        <div class="guide-over">Eating on the Trail</div>
+        <h3 class="guide-h sg">Food &amp; Budget</h3>
+        <p class="guide-p">Prices increase sharply with altitude. What costs 300 NPR in Phakding costs 600 NPR near Lobuche. Carry cash — no ATMs above Namche.</p>
+        <table class="budget-table">
+          <thead>
+            <tr><th>Meal / Item</th><th>Approx. Cost (NPR)</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mushroom soup (Lukla)</td><td>250</td><td>First meal on trail</td></tr>
+            <tr><td>Lodge room per night</td><td>100 – 300</td><td>Margin is in food — you eat at your lodge</td></tr>
+            <tr><td>Dal Bhaat</td><td>300 – 500</td><td>Most reliable meal. Order it always.</td></tr>
+            <tr><td>Plain rice with cheese</td><td>390 – 450</td><td>Simple, filling, everywhere</td></tr>
+            <tr><td>Fried potato with veggies</td><td>350 – 500</td><td>Standard lodge dinner</td></tr>
+            <tr><td>Potato cheese burger (Dingboche)</td><td>500</td><td>Mini treat at altitude</td></tr>
+            <tr><td>Sunscreen SPF 50 (Pangboche)</td><td>900</td><td>Pack it from home</td></tr>
+          </tbody>
+        </table>
+        <div class="guide-note"><strong>Rule of thumb:</strong> Dal Bhaat is the most energising meal on the trail. The unlimited refill rule applies at most lodges. Eat it every chance you get.</div>
+        <div class="img-pair">
+          <figure>
+            <img src="./images/Dal-Bhaat-in-Sonam-Restaurant-Somare.jpeg" alt="Dal Bhaat at Somare" loading="lazy">
+            <figcaption>Dal Bhaat, Sonam Restaurant, Somare — Day 5.</figcaption>
+          </figure>
+          <figure>
+            <img src="./images/Fried-potato-with-veggies.jpeg" alt="Fried potato with veggies" loading="lazy">
+            <figcaption>Fried potato with veggies — Namche Bazaar, Day 2.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="guide-block full">
+        <div class="guide-over">Solo Trekking</div>
+        <h3 class="guide-h sg">Going Solo</h3>
+        <p class="guide-p">This entire trek was done alone — no guide, no porter. Entirely possible, and deeply rewarding, if you are physically prepared.</p>
+        <ul class="guide-list">
+          <li>Solo trekkers naturally find company. Fellow trekkers become trail companions within hours.</li>
+          <li>Tell your lodge where you are going each morning. They expect it.</li>
+          <li>The trail is well-marked. Getting lost on the main EBC route is genuinely difficult.</li>
+          <li>Your pace is your own. This is the single greatest advantage of going solo.</li>
+          <li>Download an offline map (Maps.me or Gaia GPS) before leaving Kathmandu.</li>
+          <li>Register your solo trek with a trekking authority if possible — safety net for emergencies.</li>
+        </ul>
+        <div class="guide-note"><strong>From experience:</strong> The loneliness you fear before the trek dissolves on Day 1. The silence you find above 4000 m is the kind you will spend years looking for again.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /tab-wrap -->
+
+<footer>
+  <div class="ft-row">
+    <div class="ft-logo sg">ALBATROSS</div>
+    <div class="ft-soc">
+      <a href="https://www.instagram.com/albatrossamazedotcom" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://in.linkedin.com/in/raziul-hasnain-aaa457a1" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:hraziul@gmail.com">Email</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>&copy; 2026 Raziul Hasnain. All rights reserved.</span>
+    <span>13 days. One life.</span>
+  </div>
+</footer>
+
+<script>
+  // ── Tab switching ──
+  function switchTab(id, el) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  // ── Marquee text ──
+  var mqStr = '';
+  var mqWords = 'EVEREST BASE CAMP · 5364 M · 13 DAYS SOLO · 130 KM · KALA PATTHAR · 5644 M · LUKLA · NAMCHE BAZAAR · TENGBOCHE · DINGBOCHE · LOBUCHE · GORAK SHEP · FIELD NOTES · ALBATROSS · ';
+  for (var i = 0; i < 4; i++) { mqStr += mqWords; }
+  document.getElementById('mq-text').textContent = mqStr;
+</script>
+</body>
+</html>

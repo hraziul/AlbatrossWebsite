@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Views — Photography · Albatross AMAZE · Raziul Hasnain</title>
+<meta name="description" content="Photography by Raziul Hasnain. 28 albums across Trek, Travel, Wildlife, Landscape, Astrophotography and Documentary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b1d3a;
+    --surface: #142847;
+    --surface2: #0f2040;
+    --b-subtle: rgba(255,255,255,0.07);
+    --b-mid: rgba(255,255,255,0.14);
+    --t-pri: rgba(255,255,255,0.95);
+    --t-mut: rgba(255,255,255,0.68);
+    --t-faint: rgba(255,255,255,0.38);
+    --c-gold: #ffe066;
+    --c-gold-dim: rgba(255,224,102,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--t-pri); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+  .sg { font-family: 'Outfit', sans-serif; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%;
+    padding: 22px 48px;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(11,29,58,0.97), rgba(11,29,58,0.72));
+    border-bottom: 1px solid var(--b-subtle);
+    z-index: 200; backdrop-filter: blur(14px);
+  }
+  .n-back {
+    font-size: 0.74rem; letter-spacing: 0.2em; font-weight: 600;
+    color: var(--t-mut); transition: color 0.3s; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .n-back::before { content: "←"; font-size: 1rem; }
+  .n-back:hover { color: var(--c-gold); }
+  .n-logo {
+    justify-self: center; font-family: 'Outfit', sans-serif; font-weight: 900;
+    font-size: 0.88rem; letter-spacing: 0.32em; color: var(--c-gold);
+    text-transform: uppercase; text-shadow: 0 0 22px rgba(255,224,102,0.32);
+  }
+  .n-cta {
+    justify-self: end; background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.16); padding: 9px 22px;
+    font-size: 0.72rem; font-weight: 600; color: #fff; border-radius: 30px;
+    transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .n-cta:hover { background: #fff; color: var(--bg); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 148px 48px 64px; max-width: 1400px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .hero-over {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 0.68rem; letter-spacing: 0.38em; color: var(--c-gold);
+    text-transform: uppercase; font-weight: 600;
+  }
+  .hero-over-line { width: 36px; height: 1px; background: var(--c-gold); flex-shrink: 0; }
+  .hero-title {
+    font-family: 'Outfit', sans-serif; font-size: clamp(3.4rem, 9vw, 7rem);
+    font-weight: 900; line-height: 0.92; color: #fff; letter-spacing: -0.03em;
+  }
+  .hero-title span { color: var(--c-gold); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--t-mut); max-width: 540px; line-height: 1.88;
+    font-style: italic;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--b-subtle); border-radius: 20px; overflow: hidden; margin-top: 8px;
+  }
+  .h-stat { padding: 26px 24px; border-right: 1px solid var(--b-subtle); transition: background 0.3s; }
+  .h-stat:last-child { border-right: none; }
+  .h-stat:hover { background: var(--c-gold-dim); }
+  .h-stat-num { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 2rem; line-height: 1; color: var(--c-gold); }
+  .h-stat-lbl { font-size: 0.66rem; color: var(--t-faint); font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.15em; }
+
+  /* ── MARQUEE ── */
+  .marquee {
+    height: 48px; background: var(--surface);
+    border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle);
+    display: flex; align-items: center; overflow: hidden; white-space: nowrap;
+  }
+  .mq-in {
+    display: inline-block; font-size: 0.7rem; letter-spacing: 0.24em; color: var(--c-gold);
+    opacity: 0.6; font-weight: 600; animation: scrollMq 90s linear infinite; text-transform: uppercase;
+  }
+  @keyframes scrollMq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ── BOOK CARD ── */
+  .book-wrap { max-width: 1400px; margin: 56px auto 0; padding: 0 48px; }
+  .book-card {
+    display: grid; grid-template-columns: 1fr 280px;
+    background: var(--surface); border: 1px solid var(--b-mid);
+    border-radius: 28px; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .book-card:hover { border-color: rgba(255,224,102,0.38); }
+  .book-body { padding: 52px 56px; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .book-over {
+    font-size: 0.64rem; letter-spacing: 0.38em; color: var(--c-gold);
+    text-transform: uppercase; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .book-over::before { content: ""; display: block; width: 22px; height: 1px; background: var(--c-gold); }
+  .book-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: #fff; line-height: 1.1; letter-spacing: -0.02em; }
+  .book-title span { color: var(--c-gold); }
+  .book-desc { font-size: 0.9rem; color: var(--t-mut); line-height: 1.9; max-width: 500px; }
+  .book-meta { font-size: 0.72rem; color: var(--t-faint); letter-spacing: 0.1em; }
+  .book-cta {
+    display: inline-flex; align-items: center; gap: 10px; align-self: flex-start;
+    background: var(--c-gold); color: var(--bg); padding: 14px 32px;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase; border-radius: 50px;
+    transition: all 0.3s; margin-top: 6px;
+  }
+  .book-cta::after { content: "→"; font-size: 1rem; }
+  .book-cta:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,224,102,0.25); }
+  .book-cover {
+    background: linear-gradient(135deg, #1a3a6e 0%, #0b1d3a 100%);
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px; min-height: 300px;
+  }
+  .book-cover img {
+    max-height: 260px; max-width: 190px; object-fit: contain; display: block;
+    border-radius: 8px; box-shadow: 0 20px 48px rgba(0,0,0,0.5);
+  }
+  .book-cover-fallback {
+    width: 150px; height: 210px; background: var(--surface2);
+    border: 1px solid var(--b-mid); border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; padding: 20px; text-align: center;
+  }
+  .bcf-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 0.8rem; color: var(--c-gold); line-height: 1.4; }
+  .bcf-author { font-size: 0.62rem; color: var(--t-faint); letter-spacing: 0.1em; }
+
+  /* ── FILTER BAR ── */
+  .grid-wrap { max-width: 1400px; margin: 0 auto; padding: 0 48px 120px; }
+  .filter-bar {
+    display: flex; align-items: center; gap: 8px;
+    margin: 52px 0 12px; flex-wrap: wrap; overflow-x: auto;
+    scrollbar-width: none; padding-bottom: 2px;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-label { font-size: 0.66rem; letter-spacing: 0.25em; color: var(--t-faint); text-transform: uppercase; font-weight: 600; margin-right: 8px; flex-shrink: 0; }
+  .filter-btn {
+    font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0;
+    padding: 8px 20px; border-radius: 30px;
+    border: 1px solid var(--b-mid); background: none; color: var(--t-faint);
+    cursor: pointer; transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .filter-btn .fc { font-size: 0.58rem; background: rgba(255,255,255,0.07); padding: 2px 6px; border-radius: 8px; }
+  .filter-btn:hover { color: var(--c-gold); border-color: rgba(255,224,102,0.3); }
+  .filter-btn.active { background: var(--c-gold); color: var(--bg); border-color: var(--c-gold); font-weight: 700; }
+  .filter-btn.active .fc { background: rgba(11,29,58,0.22); }
+
+  /* Album count */
+  .album-count { font-size: 0.7rem; color: var(--t-faint); letter-spacing: 0.1em; margin-bottom: 28px; }
+  .album-count span { color: var(--c-gold); font-weight: 700; }
+
+  /* ── ALBUM GRID ── */
+  .album-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+  }
+
+  .album-card {
+    position: relative; overflow: hidden; aspect-ratio: 4/3; cursor: pointer;
+    background: linear-gradient(135deg, var(--surface2), #0d2248);
+    display: block;
+  }
+  .album-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transition: transform 0.55s ease, opacity 0.4s;
+    opacity: 0.8;
+  }
+  .album-card:hover img { transform: scale(1.05); opacity: 1; }
+
+  /* Gold top-border flash on hover */
+  .album-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--c-gold); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s ease; z-index: 3;
+  }
+  .album-card:hover::before { transform: scaleX(1); }
+
+  .album-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(11,29,58,0.95) 0%, rgba(11,29,58,0.12) 55%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 20px 18px; z-index: 1;
+  }
+  .ac-cat {
+    font-size: 0.56rem; letter-spacing: 0.3em; color: var(--c-gold);
+    font-weight: 700; text-transform: uppercase; margin-bottom: 5px;
+    opacity: 0; transition: opacity 0.25s; transform: translateY(4px);
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .album-card:hover .ac-cat { opacity: 1; transform: translateY(0); }
+  .ac-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1rem; color: #fff; margin-bottom: 4px; line-height: 1.2; }
+  .ac-sub { font-size: 0.62rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+  /* Category colour variants */
+  .ac-cat.cat-trek { color: #90e0ef; }
+  .ac-cat.cat-wildlife { color: #a8d8a8; }
+  .ac-cat.cat-astrophotography { color: #c9b3ff; }
+  .ac-cat.cat-documentary { color: #ffb347; }
+  .ac-cat.cat-landscape { color: var(--c-gold); }
+  .ac-cat.cat-travel { color: #fff; }
+  .ac-cat.cat-miscellaneous { color: var(--t-mut); }
+
+  .fade-in { animation: fadeUp 0.4s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── FOOTER ── */
+  footer { padding: 52px 48px 36px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--b-subtle); }
+  .ft-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 20px; }
+  .ft-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.7rem; color: #fff; }
+  .ft-soc { display: flex; gap: 28px; }
+  .ft-soc a { color: var(--t-mut); transition: color 0.3s; font-weight: 500; font-size: 0.86rem; }
+  .ft-soc a:hover { color: #fff; }
+  .ft-bot { display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--t-faint); font-weight: 500; flex-wrap: wrap; gap: 10px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .album-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 18px 20px; }
+    .n-logo { display: none; }
+    .hero { padding: 108px 20px 52px; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .h-stat { border-bottom: 1px solid var(--b-subtle); }
+    .book-wrap { padding: 0 20px; margin-top: 40px; }
+    .book-card { grid-template-columns: 1fr; }
+    .book-body { padding: 36px 28px; }
+    .book-cover { min-height: 180px; }
+    .grid-wrap { padding: 0 20px 80px; }
+    .album-grid { grid-template-columns: 1fr; }
+    .filter-bar { margin: 36px 0 12px; }
+    footer { padding: 40px 20px 28px; }
+  }
+
+  @keyframes fadeHeroUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .fade-up { opacity:0; animation: fadeHeroUp 0.8s ease forwards; }
+  .fade-up:nth-child(1){ animation-delay:0.08s; }
+  .fade-up:nth-child(2){ animation-delay:0.20s; }
+  .fade-up:nth-child(3){ animation-delay:0.32s; }
+  .fade-up:nth-child(4){ animation-delay:0.44s; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="../index.html" class="n-back">Back to the Maze</a>
+  <div class="n-logo">Views — Photography</div>
+  <a href="mailto:hraziul@gmail.com?subject=Brief%20Me&body=Hi%20Raziul%2C%0A%0AI%20came%20across%20your%20work%20and%20wanted%20to%20reach%20out..." class="n-cta">Brief Me</a>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-over fade-up"><div class="hero-over-line"></div>Door II / VII &mdash; Albatross A/Maze</div>
+  <h1 class="hero-title sg fade-up">Views.<br><span>Photographs.</span></h1>
+  <p class="hero-sub fade-up">Light. Shadow. Geometry. Not what you look at — what you actually see.</p>
+  <div class="hero-stats fade-up">
+    <div class="h-stat"><div class="h-stat-num sg" id="stat-total">28</div><div class="h-stat-lbl">Albums</div></div>
+    <div class="h-stat"><div class="h-stat-num sg">7</div><div class="h-stat-lbl">Categories</div></div>
+    <div class="h-stat"><div class="h-stat-num sg">2017</div><div class="h-stat-lbl">First Frame</div></div>
+    <div class="h-stat"><div class="h-stat-num sg">2026</div><div class="h-stat-lbl">& Loading</div></div>
+  </div>
+</div>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee">
+  <div class="mq-in" id="mq-text"></div>
+</div>
+
+<!-- ── BOOK CARD ── -->
+<div class="book-wrap">
+  <a href="YOUR-AMAZON-LINK-HERE" target="_blank" rel="noopener" style="display:block">
+    <div class="book-card">
+      <div class="book-body">
+        <div class="book-over">Now Available on Amazon</div>
+        <div class="book-title sg">Journey<br><span>Through Verse.</span></div>
+        <p class="book-desc">29 original poems collected into one volume — abstract, romance and story, from 2017 to 2022. The complete Views poetry collection, now in print.</p>
+        <div class="book-meta">Raziul Hasnain &nbsp;·&nbsp; Albatross AMAZE &nbsp;·&nbsp; Paperback &amp; Kindle</div>
+        <div class="book-cta">Buy on Amazon</div>
+      </div>
+      <div class="book-cover">
+        <img src="../views/covers/journey-through-verse.jpg"
+             alt="A Journey Through Verse — Raziul Hasnain"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+             loading="lazy">
+        <div class="book-cover-fallback" style="display:none">
+          <div class="bcf-title">A Journey Through Verse</div>
+          <div class="bcf-author">Raziul Hasnain</div>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+<!-- ── FILTER + GRID ── -->
+<div class="grid-wrap">
+  <div class="filter-bar">
+    <span class="filter-label">Filter</span>
+    <button class="filter-btn active" onclick="filterAlbums('all',this)">All <span class="fc" id="fc-all"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Trek',this)">Trek <span class="fc" id="fc-trek"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Travel',this)">Travel <span class="fc" id="fc-travel"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Landscape',this)">Landscape <span class="fc" id="fc-landscape"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Wildlife',this)">Wildlife <span class="fc" id="fc-wildlife"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Astrophotography',this)">Astrophotography <span class="fc" id="fc-astrophotography"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Documentary',this)">Documentary <span class="fc" id="fc-documentary"></span></button>
+    <button class="filter-btn" onclick="filterAlbums('Miscellaneous',this)">Miscellaneous <span class="fc" id="fc-miscellaneous"></span></button>
+  </div>
+
+  <div class="album-count">Showing <span id="showing-count">28</span> albums</div>
+
+  <div class="album-grid" id="albumGrid"></div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-row">
+    <div class="ft-logo sg">ALBATROSS</div>
+    <div class="ft-soc">
+      <a href="https://www.instagram.com/albatrossamazedotcom" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://in.linkedin.com/in/raziul-hasnain-aaa457a1" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:hraziul@gmail.com">Email</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>&copy; 2026 Raziul Hasnain. All rights reserved.</span>
+    <span>Light. Shadow. Geometry.</span>
+  </div>
+</footer>
+
+<script>
+  var ALBUMS = [
+    {"slug":"bedni-bugyal","title":"Bedni Bugyal","sub":"High altitude meadows in the Garhwal Himalayas","cat":"Trek","cover":"images/Bedni Bugyal/cover.jpg"},
+    {"slug":"bhutan","title":"Bhutan","sub":"The last Himalayan kingdom, unfiltered","cat":"Travel","cover":"images/Bhutan/cover.jpg"},
+    {"slug":"centering-europe","title":"Center-ing Europe","sub":"Finding the middle in unexpected places","cat":"Travel","cover":"images/Center-ing Europe/cover.jpg"},
+    {"slug":"corbett","title":"Corbett","sub":"India's oldest national park through a lens","cat":"Wildlife","cover":"images/Corbett/cover.jpg"},
+    {"slug":"denmark","title":"Denmark","sub":"Nordic light and quiet architecture","cat":"Travel","cover":"images/Denmark/cover.jpg"},
+    {"slug":"derwentwater","title":"Derwentwater","sub":"The Lake District at its most elemental","cat":"Landscape","cover":"images/Derwentwater/cover.jpg"},
+    {"slug":"dudhwa","title":"Dudhwa","sub":"Grasslands, tigers and the Terai frontier","cat":"Wildlife","cover":"images/Dudhwa/cover.jpg"},
+    {"slug":"ebc-2017","title":"EBC 2017","sub":"The road to 5364 m. Solo. Unguided.","cat":"Trek","cover":"images/EBC 2017/cover.jpg"},
+    {"slug":"experience-uk","title":"Experience United Kingdom","sub":"Britain through foreign eyes","cat":"Travel","cover":"images/Experience United Kingdom/cover.jpg"},
+    {"slug":"ibiza","title":"Ibiza","sub":"Beyond the noise, an island reveals itself","cat":"Travel","cover":"images/Ibiza/cover.jpg"},
+    {"slug":"into-darkness","title":"Into Darkness","sub":"When the sky becomes the subject","cat":"Astrophotography","cover":"images/Into Darkness (astrophotography)/cover.jpg"},
+    {"slug":"kheerganga","title":"Kheerganga","sub":"The trail that ends in a hot spring","cat":"Trek","cover":"images/Kheerganga/cover.jpg"},
+    {"slug":"lake-vyrnwy","title":"Lake Vyrnwy","sub":"A Welsh reservoir and its quiet drama","cat":"Landscape","cover":"images/Lake Vyrnwy/cover.jpg"},
+    {"slug":"lakshadweep","title":"Lakshadweep","sub":"Coral atolls at the edge of India","cat":"Travel","cover":"images/Lakshadweep/cover.jpg"},
+    {"slug":"llansteffan","title":"Llansteffan","sub":"A Welsh village, a castle, and the sea","cat":"Landscape","cover":"images/Llansteffan/cover.jpg"},
+    {"slug":"lunar-scope","title":"Lunar Scope","sub":"The moon, magnified","cat":"Astrophotography","cover":"images/Lunar scope/cover.jpg"},
+    {"slug":"meghalaya","title":"Meghalaya","sub":"Living root bridges and clouds that stay","cat":"Travel","cover":"images/Meghalaya/cover.jpg"},
+    {"slug":"munsiyari","title":"Munsiyari","sub":"The frontier town beneath Panchachuli","cat":"Trek","cover":"images/Munsiyari/cover.jpg"},
+    {"slug":"other-shots","title":"Other Shots","sub":"What does not fit in a box still fits in a frame","cat":"Miscellaneous","cover":"images/Other shots/cover.jpg"},
+    {"slug":"oxfam-women-lifeline","title":"Oxfam Women Lifeline","sub":"Documentary photo story for a cause","cat":"Documentary","cover":"images/Oxfam Women Lifeline Photo story/cover.jpg"},
+    {"slug":"pen-y-fan","title":"Pen y Fan","sub":"The Brecon Beacons in all weathers","cat":"Landscape","cover":"images/Pen y Fan/cover.jpg"},
+    {"slug":"pune-cochin","title":"Pune and Cochin","sub":"Two cities. Two rhythms.","cat":"Travel","cover":"images/Pune & Cochin/cover.jpg"},
+    {"slug":"rajasthan","title":"Rajasthan","sub":"Colour, geometry and ancient light","cat":"Travel","cover":"images/Rajasthan/cover.jpg"},
+    {"slug":"shimla-ladakh","title":"Shimla and Ladakh","sub":"Hill station to high desert in one journey","cat":"Travel","cover":"images/Shimla-Ladakh/cover.jpg"},
+    {"slug":"eagle-nest","title":"The Eagle Nest","sub":"A wildlife lodge at altitude","cat":"Wildlife","cover":"images/The Eagle Nest/cover.jpg"},
+    {"slug":"triund-snowline","title":"Triund and Snowline","sub":"The ridge above McLeod Ganj, winter 2017","cat":"Trek","cover":"images/Triund-Snowline(2017)/cover.jpg"},
+    {"slug":"ty-cipar","title":"Ty Cipar","sub":"A Welsh cottage and the land around it","cat":"Landscape","cover":"images/Ty Cipar/cover.jpg"},
+    {"slug":"zoo-day","title":"Zoo Day","sub":"Animals, patience and the right moment","cat":"Wildlife","cover":"images/Zoo Day/cover.jpg"}
+  ];
+
+  var CAT_CLASS = {
+    "Trek": "cat-trek",
+    "Travel": "cat-travel",
+    "Landscape": "cat-landscape",
+    "Wildlife": "cat-wildlife",
+    "Astrophotography": "cat-astrophotography",
+    "Documentary": "cat-documentary",
+    "Miscellaneous": "cat-miscellaneous"
+  };
+
+  var currentCat = "all";
+
+  // ── Count badges ──
+  var counts = {};
+  ALBUMS.forEach(function(a) { counts[a.cat] = (counts[a.cat] || 0) + 1; });
+  document.getElementById("fc-all").textContent = ALBUMS.length;
+  Object.keys(counts).forEach(function(cat) {
+    var el = document.getElementById("fc-" + cat.toLowerCase());
+    if (el) el.textContent = counts[cat];
+  });
+
+  // ── Build grid ──
+  function buildGrid() {
+    var grid = document.getElementById("albumGrid");
+    grid.innerHTML = "";
+    var visible = ALBUMS.filter(function(a) {
+      return currentCat === "all" || a.cat === currentCat;
+    });
+    document.getElementById("showing-count").textContent = visible.length;
+
+    visible.forEach(function(a, i) {
+      var card = document.createElement("a");
+      card.className = "album-card fade-in";
+      card.href = "album.html?album=" + a.slug;
+      card.style.animationDelay = (i * 35) + "ms";
+
+      var img = document.createElement("img");
+      img.src = a.cover;
+      img.alt = a.title;
+      img.setAttribute("loading", "lazy");
+      img.onerror = function() { this.style.display = "none"; };
+
+      var overlay = document.createElement("div");
+      overlay.className = "album-overlay";
+
+      var catEl = document.createElement("div");
+      catEl.className = "ac-cat " + (CAT_CLASS[a.cat] || "");
+      catEl.textContent = a.cat.toUpperCase();
+
+      var titleEl = document.createElement("div");
+      titleEl.className = "ac-title";
+      titleEl.textContent = a.title;
+
+      var subEl = document.createElement("div");
+      subEl.className = "ac-sub";
+      subEl.textContent = a.sub;
+
+      overlay.appendChild(catEl);
+      overlay.appendChild(titleEl);
+      overlay.appendChild(subEl);
+      card.appendChild(img);
+      card.appendChild(overlay);
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Filter ──
+  function filterAlbums(cat, btn) {
+    currentCat = cat;
+    document.querySelectorAll(".filter-btn").forEach(function(b) { b.classList.remove("active"); });
+    btn.classList.add("active");
+    buildGrid();
+  }
+
+  // ── Marquee ──
+  var titles = ALBUMS.map(function(a) { return a.title; });
+  var mqStr = "";
+  for (var i = 0; i < 4; i++) { mqStr += titles.join(" · ") + " · "; }
+  document.getElementById("mq-text").textContent = mqStr;
+
+  buildGrid();
+</script>
+</body>
+</html>
