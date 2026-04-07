@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "title": "test",
+      "category": "Film",
+      "desc": "test",
+      "link": "https://albatrossamaze.com",
+      "year": "2026",
+      "thumb": "https://albatrossamaze.com"
+    }
+  ]
+}
