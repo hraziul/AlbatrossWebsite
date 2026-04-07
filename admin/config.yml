@@ -7,7 +7,7 @@ public_folder: "/images"
 
 collections:
   - name: "projects"
-    label: "Directors Cut"
+    label: "Director's Cut"
     files:
       - label: "Projects List"
         name: "projects"
@@ -18,18 +18,6 @@ collections:
             widget: "list"
             fields:
               - {label: "Title", name: "title", widget: "string"}
-              - {label: "Category", name: "category", widget: "select", options: ["Film", "Brand", "Motion", "Documentary", "Music Video", "Campaign"]}
+              - {label: "Category", name: "category", widget: "string"}
               - {label: "Description", name: "desc", widget: "text"}
               - {label: "Link", name: "link", widget: "string"}
-              - {label: "Year", name: "year", widget: "string"}
-
-  - name: "writings"
-    label: "Writings"
-    folder: "writings/posts"
-    create: true
-    slug: "{{year}}-{{month}}-{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Category", name: "category", widget: "select", options: ["Poetry", "Prose", "Essay", "Story"]}
-      - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Body", name: "body", widget: "markdown"}
