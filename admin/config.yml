@@ -7,23 +7,19 @@ public_folder: "/images"
 
 collections:
   - name: "projects"
-    label: "Director's Cut"
-    folder: "data"
-    create: true
-    slug: "{{slug}}"
+    label: "Directors Cut"
     files:
-      - label: "Projects"
+      - label: "Projects List"
         name: "projects"
         file: "data/projects.json"
         fields:
-          - label: "Projects"
+          - label: "Items"
             name: "items"
             widget: "list"
             fields:
               - {label: "Title", name: "title", widget: "string"}
               - {label: "Category", name: "category", widget: "select", options: ["Film", "Brand", "Motion", "Documentary", "Music Video", "Campaign"]}
               - {label: "Description", name: "desc", widget: "text"}
-              - {label: "Thumbnail", name: "thumb", widget: "image"}
               - {label: "Link", name: "link", widget: "string"}
               - {label: "Year", name: "year", widget: "string"}
 
@@ -31,10 +27,9 @@ collections:
     label: "Writings"
     folder: "writings/posts"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Category", name: "category", widget: "select", options: ["Poetry", "Prose", "Essay", "Story"]}
       - {label: "Date", name: "date", widget: "datetime"}
-      - {label: "Cover Image", name: "thumb", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
