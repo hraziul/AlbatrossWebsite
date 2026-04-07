@@ -7,7 +7,7 @@ public_folder: "/images"
 
 collections:
   - name: "projects"
-    label: "Director's Cut"
+    label: "Directors Cut"
     files:
       - label: "Projects List"
         name: "projects"
@@ -18,6 +18,37 @@ collections:
             widget: "list"
             fields:
               - {label: "Title", name: "title", widget: "string"}
-              - {label: "Category", name: "category", widget: "string"}
+              - {label: "Category", name: "category", widget: "select", options: ["Film", "Brand", "Motion", "Documentary", "Music Video", "Campaign"]}
               - {label: "Description", name: "desc", widget: "text"}
+              - {label: "Thumbnail", name: "thumb", widget: "image"}
               - {label: "Link", name: "link", widget: "string"}
+              - {label: "Year", name: "year", widget: "string"}
+
+  - name: "writings"
+    label: "Writings"
+    folder: "writings/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Category", name: "category", widget: "select", options: ["Poetry", "Prose", "Essay", "Story"]}
+      - {label: "Date", name: "date", widget: "datetime"}
+      - {label: "Cover Image", name: "thumb", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "views"
+    label: "Views Albums"
+    files:
+      - label: "Albums List"
+        name: "albums"
+        file: "data/albums.json"
+        fields:
+          - label: "Albums"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Album Title", name: "title", widget: "string"}
+              - {label: "Cover Image", name: "cover", widget: "image"}
+              - {label: "Location", name: "location", widget: "string"}
+              - {label: "Year", name: "year", widget: "string"}
+              - {label: "Description", name: "desc", widget: "text"}
