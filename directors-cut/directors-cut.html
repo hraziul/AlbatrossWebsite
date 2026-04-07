@@ -7,7 +7,8 @@
 <link rel="icon" type="image/png" href="../favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <style>
   :root {
     --bg: #0b1d3a;
@@ -117,275 +118,233 @@
   .v-card {
     background: var(--surface); border: 1px solid var(--b-subtle);
     border-radius: 24px; overflow: hidden; display: flex; flex-direction: column;
-    opacity: 0; transform: translateY(28px);
-    transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
-                transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
-                border-color 0.3s, box-shadow 0.3s;
-    text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+    cursor: pointer;
   }
   .v-card.vis { opacity: 1; transform: translateY(0); }
-  .v-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
   .v-card.hidden { display: none; }
+  .v-card:hover { border-color: rgba(255,179,71,0.4); }
+  .v-card:hover .v-thumb img { transform: scale(1.04); }
+
   .v-card.span-8 { grid-column: span 8; }
   .v-card.span-4 { grid-column: span 4; }
   .v-card.span-6 { grid-column: span 6; }
-  .v-card.span-3 { grid-column: span 3; }
   .v-card.span-12 { grid-column: span 12; }
 
-  .v-thumb { position: relative; overflow: hidden; background: #0a1525; }
-  .v-card.span-8 .v-thumb, .v-card.span-12 .v-thumb { height: 320px; }
-  .v-card.span-6 .v-thumb { height: 240px; }
-  .v-card.span-4 .v-thumb { height: 200px; }
-  .v-card.span-3 .v-thumb { height: 180px; }
+  .v-thumb {
+    width: 100%; overflow: hidden;
+    background: linear-gradient(135deg, rgba(255,179,71,0.08), transparent);
+  }
+  .v-thumb img { width: 100%; display: block; transition: transform 0.5s ease; }
+  .v-thumb.tall { height: 360px; }
+  .v-thumb.tall img { height: 100%; object-fit: cover; }
+  .v-thumb.short-h { height: 220px; }
+  .v-thumb.short-h img { height: 100%; object-fit: cover; }
 
-  .v-thumb img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  .v-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .v-cat {
+    font-size: 0.65rem; letter-spacing: 0.25em; color: var(--c-main);
+    font-weight: 700; text-transform: uppercase;
   }
-  .v-card:hover .v-thumb img { transform: scale(1.05); }
+  .v-title { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 700; color: #fff; line-height: 1.3; }
+  .v-desc { font-size: 0.82rem; color: var(--t-mut); line-height: 1.6; flex: 1; }
+  .v-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; border-top: 1px solid var(--b-subtle); margin-top: auto;
+  }
+  .v-year { font-size: 0.72rem; color: var(--t-faint); font-weight: 600; letter-spacing: 0.1em; }
+  .v-arrow {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--b-mid); display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; color: var(--t-mut); transition: all 0.3s;
+  }
+  .v-card:hover .v-arrow { background: var(--c-main); border-color: var(--c-main); color: #000; }
 
-  .v-play {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%) scale(0.8);
-    width: 52px; height: 52px; border-radius: 50%;
-    background: rgba(255,179,71,0.92);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: all 0.3s;
-  }
-  .v-play::after {
-    content: ""; border-left: 16px solid #000;
-    border-top: 10px solid transparent; border-bottom: 10px solid transparent;
-    margin-left: 4px;
-  }
-  .v-card:hover .v-play { opacity: 1; transform: translate(-50%,-50%) scale(1); }
-
-  .v-short-badge {
-    position: absolute; top: 12px; right: 12px;
-    background: rgba(255,179,71,0.9); color: #000;
-    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
-    padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
-  }
-  .v-playlist-badge {
-    position: absolute; top: 12px; right: 12px;
-    background: rgba(255,107,107,0.9); color: #fff;
-    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
-    padding: 4px 10px; border-radius: 20px; text-transform: uppercase;
+  .empty-state {
+    grid-column: span 12; text-align: center; padding: 80px 0;
+    color: var(--t-faint); font-size: 0.9rem; letter-spacing: 0.1em;
   }
 
-  .v-body { padding: 24px 28px 28px; display: flex; flex-direction: column; flex-grow: 1; }
-  .v-cat { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--c-main); text-transform: uppercase; font-weight: 600; margin-bottom: 8px; }
-  .v-title { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.2rem; color: #fff; margin-bottom: 6px; line-height: 1.25; }
-  .v-card.span-8 .v-title { font-size: 1.55rem; }
-  .v-client { font-size: 0.82rem; color: var(--t-mut); flex-grow: 1; margin-bottom: 16px; }
-  .v-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .v-tag {
-    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
-    border: 1px solid var(--b-mid); color: var(--t-faint);
-    padding: 3px 10px; border-radius: 20px;
+  .brief-wrap {
+    background: var(--surface); border-top: 1px solid var(--b-subtle);
+    padding: 80px 48px;
   }
-
-  .brief-sec {
-    margin: 0 48px 100px; background: var(--surface);
-    border: 1px solid var(--b-subtle); border-radius: 32px;
-    padding: 72px 64px; display: flex; justify-content: space-between;
-    align-items: center; gap: 48px; flex-wrap: wrap;
-    position: relative; overflow: hidden;
-    opacity: 0; transform: translateY(28px);
-    transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+  .brief-inner {
+    max-width: 1400px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 48px; flex-wrap: wrap;
   }
-  .brief-sec.vis { opacity: 1; transform: translateY(0); }
-  .brief-sec::before {
-    content: ""; position: absolute; top: 0; right: 0; width: 60%; height: 100%;
-    background: radial-gradient(ellipse at right center, rgba(255,179,71,0.08) 0%, transparent 70%);
-    pointer-events: none;
+  .brief-left { display: flex; flex-direction: column; gap: 16px; }
+  .brief-tag {
+    font-size: 0.68rem; letter-spacing: 0.3em; color: var(--c-main);
+    text-transform: uppercase; font-weight: 700;
   }
-  .brief-left { max-width: 560px; }
-  .brief-over { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--c-main); text-transform: uppercase; font-weight: 600; margin-bottom: 20px; }
-  .brief-title { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: clamp(2rem, 4vw, 3rem); color: #fff; line-height: 1.1; margin-bottom: 20px; }
-  .brief-title span { color: var(--c-main); }
-  .brief-desc { font-size: 1rem; color: var(--t-mut); line-height: 1.7; }
-  .brief-meta { font-size: 0.8rem; color: var(--t-faint); margin-top: 16px; font-weight: 500; }
+  .brief-title {
+    font-family: 'Outfit', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 900; color: #fff; line-height: 1.1;
+  }
+  .brief-sub { font-size: 0.95rem; color: var(--t-mut); line-height: 1.7; max-width: 500px; }
+  .brief-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+  .brief-chip {
+    font-size: 0.7rem; letter-spacing: 0.1em; font-weight: 600;
+    border: 1px solid var(--b-mid); color: var(--t-mut);
+    padding: 6px 16px; border-radius: 20px; text-transform: uppercase;
+  }
   .brief-cta {
-    background: var(--c-main); color: #000; padding: 18px 36px;
-    font-size: 0.85rem; font-weight: 700; border-radius: 40px;
-    transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.1em;
-    white-space: nowrap; cursor: pointer; border: none; font-family: 'Montserrat', sans-serif;
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--c-main); color: #000;
+    padding: 18px 40px; font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px;
+    transition: all 0.3s; white-space: nowrap;
   }
-  .brief-cta:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,179,71,0.3); }
+  .brief-cta:hover { background: #fff; transform: translateY(-2px); }
+  .brief-note { font-size: 0.72rem; color: var(--t-faint); margin-top: 8px; }
 
-  footer { padding: 60px 48px 40px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--b-subtle); }
-  .ft-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 24px; }
-  .ft-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 2rem; color: #fff; }
-  .ft-soc { display: flex; gap: 32px; }
-  .ft-soc a { color: var(--t-mut); transition: color 0.3s; font-weight: 500; font-size: 0.9rem; }
-  .ft-soc a:hover { color: #fff; }
-  .ft-bot { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--t-faint); font-weight: 500; flex-wrap: wrap; gap: 12px; }
-
-  @media (max-width: 1024px) {
-    .v-card.span-8 { grid-column: span 12; }
-    .v-card.span-4 { grid-column: span 6; }
-    .v-card.span-3 { grid-column: span 6; }
-  }
-  @media (max-width: 768px) {
-    nav { padding: 20px 24px; }
+  @media (max-width: 900px) {
+    nav { padding: 16px 20px; }
     .n-logo { display: none; }
-    .hero { padding: 120px 24px 60px; }
-    .hero-stats { gap: 32px; }
-    .filters { padding: 32px 24px 24px; }
-    .grid-wrap { padding: 0 24px 80px; }
-    .v-grid { display: flex; flex-direction: column; }
-    .brief-sec { margin: 0 24px 80px; padding: 48px 32px; }
-    footer { padding: 48px 24px 32px; }
+    .hero { padding: 120px 20px 60px; }
+    .filters { padding: 32px 20px 20px; }
+    .grid-wrap { padding: 0 20px 80px; }
+    .v-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .v-card.span-8, .v-card.span-4, .v-card.span-6, .v-card.span-12 { grid-column: span 2; }
+    .brief-wrap { padding: 60px 20px; }
   }
-
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-  .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.8s ease forwards; }
-  .fade-up:nth-child(1) { animation-delay: 0.1s; }
-  .fade-up:nth-child(2) { animation-delay: 0.25s; }
-  .fade-up:nth-child(3) { animation-delay: 0.4s; }
-  .fade-up:nth-child(4) { animation-delay: 0.55s; }
+  @media (max-width: 600px) {
+    .v-grid { grid-template-columns: 1fr; }
+    .v-card.span-8, .v-card.span-4, .v-card.span-6, .v-card.span-12 { grid-column: span 1; }
+    .hero-stats { gap: 24px; }
+  }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="../index.html" class="n-back">Albatross</a>
-  <div class="n-logo">Director's Cut</div>
-  <a href="mailto:hraziul@gmail.com?subject=Director's%20Cut%20Brief" class="n-cta">Brief Me</a>
+  <a class="n-back" href="../">Home</a>
+  <div class="n-logo">Albatross</div>
+  <a class="n-cta" href="mailto:hraziul@gmail.com">Brief Me</a>
 </nav>
 
-<div class="hero">
-  <div class="hero-over fade-up"><div class="hero-line"></div>Videos</div>
-  <h1 class="hero-title fade-up">Director's <span>Cut.</span></h1>
-  <p class="hero-sub fade-up">Campaigns, brand films, motion and more. Every frame is a decision. Every cut is a declaration.</p>
-  <div class="hero-stats fade-up">
-    <div>
-      <div class="h-stat-num sg" style="font-size:1.6rem;letter-spacing:-0.01em;">Brief → Screen</div>
-      <div class="h-stat-lbl">End-to-end direction</div>
-    </div>
-    <div>
-      <div class="h-stat-num sg" style="font-size:1.45rem;letter-spacing:-0.01em;">Studio, Govt &amp; Corp</div>
-      <div class="h-stat-lbl">Clients worked with</div>
-    </div>
+<section class="hero obs">
+  <div class="hero-over"><span class="hero-line"></span>Portfolio</div>
+  <h1 class="hero-title">Director's <span>Cut.</span></h1>
+  <p class="hero-sub">Films, brand stories, and motion work — built to move people. Every frame with intent.</p>
+  <div class="hero-stats">
+    <div><div class="h-stat-num">8+</div><div class="h-stat-lbl">Years Active</div></div>
+    <div><div class="h-stat-num">40+</div><div class="h-stat-lbl">Projects</div></div>
+    <div><div class="h-stat-num">15+</div><div class="h-stat-lbl">Brands</div></div>
+    <div><div class="h-stat-num">3</div><div class="h-stat-lbl">Countries</div></div>
   </div>
-</div>
+</section>
 
-<div class="marquee">
-  <div class="mq-in" id="mq-text"></div>
-</div>
+<div class="marquee"><div class="mq-in" id="mq-text"></div></div>
 
 <div class="filters">
-  <span class="f-label">Filter</span>
+  <span class="f-label">Filter by type</span>
   <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="government">Government</button>
-  <button class="filter-btn" data-filter="corporate">Corporate</button>
-  <button class="filter-btn" data-filter="brand-film">Brand Film</button>
-  <button class="filter-btn" data-filter="channel">Channel</button>
+  <button class="filter-btn" data-filter="Film">Film</button>
+  <button class="filter-btn" data-filter="Brand">Brand</button>
+  <button class="filter-btn" data-filter="Motion">Motion</button>
+  <button class="filter-btn" data-filter="Documentary">Documentary</button>
+  <button class="filter-btn" data-filter="Music Video">Music Video</button>
+  <button class="filter-btn" data-filter="Campaign">Campaign</button>
 </div>
 
 <div class="grid-wrap">
-  <div class="v-grid" id="vgrid"></div>
-</div>
-
-<div class="brief-sec obs">
-  <div class="brief-left">
-    <div class="brief-over">Open for Briefs</div>
-    <h2 class="brief-title">Have a vision?<br><span>Let's make it real.</span></h2>
-    <p class="brief-desc">Campaign. Brand film. Motion. Live event edit.<br>If you have a brief and need it done right — let's talk.</p>
-    <p class="brief-meta">Replies within 24 hours &nbsp;·&nbsp; hraziul@gmail.com</p>
+  <div class="v-grid" id="project-grid">
+    <div class="empty-state" id="loading-msg">Loading projects...</div>
   </div>
-  <a href="mailto:hraziul@gmail.com?subject=Director's%20Cut%20Brief" class="brief-cta">Send a Brief</a>
 </div>
 
-<footer>
-  <div class="ft-row">
-    <div class="ft-logo sg">ALBATROSS</div>
-    <div class="ft-soc">
-      <a href="https://www.instagram.com/albatrossamazedotcom" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://in.linkedin.com/in/raziul-hasnain-aaa457a1" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="mailto:hraziul@gmail.com">Email</a>
+<div class="brief-wrap">
+  <div class="brief-inner">
+    <div class="brief-left">
+      <div class="brief-tag">Open for briefs</div>
+      <div class="brief-title">Have a brief?<br>Let's make it real.</div>
+      <p class="brief-sub">Campaign. Brand film. Motion. Live event edit. If you have a brief and need it done right — let's talk.</p>
+      <div class="brief-chips">
+        <span class="brief-chip">Brand Film</span>
+        <span class="brief-chip">Campaign</span>
+        <span class="brief-chip">Motion</span>
+        <span class="brief-chip">Documentary</span>
+      </div>
+      <div class="brief-note">Replies within 24 hours &nbsp;·&nbsp; hraziul@gmail.com</div>
     </div>
+    <a class="brief-cta" href="mailto:hraziul@gmail.com">Send Brief →</a>
   </div>
-  <div class="ft-bot">
-    <span>&copy; 2026 Raziul Hasnain. All rights reserved.</span>
-    <span>Designed for impact.</span>
-  </div>
-</footer>
+</div>
 
 <script>
-const videos = [
-  { span:'span-8', cat:'Government Campaign', filter:'government', title:'30 Years of Telecom — National DVC', client:'TRAI / Government of India', tags:['Campaign','Direction','National'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/afua4dRLqAI' },
-  { span:'span-4', cat:'Government Campaign', filter:'government', title:'National DVC', client:'TRAI / Government of India', tags:['Campaign','DVC'], ytId:'F3gUBE9h3Us', short:false, link:'https://youtu.be/F3gUBE9h3Us' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Basement', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'7aKFbNXiRMI', short:true, link:'https://youtube.com/shorts/7aKFbNXiRMI' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Elevator', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'hNdnw19aK7s', short:true, link:'https://youtube.com/shorts/hNdnw19aK7s' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Highway', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'3SI3MgQRPL0', short:true, link:'https://youtube.com/shorts/3SI3MgQRPL0' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Stadium', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'aoC3o6wJGAs', short:true, link:'https://youtube.com/shorts/aoC3o6wJGAs' },
-  { span:'span-6', cat:'Government Campaign', filter:'government', title:'1600 OTP Fraud Awareness', client:'TRAI / Government of India', tags:['Short','Awareness'], ytId:'-BDP6jkhRZc', short:true, link:'https://youtube.com/shorts/-BDP6jkhRZc' },
-  { span:'span-6', cat:'Government Campaign', filter:'government', title:'1600 Pension Fraud Awareness', client:'TRAI / Government of India', tags:['Short','Awareness'], ytId:'JKOtfcDHl0Y', short:true, link:'https://youtube.com/shorts/JKOtfcDHl0Y' },
-  { span:'span-8', cat:'Corporate', filter:'corporate', title:'WhatFix — Product Film', client:'WhatFix', tags:['Brand Film','Product','Direction'], ytId:'UH9TQGBB6og', short:false, link:'https://youtu.be/UH9TQGBB6og' },
-  { span:'span-4', cat:'Corporate', filter:'corporate', title:'Prodapt Brand Film', client:'Prodapt', tags:['Brand Film','Direction'], ytId:'jT62SF0q-5c', short:false, link:'https://youtu.be/jT62SF0q-5c' },
-  { span:'span-4', cat:'Corporate', filter:'corporate', title:'WhatsApp Pitch Video', client:'WhatsApp', tags:['Pitch','Direction'], ytId:'rPxwlqdnraQ', short:false, link:'https://youtu.be/rPxwlqdnraQ' },
-  { span:'span-4', cat:'Corporate', filter:'corporate', title:'Sooryavanshi', client:'Corporate / Film', tags:['Direction','Film'], ytId:'L6IR78YSBq8', short:false, link:'https://youtu.be/L6IR78YSBq8' },
-  { span:'span-4', cat:'Corporate', filter:'corporate', title:'Bamboobox', client:'Bamboobox', tags:['Brand Film'], ytId:'RayKrJr_liE', short:false, link:'https://youtu.be/RayKrJr_liE' },
-  { span:'span-6', cat:'Corporate', filter:'corporate', title:'Stomp — GreyOrange', client:'GreyOrange', tags:['Motion','Direction'], ytId:'nAqeYXIGd9M', short:false, link:'https://youtu.be/nAqeYXIGd9M' },
-  { span:'span-3', cat:'Corporate', filter:'corporate', title:'AWS CTO India', client:'Amazon Web Services', tags:['Short','Live Edit'], ytId:'LvzTVjIVRds', short:true, link:'https://youtube.com/shorts/LvzTVjIVRds' },
-  { span:'span-3', cat:'Corporate', filter:'corporate', title:'AWS Live Edit', client:'Amazon Web Services', tags:['Short','Live'], ytId:'ly7X5WMtMzA', short:true, link:'https://youtube.com/shorts/ly7X5WMtMzA' },
-  { span:'span-6', cat:'Corporate', filter:'corporate', title:'Infosys', client:'Infosys', tags:['Short','Corporate'], ytId:'dGz9E3-AqMQ', short:true, link:'https://youtube.com/shorts/dGz9E3-AqMQ' },
-  { span:'span-6', cat:'Corporate', filter:'corporate', title:'British Council — Five Films Event', client:'British Council India', tags:['Short','Event','Live Edit'], ytId:'OQvFNv2ykqw', short:true, link:'https://youtube.com/shorts/OQvFNv2ykqw' },
-  { span:'span-8', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 1', client:'Shunya Films', tags:['Digital Ad','Direction'], ytId:'Ozz9D7G5Lsw', short:false, link:'https://www.youtube.com/watch?v=Ozz9D7G5Lsw' },
-  { span:'span-4', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 2', client:'Shunya Films', tags:['Digital Ad','Direction'], ytId:'BmnyEf8fXsw', short:false, link:'https://www.youtube.com/watch?v=BmnyEf8fXsw' },
-  { span:'span-6', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 3', client:'Shunya Films', tags:['Digital Ad'], ytId:'qta3me2o1nU', short:false, link:'https://www.youtube.com/watch?v=qta3me2o1nU' },
-  { span:'span-6', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 4', client:'Shunya Films', tags:['Digital Ad'], ytId:'ajvDRcKvEoI', short:false, link:'https://www.youtube.com/watch?v=ajvDRcKvEoI' },
-  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:'Project Who', client:'Original Channel', tags:['Channel','Direction','Concept'], ytId:'', short:false, link:'https://www.youtube.com/@ProjectWho63', customThumb:'' },
-  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:'Somewhere There', client:'Original Channel', tags:['Channel','Documentary'], ytId:'', short:false, link:'https://www.youtube.com/@somewherethere9046', customThumb:'' },
-  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:"Flippin' Fridays", client:'Original Series', tags:['Series','Direction'], ytId:'-t0FIXXnevg', short:false, link:'https://www.youtube.com/watch?v=-t0FIXXnevg' }
-];
+const SPANS = ['span-8','span-4','span-6','span-6','span-4','span-8','span-12'];
 
-function getThumb(v) {
-  if (v.customThumb !== undefined && v.customThumb === '') return '';
-  if (v.ytId) return `https://img.youtube.com/vi/${v.ytId}/maxresdefault.jpg`;
-  return '';
+function getSpan(i) { return SPANS[i % SPANS.length]; }
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.obs').forEach(el => observer.observe(el));
+
+function applyFilter(f) {
+  document.querySelectorAll('.v-card').forEach(card => {
+    card.classList.toggle('hidden', f !== 'all' && card.dataset.filter !== f);
+  });
 }
-
-const grid = document.getElementById('vgrid');
-videos.forEach((v, i) => {
-  const a = document.createElement('a');
-  a.href = v.link; a.target = '_blank'; a.rel = 'noopener noreferrer';
-  a.className = `v-card ${v.span} obs`;
-  a.dataset.filter = v.filter;
-  a.style.transitionDelay = `${(i % 4) * 80}ms`;
-  const thumb = getThumb(v);
-  const thumbHTML = thumb ? `<img src="${thumb}" alt="${v.title}" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,rgba(255,179,71,0.18),transparent)'">` : '';
-  const badgeHTML = v.short ? '<div class="v-short-badge">Short</div>' : v.filter === 'channel' ? '<div class="v-playlist-badge">Channel</div>' : '';
-  a.innerHTML = `
-    <div class="v-thumb">${thumbHTML}<div class="v-play"></div>${badgeHTML}</div>
-    <div class="v-body">
-      <div class="v-cat">${v.cat}</div>
-      <div class="v-title sg">${v.title}</div>
-      <div class="v-client">${v.client}</div>
-      <div class="v-tags">${v.tags.map(t => `<span class="v-tag">${t}</span>`).join('')}</div>
-    </div>`;
-  grid.appendChild(a);
-});
 
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const f = btn.dataset.filter;
-    document.querySelectorAll('.v-card').forEach(card => {
-      card.classList.toggle('hidden', f !== 'all' && card.dataset.filter !== f);
-    });
+    applyFilter(btn.dataset.filter);
   });
 });
 
 const mqStr = ('TRAI &nbsp;·&nbsp; AWS &nbsp;·&nbsp; BRITISH COUNCIL &nbsp;·&nbsp; PRODAPT &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; INFOSYS &nbsp;·&nbsp; WHATFIX &nbsp;·&nbsp; SHUNYA FILMS &nbsp;·&nbsp; GREYORANGE &nbsp;·&nbsp; BAMBOOBOX &nbsp;·&nbsp; ').repeat(4);
 document.getElementById('mq-text').innerHTML = mqStr;
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
-}, { threshold: 0.08 });
-document.querySelectorAll('.obs').forEach(el => observer.observe(el));
+function renderProjects(items) {
+  const grid = document.getElementById('project-grid');
+  grid.innerHTML = '';
+  if (!items || items.length === 0) {
+    grid.innerHTML = '<div class="empty-state">No projects yet — add them via the CMS.</div>';
+    return;
+  }
+  items.forEach((p, i) => {
+    const span = getSpan(i);
+    const thumbHTML = p.thumb
+      ? `<div class="v-thumb ${span === 'span-12' ? 'tall' : 'short-h'}"><img src="${p.thumb}" alt="${p.title}"></div>`
+      : `<div class="v-thumb short-h" style="background:linear-gradient(135deg,rgba(255,179,71,0.12),transparent)"></div>`;
+    const card = document.createElement('div');
+    card.className = `v-card obs ${span}`;
+    card.dataset.filter = p.category || 'Film';
+    card.innerHTML = `
+      ${thumbHTML}
+      <div class="v-body">
+        <div class="v-cat">${p.category || ''}</div>
+        <div class="v-title">${p.title}</div>
+        ${p.desc ? `<div class="v-desc">${p.desc}</div>` : ''}
+        <div class="v-foot">
+          <span class="v-year">${p.year || ''}</span>
+          <div class="v-arrow">→</div>
+        </div>
+      </div>`;
+    if (p.link) card.addEventListener('click', () => window.open(p.link, '_blank'));
+    grid.appendChild(card);
+    observer.observe(card);
+  });
+}
+
+fetch('/data/projects.json')
+  .then(r => r.json())
+  .then(data => {
+    const msg = document.getElementById('loading-msg');
+    if (msg) msg.remove();
+    renderProjects(data.items || []);
+  })
+  .catch(() => {
+    document.getElementById('project-grid').innerHTML = '<div class="empty-state">Projects loading — check back soon.</div>';
+  });
 </script>
 </body>
 </html>
