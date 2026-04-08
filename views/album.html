@@ -313,7 +313,11 @@
           img.src         = url;
           img.alt         = album.title + ' — Photo ' + (i + 1);
           img.loading     = 'lazy';
-          img.onload      = () => img.classList.add('loaded');
+          img.onload = () => {
+  img.classList.add('loaded');
+  a.dataset.pswpWidth  = img.naturalWidth;
+  a.dataset.pswpHeight = img.naturalHeight;
+};
           img.onerror     = () => { a.style.display = 'none'; };
 
           a.appendChild(img);
