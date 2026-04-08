@@ -1,212 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Album — Raziul Hasnain</title>
-<link rel="icon" type="image/png" href="../favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe.min.css">
-<style>
-  :root {
-    --bg: #0b1d3a; --surface: #142847;
-    --b-subtle: rgba(255,255,255,0.07); --b-mid: rgba(255,255,255,0.15);
-    --t-pri: rgba(255,255,255,0.95); --t-mut: rgba(255,255,255,0.6);
-    --t-faint: rgba(255,255,255,0.35); --c-main: #ffb347;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--t-pri); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
-  h1,h2,h3 { font-family: 'Outfit', sans-serif; }
-  a { text-decoration: none; color: inherit; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Album — Views · Albatross · Raziul Hasnain</title>
+  <meta name="description" id="page-desc" content="Photography by Raziul Hasnain">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
+  <style>
+    :root {
+      --bg: #0b1d3a;
+      --surface: #142847;
+      --b-subtle: rgba(255,255,255,0.07);
+      --b-mid: rgba(255,255,255,0.15);
+      --t-pri: rgba(255,255,255,0.95);
+      --t-mut: rgba(255,255,255,0.65);
+      --t-faint: rgba(255,255,255,0.35);
+      --accent: #ffb347;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--t-pri); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
 
-  nav {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 20px 48px; display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(11,29,58,0.98) 0%, rgba(11,29,58,0.7) 100%);
-    border-bottom: 1px solid var(--b-subtle); z-index: 200; backdrop-filter: blur(12px);
-  }
-  .n-back { font-size: 0.72rem; letter-spacing: 0.18em; font-weight: 600; color: var(--t-mut); text-transform: uppercase; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
-  .n-back:hover { color: var(--c-main); }
-  .n-back::before { content: "←"; font-size: 1rem; }
-  .n-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.25em; color: #fff; text-transform: uppercase; }
-  .n-cat { font-size: 0.65rem; letter-spacing: 0.2em; font-weight: 700; color: var(--c-main); text-transform: uppercase; background: rgba(255,179,71,0.12); border: 1px solid rgba(255,179,71,0.3); padding: 5px 14px; border-radius: 20px; }
+    /* ── NAV ── */
+    nav.topnav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 20px 48px;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      background: rgba(11,29,58,0.92);
+      border-bottom: 1px solid var(--b-subtle);
+      z-index: 200; backdrop-filter: blur(12px);
+    }
+    .n-back {
+      font-size: 0.72rem; letter-spacing: 0.2em; font-weight: 700;
+      color: var(--t-mut); transition: color 0.3s; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .n-back:hover { color: var(--accent); }
+    .n-navtitle {
+      justify-self: center; font-family: 'Outfit', sans-serif; font-weight: 900;
+      font-size: 0.82rem; letter-spacing: 0.32em; color: var(--accent);
+      text-transform: uppercase;
+    }
+    .n-counter {
+      justify-self: end; font-size: 0.68rem; letter-spacing: 0.18em;
+      color: var(--t-faint); font-weight: 600; text-transform: uppercase;
+    }
+    .n-counter em { color: var(--accent); font-style: normal; }
 
-  .album-hero { padding: 130px 48px 56px; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-  .hero-over { display: inline-flex; align-items: center; gap: 12px; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--c-main); text-transform: uppercase; font-weight: 700; }
-  .hero-line { width: 32px; height: 1px; background: var(--c-main); }
-  .album-title { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -0.02em; }
-  .album-sub { font-size: 1.05rem; color: var(--t-mut); max-width: 560px; line-height: 1.7; }
-  .meta-count { font-size: 0.75rem; color: var(--t-faint); letter-spacing: 0.1em; margin-top: 8px; }
+    /* ── HERO ── */
+    .hero {
+      padding: 136px 48px 52px; max-width: 1400px; margin: 0 auto;
+    }
+    .hero-over {
+      display: inline-flex; align-items: center; gap: 14px; margin-bottom: 20px;
+      font-size: 0.68rem; letter-spacing: 0.28em; color: var(--accent);
+      text-transform: uppercase; font-weight: 700;
+    }
+    .hero-over-line { width: 32px; height: 1px; background: var(--accent); flex-shrink: 0; }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 900; line-height: 1; letter-spacing: -0.02em;
+      color: var(--t-pri); margin-bottom: 16px;
+    }
+    .hero-sub {
+      font-size: 0.95rem; color: var(--t-mut); line-height: 1.7;
+      max-width: 520px; margin-bottom: 32px; font-style: italic;
+    }
+    .hero-meta { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .hm-val {
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: 1.4rem; color: var(--accent); line-height: 1;
+    }
+    .hm-lbl {
+      font-size: 0.62rem; color: var(--t-faint); letter-spacing: 0.2em;
+      text-transform: uppercase; font-weight: 600;
+    }
+    .hero-divider { width: 1px; height: 40px; background: var(--b-mid); }
 
-  .loading-state { padding: 80px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .loading-spinner { width: 40px; height: 40px; border: 2px solid var(--b-subtle); border-top-color: var(--c-main); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { font-size: 0.8rem; color: var(--t-faint); letter-spacing: 0.15em; text-transform: uppercase; }
+    /* ── MASONRY ── */
+    .grid-wrap { max-width: 1400px; margin: 0 auto; padding: 0 48px 80px; }
+    .masonry { columns: 4; column-gap: 10px; }
+    .photo-item {
+      break-inside: avoid; margin-bottom: 10px;
+      position: relative; overflow: hidden;
+      border-radius: 6px; cursor: pointer; display: block;
+    }
+    .photo-item img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.45s ease, opacity 0.35s;
+      opacity: 0; border-radius: 6px;
+    }
+    .photo-item img.loaded { opacity: 1; }
+    .photo-item:hover img { transform: scale(1.04); }
+    .photo-item::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(11,29,58,0.5) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.3s; border-radius: 6px; pointer-events: none;
+    }
+    .photo-item:hover::after { opacity: 1; }
 
-  .gallery-wrap { padding: 0 48px 80px; max-width: 1400px; margin: 0 auto; }
-  .masonry { columns: 4; column-gap: 14px; }
-  .photo-item { break-inside: avoid; margin-bottom: 14px; cursor: pointer; position: relative; overflow: hidden; border-radius: 8px; background: var(--surface); border: 1px solid var(--b-subtle); opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s; }
-  .photo-item.vis { opacity: 1; transform: translateY(0); }
-  .photo-item:hover { border-color: rgba(255,179,71,0.4); }
-  .photo-item img { width: 100%; display: block; transition: transform 0.5s ease; }
-  .photo-item:hover img { transform: scale(1.04); }
-  .photo-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,29,58,0.7) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 16px; }
-  .photo-item:hover .photo-overlay { opacity: 1; }
-  .photo-expand { width: 32px; height: 32px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); margin-left: auto; }
-  .photo-expand svg { width: 14px; height: 14px; fill: #fff; }
+    /* scroll reveal */
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .error-state { padding: 80px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .error-icon { font-size: 2.5rem; opacity: 0.4; }
-  .error-text { font-size: 0.85rem; color: var(--t-faint); letter-spacing: 0.1em; }
+    /* ── LOADING ── */
+    .loading-state {
+      text-align: center; padding: 120px 48px;
+      font-size: 0.78rem; color: var(--t-faint); letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .loading-spinner {
+      width: 32px; height: 32px; border: 2px solid var(--b-mid);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-  .album-footer { padding: 48px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--b-subtle); display: flex; align-items: center; justify-content: space-between; }
-  .footer-back { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--b-mid); color: var(--t-mut); padding: 12px 28px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; transition: all 0.3s; }
-  .footer-back:hover { border-color: var(--c-main); color: var(--c-main); }
-  .footer-back::before { content: "←"; margin-right: 4px; }
-  .footer-credit { font-size: 0.7rem; color: var(--t-faint); letter-spacing: 0.1em; }
-  .pswp { --pswp-bg: #0b1d3a; }
+    /* ── FOOTER NAV ── */
+    .footer-nav {
+      border-top: 1px solid var(--b-subtle);
+      max-width: 1400px; margin: 0 auto; padding: 40px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .fn-btn {
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 24px 28px; border: 1px solid var(--b-subtle);
+      border-radius: 8px; transition: border-color 0.3s, background 0.3s;
+      background: none; color: inherit;
+    }
+    .fn-btn:hover { border-color: var(--accent); background: rgba(255,179,71,0.04); }
+    .fn-next { text-align: right; }
+    .fn-dir { font-size: 0.62rem; letter-spacing: 0.25em; color: var(--t-faint); text-transform: uppercase; font-weight: 700; }
+    .fn-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: var(--t-pri); }
+    .fn-cat { font-size: 0.68rem; color: var(--accent); font-weight: 600; }
 
-  @media (max-width: 1100px) { .masonry { columns: 3; } }
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .album-hero { padding: 100px 20px 40px; }
-    .gallery-wrap { padding: 0 20px 60px; }
-    .masonry { columns: 2; column-gap: 10px; }
-    .photo-item { margin-bottom: 10px; }
-    .album-footer { padding: 32px 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
-  }
-  @media (max-width: 480px) { .masonry { columns: 2; } .n-logo { display: none; } }
-</style>
+    /* ── FOOTER ── */
+    footer {
+      padding: 36px 48px 28px; max-width: 1400px; margin: 0 auto;
+      border-top: 1px solid var(--b-subtle);
+    }
+    .ft-bot { display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--t-faint); flex-wrap: wrap; gap: 10px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) { .masonry { columns: 3; } }
+    @media (max-width: 768px) {
+      nav.topnav { padding: 18px 20px; }
+      .n-navtitle { display: none; }
+      .hero { padding: 100px 20px 40px; }
+      .grid-wrap { padding: 0 20px 60px; }
+      .masonry { columns: 2; }
+      .footer-nav { padding: 28px 20px; }
+      footer { padding: 28px 20px; }
+    }
+    @media (max-width: 480px) { .masonry { columns: 2; column-gap: 6px; } }
+  </style>
 </head>
 <body>
 
-<nav>
-  <a class="n-back" href="../index.html#frame">Back to Views</a>
-  <span class="n-logo">Albatross</span>
-  <span class="n-cat" id="nav-cat">Photography</span>
+<nav class="topnav">
+  <a href="viewsindex.html" class="n-back">← Views</a>
+  <div class="n-navtitle" id="nav-title">ALBATROSS</div>
+  <div class="n-counter"><em id="album-index">—</em> / 28</div>
 </nav>
 
-<div class="album-hero">
-  <div class="hero-over"><span class="hero-line"></span><span id="hero-cat">Photography</span></div>
-  <h1 class="album-title" id="album-title">Loading…</h1>
-  <p class="album-sub" id="album-sub"></p>
-  <div class="meta-count" id="photo-count"></div>
+<div id="loading-state" class="loading-state">
+  <div class="loading-spinner"></div>
+  Loading album…
 </div>
 
-<div id="gallery-container">
-  <div class="loading-state" id="loading-state">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading album</div>
+<div id="page-content" style="display:none">
+  <div class="hero">
+    <div class="hero-over"><div class="hero-over-line"></div><span id="hero-cat">Photography</span></div>
+    <h1 class="hero-title" id="hero-title">Album</h1>
+    <p class="hero-sub" id="hero-sub"></p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hm-val" id="photo-count">—</div>
+        <div class="hm-lbl">Photographs</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-meta-item">
+        <div class="hm-val" id="album-num">—</div>
+        <div class="hm-lbl">Album No.</div>
+      </div>
+    </div>
   </div>
-  <div class="gallery-wrap" id="gallery-wrap" style="display:none">
-    <div class="masonry" id="masonry-grid"></div>
-  </div>
-  <div class="error-state" id="error-state" style="display:none">
-    <div class="error-icon">⬜</div>
-    <div class="error-text">Album is being prepared — check back shortly</div>
-  </div>
-</div>
 
-<div class="album-footer">
-  <a class="footer-back" href="../index.html#frame">All albums</a>
-  <span class="footer-credit">© Raziul Hasnain</span>
+  <div class="grid-wrap">
+    <div class="masonry" id="masonry"></div>
+  </div>
+
+  <div class="footer-nav">
+    <a class="fn-btn fn-prev" id="fn-prev" href="#">
+      <div class="fn-dir">← Previous</div>
+      <div class="fn-name" id="prev-name">—</div>
+      <div class="fn-cat" id="prev-cat">—</div>
+    </a>
+    <a class="fn-btn fn-next" id="fn-next" href="#">
+      <div class="fn-dir">Next →</div>
+      <div class="fn-name" id="next-name">—</div>
+      <div class="fn-cat" id="next-cat">—</div>
+    </a>
+  </div>
+
+  <footer>
+    <div class="ft-bot">
+      <span>© 2026 Raziul Hasnain. All rights reserved.</span>
+      <span>Light. Shadow. Geometry.</span>
+    </div>
+  </footer>
 </div>
 
 <script type="module">
-  import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe-lightbox.esm.min.js';
-  import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe.esm.min.js';
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js';
+  import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js';
+
+  const R2  = 'https://pub-45dd874c04194b2bb4c966a81728e505.r2.dev/';
+  const MANIFEST = '../data/views-manifest.json';
 
   const ALBUMS = [
-    {slug:"bedni-bugyal",title:"Bedni Bugyal",sub:"High altitude meadows in the Garhwal Himalayas",cat:"Trek",folder:"Bedni Bugyal"},
-    {slug:"bhutan",title:"Bhutan",sub:"The last Himalayan kingdom, unfiltered",cat:"Travel",folder:"Bhutan"},
-    {slug:"centering-europe",title:"Center-ing Europe",sub:"Finding the middle in unexpected places",cat:"Travel",folder:"Center-ing Europe"},
-    {slug:"corbett",title:"Corbett",sub:"India's oldest national park through a lens",cat:"Wildlife",folder:"Corbett"},
-    {slug:"denmark",title:"Denmark",sub:"Nordic light and quiet architecture",cat:"Travel",folder:"Denmark"},
-    {slug:"derwentwater",title:"Derwentwater",sub:"The Lake District at its most elemental",cat:"Landscape",folder:"Derwentwater"},
-    {slug:"dudhwa",title:"Dudhwa",sub:"Grasslands, tigers and the Terai frontier",cat:"Wildlife",folder:"Dudhwa"},
-    {slug:"ebc-2017",title:"EBC 2017",sub:"The road to 5364 m. Solo. Unguided.",cat:"Trek",folder:"EBC 2017"},
-    {slug:"experience-uk",title:"Experience United Kingdom",sub:"Britain through foreign eyes",cat:"Travel",folder:"Experience United Kingdom"},
-    {slug:"ibiza",title:"Ibiza",sub:"Beyond the noise, an island reveals itself",cat:"Travel",folder:"Ibiza"},
-    {slug:"into-darkness",title:"Into Darkness",sub:"When the sky becomes the subject",cat:"Astrophotography",folder:"Into Darkness (astrophotography)"},
-    {slug:"kheerganga",title:"Kheerganga",sub:"The trail that ends in a hot spring",cat:"Trek",folder:"Kheerganga"},
-    {slug:"lake-vyrnwy",title:"Lake Vyrnwy",sub:"A Welsh reservoir and its quiet drama",cat:"Landscape",folder:"Lake Vyrnwy"},
-    {slug:"lakshadweep",title:"Lakshadweep",sub:"Coral atolls at the edge of India",cat:"Travel",folder:"Lakshadweep"},
-    {slug:"llansteffan",title:"Llansteffan",sub:"A Welsh village, a castle, and the sea",cat:"Landscape",folder:"Llansteffan"},
-    {slug:"lunar-scope",title:"Lunar Scope",sub:"The moon, magnified",cat:"Astrophotography",folder:"Lunar scope"},
-    {slug:"meghalaya",title:"Meghalaya",sub:"Living root bridges and clouds that stay",cat:"Travel",folder:"Meghalaya"},
-    {slug:"munsiyari",title:"Munsiyari",sub:"The frontier town beneath Panchachuli",cat:"Trek",folder:"Munsiyari"},
-    {slug:"other-shots",title:"Other Shots",sub:"What does not fit in a box still fits in a frame",cat:"Miscellaneous",folder:"Other shots"},
-    {slug:"oxfam-women-lifeline",title:"Oxfam Women Lifeline",sub:"Documentary photo story for a cause",cat:"Documentary",folder:"Oxfam Women Lifeline Photo story"},
-    {slug:"pen-y-fan",title:"Pen y Fan",sub:"The Brecon Beacons in all weathers",cat:"Landscape",folder:"Pen y Fan"},
-    {slug:"pune-cochin",title:"Pune and Cochin",sub:"Two cities. Two rhythms.",cat:"Travel",folder:"Pune & Cochin"},
-    {slug:"rajasthan",title:"Rajasthan",sub:"Colour, geometry and ancient light",cat:"Travel",folder:"Rajasthan"},
-    {slug:"shimla-ladakh",title:"Shimla and Ladakh",sub:"Hill station to high desert in one journey",cat:"Travel",folder:"Shimla-Ladakh"},
-    {slug:"eagle-nest",title:"The Eagle Nest",sub:"A wildlife lodge at altitude",cat:"Wildlife",folder:"The Eagle Nest"},
-    {slug:"triund-snowline",title:"Triund and Snowline",sub:"The ridge above McLeod Ganj, winter 2017",cat:"Trek",folder:"Triund-Snowline(2017)"},
-    {slug:"ty-cipar",title:"Ty Cipar",sub:"A Welsh cottage and the land around it",cat:"Landscape",folder:"Ty Cipar"},
-    {slug:"zoo-day",title:"Zoo Day",sub:"Animals, patience and the right moment",cat:"Wildlife",folder:"Zoo Day"},
+    {slug:'bedni-bugyal',     title:'Bedni Bugyal',            sub:'High altitude meadows in the Garhwal Himalayas',       cat:'Trek'},
+    {slug:'bhutan',           title:'Bhutan',                  sub:'The last Himalayan kingdom, unfiltered',               cat:'Travel'},
+    {slug:'centering-europe', title:'Center-ing Europe',       sub:'Finding the middle in unexpected places',              cat:'Travel'},
+    {slug:'corbett',          title:'Corbett',                 sub:"India's oldest national park through a lens",          cat:'Wildlife'},
+    {slug:'denmark',          title:'Denmark',                 sub:'Nordic light and quiet architecture',                  cat:'Travel'},
+    {slug:'derwentwater',     title:'Derwentwater',            sub:'The Lake District at its most elemental',              cat:'Landscape'},
+    {slug:'dudhwa',           title:'Dudhwa',                  sub:'Grasslands, tigers and the Terai frontier',            cat:'Wildlife'},
+    {slug:'ebc-2017',         title:'EBC 2017',                sub:'The road to 5364 m. Solo. Unguided.',                  cat:'Trek'},
+    {slug:'experience-uk',    title:'Experience United Kingdom',sub:'Britain through foreign eyes',                        cat:'Travel'},
+    {slug:'ibiza',            title:'Ibiza',                   sub:'Beyond the noise, an island reveals itself',           cat:'Travel'},
+    {slug:'into-darkness',    title:'Into Darkness',           sub:'When the sky becomes the subject',                     cat:'Astrophotography'},
+    {slug:'kheerganga',       title:'Kheerganga',              sub:'The trail that ends in a hot spring',                  cat:'Trek'},
+    {slug:'lake-vyrnwy',      title:'Lake Vyrnwy',             sub:'A Welsh reservoir and its quiet drama',                cat:'Landscape'},
+    {slug:'lakshadweep',      title:'Lakshadweep',             sub:'Coral atolls at the edge of India',                    cat:'Travel'},
+    {slug:'llansteffan',      title:'Llansteffan',             sub:'A Welsh village, a castle, and the sea',               cat:'Landscape'},
+    {slug:'lunar-scope',      title:'Lunar Scope',             sub:'The moon, magnified',                                  cat:'Astrophotography'},
+    {slug:'meghalaya',        title:'Meghalaya',               sub:'Living root bridges and clouds that stay',             cat:'Travel'},
+    {slug:'munsiyari',        title:'Munsiyari',               sub:'The frontier town beneath Panchachuli',                cat:'Trek'},
+    {slug:'other-shots',      title:'Other Shots',             sub:'What does not fit in a box still fits in a frame',     cat:'Miscellaneous'},
+    {slug:'oxfam-women-lifeline',title:'Oxfam Women Lifeline', sub:'Documentary photo story for a cause',                  cat:'Documentary'},
+    {slug:'pen-y-fan',        title:'Pen y Fan',               sub:'The Brecon Beacons in all weathers',                   cat:'Landscape'},
+    {slug:'pune-cochin',      title:'Pune and Cochin',         sub:'Two cities. Two rhythms.',                             cat:'Travel'},
+    {slug:'rajasthan',        title:'Rajasthan',               sub:'Colour, geometry and ancient light',                   cat:'Travel'},
+    {slug:'shimla-ladakh',    title:'Shimla and Ladakh',       sub:'Hill station to high desert in one journey',           cat:'Travel'},
+    {slug:'eagle-nest',       title:'The Eagle Nest',          sub:'A wildlife lodge at altitude',                         cat:'Wildlife'},
+    {slug:'triund-snowline',  title:'Triund and Snowline',     sub:'The ridge above McLeod Ganj, winter 2017',             cat:'Trek'},
+    {slug:'ty-cipar',         title:'Ty Cipar',                sub:'A Welsh cottage and the land around it',               cat:'Landscape'},
+    {slug:'zoo-day',          title:'Zoo Day',                 sub:'Animals, patience and the right moment',               cat:'Wildlife'}
   ];
 
-  const IK_BASE = 'https://ik.imagekit.io/nhraz1u7/views/Challenge';
-  const params = new URLSearchParams(location.search);
-  const slug = params.get('album');
-  const album = ALBUMS.find(a => a.slug === slug);
+  const params = new URLSearchParams(window.location.search);
+  const slug   = params.get('album');
+  const idx    = ALBUMS.findIndex(a => a.slug === slug);
 
-  if (!album) {
-    document.getElementById('album-title').textContent = 'Album not found';
-    document.getElementById('loading-state').style.display = 'none';
+  if (idx === -1) {
+    document.getElementById('loading-state').innerHTML =
+      '<p style="color:var(--t-mut);font-size:0.9rem">Album not found. <a href="viewsindex.html" style="color:var(--accent)">← Back to Views</a></p>';
   } else {
-    document.title = album.title + ' — Raziul Hasnain';
-    document.getElementById('album-title').textContent = album.title;
-    document.getElementById('album-sub').textContent = album.sub;
-    document.getElementById('hero-cat').textContent = album.cat;
-    document.getElementById('nav-cat').textContent = album.cat;
-    loadAlbum(album);
-  }
+    const album = ALBUMS[idx];
+    const num   = idx + 1;
 
-  async function loadAlbum(album) {
-    try {
-      const res = await fetch('../views/manifest.json');
-      if (!res.ok) throw new Error('No manifest');
-      const manifest = await res.json();
-      const files = manifest[album.slug];
-      if (!files || files.length === 0) throw new Error('Empty album');
-      renderGallery(album, files);
-    } catch(e) {
-      document.getElementById('loading-state').style.display = 'none';
-      document.getElementById('error-state').style.display = 'flex';
-    }
-  }
+    // Page metadata
+    document.title = album.title + ' Photography — Raziul Hasnain';
+    document.getElementById('page-desc').setAttribute('content',
+      album.sub + ' Photography by Raziul Hasnain.');
+    document.getElementById('hero-title').textContent  = album.title;
+    document.getElementById('hero-sub').textContent    = album.sub;
+    document.getElementById('hero-cat').textContent    = album.cat;
+    document.getElementById('nav-title').textContent   = album.title.toUpperCase();
+    document.getElementById('album-index').textContent = num;
+    document.getElementById('album-num').textContent   = String(num).padStart(2,'0');
 
-  function renderGallery(album, files) {
-    const grid = document.getElementById('masonry-grid');
-    document.getElementById('photo-count').textContent = files.length + ' photographs';
-    files.forEach((filename, i) => {
-      const url = `${IK_BASE}/${encodeURIComponent(album.folder)}/${filename}`;
-      const thumb = `${IK_BASE}/${encodeURIComponent(album.folder)}/tr:w-600,q-80/${filename}`;
-      const item = document.createElement('a');
-      item.className = 'photo-item';
-      item.href = url;
-      item.dataset.pswpWidth = '2000';
-      item.dataset.pswpHeight = '1333';
-      item.style.transitionDelay = (i % 4) * 40 + 'ms';
-      item.innerHTML = `<img src="${thumb}" alt="${album.title} ${i+1}" loading="lazy" onerror="this.src='${url}'">
-        <div class="photo-overlay"><div class="photo-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm18 0v6h-6v-2h4v-4h2zM5 3h6v2H5v4H3V3h2z"/></svg></div></div>`;
-      grid.appendChild(item);
-    });
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('gallery-wrap').style.display = 'block';
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.photo-item').forEach(el => obs.observe(el));
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '#masonry-grid', children: 'a.photo-item', pswpModule: PhotoSwipe,
-      padding: { top: 20, bottom: 20, left: 20, right: 20 }, bgOpacity: 0.95,
-    });
-    lightbox.init();
+    // Prev / Next (wraps around)
+    const prev = ALBUMS[(idx - 1 + ALBUMS.length) % ALBUMS.length];
+    const next = ALBUMS[(idx + 1) % ALBUMS.length];
+    document.getElementById('fn-prev').href       = 'album.html?album=' + prev.slug;
+    document.getElementById('prev-name').textContent = prev.title;
+    document.getElementById('prev-cat').textContent  = prev.cat;
+    document.getElementById('fn-next').href       = 'album.html?album=' + next.slug;
+    document.getElementById('next-name').textContent = next.title;
+    document.getElementById('next-cat').textContent  = next.cat;
+
+    // Load manifest → build grid
+    fetch(MANIFEST)
+      .then(r => { if (!r.ok) throw new Error('manifest fetch failed'); return r.json(); })
+      .then(manifest => {
+        const photos  = manifest[slug] || [];
+        document.getElementById('photo-count').textContent = photos.length;
+
+        const masonry = document.getElementById('masonry');
+        const items   = [];
+
+        photos.forEach((photo, i) => {
+          // Encode each path segment individually (handles spaces in folder names)
+          const encodedPath = photo.path.split('/').map(encodeURIComponent).join('/');
+          const url = R2 + encodedPath;
+
+          const a   = document.createElement('a');
+          a.className = 'photo-item reveal';
+          a.href      = url;
+          // PhotoSwipe needs dimensions — default 3:2 DSLR ratio; real dims load on open
+          a.dataset.pswpWidth  = '3000';
+          a.dataset.pswpHeight = '2000';
+
+          const img       = document.createElement('img');
+          img.src         = url;
+          img.alt         = album.title + ' — Photo ' + (i + 1);
+          img.loading     = 'lazy';
+          img.onload      = () => img.classList.add('loaded');
+          img.onerror     = () => { a.style.display = 'none'; };
+
+          a.appendChild(img);
+          masonry.appendChild(a);
+          items.push(a);
+        });
+
+        // Show content
+        document.getElementById('loading-state').style.display  = 'none';
+        document.getElementById('page-content').style.display   = 'block';
+
+        // Scroll reveal via IntersectionObserver
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.04 });
+        items.forEach(el => io.observe(el));
+
+        // PhotoSwipe lightbox
+        const lb = new PhotoSwipeLightbox({
+          gallery:    '#masonry',
+          children:   'a.photo-item',
+          pswpModule: PhotoSwipe,
+          bgOpacity:  0.96,
+          padding:    { top: 20, bottom: 20, left: 20, right: 20 }
+        });
+        lb.init();
+      })
+      .catch(() => {
+        document.getElementById('loading-state').innerHTML =
+          '<p style="color:var(--t-mut);padding:40px;font-size:0.9rem">Could not load photos. <a href="viewsindex.html" style="color:var(--accent)">← Back</a></p>';
+      });
   }
 </script>
 </body>
