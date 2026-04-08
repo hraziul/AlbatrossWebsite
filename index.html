@@ -53,12 +53,55 @@
       #desk { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); width: 100%; min-width: 800px; max-width: 1440px; z-index: 3; pointer-events: none; }
       #hit-zones { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; z-index: 10; }
       .hit-zone { position: absolute; transform: translate(-50%,-50%); width: 60px; height: 60px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-      .hover-card { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(15px); width: 280px; background: rgba(20,40,71,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 20; }
+
+      /* ── HOVER CARD — default (centered) ── */
+      .hover-card {
+        position: absolute; top: 100%; left: 50%;
+        transform: translateX(-50%) translateY(15px);
+        width: 280px;
+        background: rgba(20,40,71,0.85); backdrop-filter: blur(12px);
+        border: 1px solid rgba(255,255,255,0.15); border-radius: 16px;
+        padding: 20px; opacity: 0; pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 20;
+      }
       .hover-card.card-up { top: auto; bottom: 100%; transform: translateX(-50%) translateY(-15px); }
+
+      /* ── HOVER CARD — left-edge stars (align left) ── */
+      .hover-card.card-left { left: 0; transform: translateX(0) translateY(15px); }
+      .hover-card.card-left.card-up { transform: translateX(0) translateY(-15px); }
+
+      /* ── HOVER CARD — right-edge stars (align right) ── */
+      .hover-card.card-right { left: auto; right: 0; transform: translateX(0) translateY(15px); }
+      .hover-card.card-right.card-up { transform: translateX(0) translateY(-15px); }
+
+      /* ── HOVER CARD — show states ── */
+      .hit-zone:hover .hover-card,
+      .hover-card:hover,
+      .hit-zone.active .hover-card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(5px); }
+
+      .hit-zone:hover .hover-card.card-up,
+      .hover-card.card-up:hover,
+      .hit-zone.active .hover-card.card-up { transform: translateX(-50%) translateY(-5px); }
+
+      /* left-edge show */
+      .hit-zone:hover .hover-card.card-left,
+      .hover-card.card-left:hover,
+      .hit-zone.active .hover-card.card-left { transform: translateX(0) translateY(5px); }
+      .hit-zone:hover .hover-card.card-left.card-up,
+      .hover-card.card-left.card-up:hover,
+      .hit-zone.active .hover-card.card-left.card-up { transform: translateX(0) translateY(-5px); }
+
+      /* right-edge show */
+      .hit-zone:hover .hover-card.card-right,
+      .hover-card.card-right:hover,
+      .hit-zone.active .hover-card.card-right { transform: translateX(0) translateY(5px); }
+      .hit-zone:hover .hover-card.card-right.card-up,
+      .hover-card.card-right.card-up:hover,
+      .hit-zone.active .hover-card.card-right.card-up { transform: translateX(0) translateY(-5px); }
+
       .hover-card::before { content: ""; position: absolute; top: -30px; left: 0; width: 100%; height: 30px; }
       .hover-card::after { content: ""; position: absolute; bottom: -30px; left: 0; width: 100%; height: 30px; }
-      .hit-zone:hover .hover-card, .hover-card:hover, .hit-zone.active .hover-card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(5px); }
-      .hit-zone:hover .hover-card.card-up, .hover-card.card-up:hover, .hit-zone.active .hover-card.card-up { transform: translateX(-50%) translateY(-5px); }
       .hc-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; background: #0b1d3a; }
       .hc-cat { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--c-main); margin-bottom: 6px; text-transform: uppercase; font-weight: 600; }
       .hc-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
@@ -67,7 +110,15 @@
       .hc-cta:hover { background: rgba(255,255,255,0.2); }
       .hc-cta-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
 
-      #audio-hint { position: absolute; top: 50%; left: 48px; transform: translateY(-50%); z-index: 200; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--c-main); text-transform: uppercase; font-weight: 600; animation: blink 1.5s infinite; transition: opacity 0.5s ease; pointer-events: none; }
+      /* ── AUDIO HINT — bolder, more visible ── */
+      #audio-hint {
+        position: absolute; top: 50%; left: 48px; transform: translateY(-50%);
+        z-index: 200; font-size: 0.76rem; letter-spacing: 0.2em;
+        color: var(--c-main); text-transform: uppercase;
+        font-weight: 800;
+        animation: blink 1.5s infinite;
+        transition: opacity 0.6s ease; pointer-events: none;
+      }
       @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
       #hero-text { position: absolute; top: 12%; left: 0; width: 100%; text-align: center; z-index: 5; pointer-events: none; }
@@ -155,6 +206,7 @@
         .ft-top, .ft-mid, .ft-bot { flex-direction: column; gap: 32px; align-items: flex-start; }
         nav { padding: 24px; }
         .sec { padding: 64px 24px; }
+        #audio-hint { left: 20px; font-size: 0.68rem; }
       }
       .c-img-c { object-fit: contain !important; padding: 20px; }
     </style>
@@ -174,7 +226,7 @@
     </div>
 
     <div id="hero">
-      <div id="audio-hint">Click anywhere to play sound</div>
+      <div id="audio-hint">Tap anywhere to play sound</div>
       <canvas id="sky"></canvas>
       <div id="golden-glow"></div>
       <div id="desk">
@@ -265,7 +317,7 @@
     <script>
       function openEmail() {
         const subject = encodeURIComponent("lets build this together");
-        const body = encodeURIComponent("Hi Razi, I came across your website and wanted to reach out regarding a project.\n\nBrief:\n\nTimeline:\n\nBudget range:\n\nLooking forward.");
+        const body = encodeURIComponent("Hi Razi, I came across your website and wanted to reach out regarding a project.\\n\\nBrief:\\n\\nTimeline:\\n\\nBudget range:\\n\\nLooking forward.");
         window.location.href = `mailto:hraziul@gmail.com?subject=${subject}&body=${body}`;
       }
 
@@ -439,7 +491,12 @@
             card.href = s.link;
             if (s.ext) { card.target = "_blank"; card.rel = "noopener noreferrer"; }
           }
+          // Vertical: flip up if star is in bottom 40% of screen
           if (s.y > 0.6) card.classList.add("card-up");
+          // Horizontal: align to edge if star is within 30% of left or right
+          if (s.x < 0.3) card.classList.add("card-left");
+          else if (s.x > 0.7) card.classList.add("card-right");
+
           let hcInner = `
       <img src="${s.thumb || ''}" class="hc-img" alt="" onerror="this.style.display='none'">
       <div class="hc-cat" style="color:#${s.color}">${s.cat}</div>
@@ -471,7 +528,17 @@
         });
       }
 
+      // ── AUDIO — warm up AudioContext on very first user interaction (iOS fix)
       let actx;
+      function initAudio() {
+        if (!actx) {
+          actx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (actx.state === "suspended") actx.resume();
+      }
+      document.addEventListener("touchstart", initAudio, { once: true, passive: true });
+      document.addEventListener("click",      initAudio, { once: true });
+
       function playNote(hz) {
         if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
         if (actx.state === "suspended") actx.resume();
@@ -561,20 +628,26 @@
       );
       document.querySelectorAll(".obs").forEach((el) => observer.observe(el));
 
+      // ── HINT TEXT — bold, 3.5s fade, tap-aware
       const hint = document.getElementById("audio-hint");
+      const isTouch = window.matchMedia("(hover: none)").matches;
+      if (hint) hint.textContent = isTouch ? "Tap anywhere to play sound" : "Click anywhere to play sound";
+
       let audioClicked = false;
       setTimeout(() => { if (!audioClicked && hint) hint.style.animation = "none"; }, 3000);
-      document.body.addEventListener("click", () => {
+
+      function handleFirstInteraction() {
         if (audioClicked) return;
         audioClicked = true;
         if (hint) {
-          hint.style.animation = "none"; hint.style.opacity = "1";
-          hint.textContent = "Hover stars to explore";
-          setTimeout(() => { hint.style.opacity = "0"; }, 2000);
+          hint.style.animation = "none";
+          hint.style.opacity = "1";
+          hint.textContent = isTouch ? "Tap stars to explore" : "Hover stars to explore";
+          setTimeout(() => { hint.style.opacity = "0"; }, 3500);
         }
-        if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-        if (actx.state === "suspended") actx.resume();
-      });
+      }
+      document.body.addEventListener("click",      handleFirstInteraction);
+      document.body.addEventListener("touchstart", handleFirstInteraction, { passive: true });
 
       window.addEventListener("scroll", () => {
         const navL = document.querySelector(".n-l");
