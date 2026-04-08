@@ -516,8 +516,11 @@
           z.addEventListener("mouseleave", () => { z.classList.remove("active"); leaveStar(); });
           z.addEventListener("touchstart", (e) => {
             if (!e.target.closest(".hover-card")) {
-              if (!z.classList.contains("active")) {
-                e.preventDefault();
+              e.preventDefault();
+              if (z.classList.contains("active")) {
+                z.classList.remove("active");
+                leaveStar();
+              } else {
                 document.querySelectorAll(".hit-zone").forEach((hz) => hz.classList.remove("active"));
                 z.classList.add("active");
                 enterStar(i);
