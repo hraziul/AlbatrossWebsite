@@ -512,9 +512,21 @@
           }
           card.innerHTML = hcInner;
           z.appendChild(card);
-          z.addEventListener("mouseenter", () => enterStar(i));
-          z.addEventListener("mouseleave", () => { z.classList.remove("active"); leaveStar(); });
-          z.addEventListener("touchstart", (e) => {
+         z.addEventListener("mouseenter", () => { if (!('ontouchstart' in window)) enterStar(i); });
+z.addEventListener("mouseleave", () => { if (!('ontouchstart' in window)) { z.classList.remove("active"); leaveStar(); } });
+z.addEventListener("touchstart", (e) => {
+  if (!e.target.closest(".hover-card")) {
+    e.preventDefault();
+    if (z.classList.contains("active")) {
+      z.classList.remove("active");
+      leaveStar();
+    } else {
+      document.querySelectorAll(".hit-zone").forEach((hz) => hz.classList.remove("active"));
+      z.classList.add("active");
+      enterStar(i);
+    }
+  }
+});
             if (!e.target.closest(".hover-card")) {
               e.preventDefault();
               if (z.classList.contains("active")) {
