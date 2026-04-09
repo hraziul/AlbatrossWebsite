@@ -1,213 +1,252 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Album — Raziul Hasnain</title>
-<link rel="icon" type="image/png" href="../favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe.min.css">
-<style>
-  :root {
-    --bg: #0b1d3a; --surface: #142847;
-    --b-subtle: rgba(255,255,255,0.07); --b-mid: rgba(255,255,255,0.15);
-    --t-pri: rgba(255,255,255,0.95); --t-mut: rgba(255,255,255,0.6);
-    --t-faint: rgba(255,255,255,0.35); --c-main: #ffb347;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--t-pri); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
-  h1,h2,h3 { font-family: 'Outfit', sans-serif; }
-  a { text-decoration: none; color: inherit; }
-
-  nav {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 20px 48px; display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(11,29,58,0.98) 0%, rgba(11,29,58,0.7) 100%);
-    border-bottom: 1px solid var(--b-subtle); z-index: 200; backdrop-filter: blur(12px);
-  }
-  .n-back { font-size: 0.72rem; letter-spacing: 0.18em; font-weight: 600; color: var(--t-mut); text-transform: uppercase; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
-  .n-back:hover { color: var(--c-main); }
-  .n-back::before { content: "←"; font-size: 1rem; }
-  .n-logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.25em; color: #fff; text-transform: uppercase; }
-  .n-cat { font-size: 0.65rem; letter-spacing: 0.2em; font-weight: 700; color: var(--c-main); text-transform: uppercase; background: rgba(255,179,71,0.12); border: 1px solid rgba(255,179,71,0.3); padding: 5px 14px; border-radius: 20px; }
-
-  .album-hero { padding: 130px 48px 56px; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-  .hero-over { display: inline-flex; align-items: center; gap: 12px; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--c-main); text-transform: uppercase; font-weight: 700; }
-  .hero-line { width: 32px; height: 1px; background: var(--c-main); }
-  .album-title { font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -0.02em; }
-  .album-sub { font-size: 1.05rem; color: var(--t-mut); max-width: 560px; line-height: 1.7; }
-  .meta-count { font-size: 0.75rem; color: var(--t-faint); letter-spacing: 0.1em; margin-top: 8px; }
-
-  .loading-state { padding: 80px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .loading-spinner { width: 40px; height: 40px; border: 2px solid var(--b-subtle); border-top-color: var(--c-main); border-radius: 50%; animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { font-size: 0.8rem; color: var(--t-faint); letter-spacing: 0.15em; text-transform: uppercase; }
-
-  .gallery-wrap { padding: 0 48px 80px; max-width: 1400px; margin: 0 auto; }
-  .masonry { columns: 4; column-gap: 14px; }
-  .photo-item { break-inside: avoid; margin-bottom: 14px; cursor: pointer; position: relative; overflow: hidden; border-radius: 8px; background: var(--surface); border: 1px solid var(--b-subtle); opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s; }
-  .photo-item.vis { opacity: 1; transform: translateY(0); }
-  .photo-item:hover { border-color: rgba(255,179,71,0.4); }
-  .photo-item img { width: 100%; display: block; transition: transform 0.5s ease; }
-  .photo-item:hover img { transform: scale(1.04); }
-  .photo-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,29,58,0.7) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 16px; }
-  .photo-item:hover .photo-overlay { opacity: 1; }
-  .photo-expand { width: 32px; height: 32px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); margin-left: auto; }
-  .photo-expand svg { width: 14px; height: 14px; fill: #fff; }
-
-  .error-state { padding: 80px 48px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-  .error-icon { font-size: 2.5rem; opacity: 0.4; }
-  .error-text { font-size: 0.85rem; color: var(--t-faint); letter-spacing: 0.1em; }
-
-  .album-footer { padding: 48px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--b-subtle); display: flex; align-items: center; justify-content: space-between; }
-  .footer-back { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--b-mid); color: var(--t-mut); padding: 12px 28px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; transition: all 0.3s; }
-  .footer-back:hover { border-color: var(--c-main); color: var(--c-main); }
-  .footer-back::before { content: "←"; margin-right: 4px; }
-  .footer-credit { font-size: 0.7rem; color: var(--t-faint); letter-spacing: 0.1em; }
-  .pswp { --pswp-bg: #0b1d3a; }
-
-  @media (max-width: 1100px) { .masonry { columns: 3; } }
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .album-hero { padding: 100px 20px 40px; }
-    .gallery-wrap { padding: 0 20px 60px; }
-    .masonry { columns: 2; column-gap: 10px; }
-    .photo-item { margin-bottom: 10px; }
-    .album-footer { padding: 32px 20px; flex-direction: column; gap: 16px; align-items: flex-start; }
-  }
-  @media (max-width: 480px) { .masonry { columns: 2; } .n-logo { display: none; } }
-</style>
-</head>
-<body>
-
-<nav>
-  <a class="n-back" href="../index.html#frame">Back to Views</a>
-  <span class="n-logo">Albatross</span>
-  <span class="n-cat" id="nav-cat">Photography</span>
-</nav>
-
-<div class="album-hero">
-  <div class="hero-over"><span class="hero-line"></span><span id="hero-cat">Photography</span></div>
-  <h1 class="album-title" id="album-title">Loading…</h1>
-  <p class="album-sub" id="album-sub"></p>
-  <div class="meta-count" id="photo-count"></div>
-</div>
-
-<div id="gallery-container">
-  <div class="loading-state" id="loading-state">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Loading album</div>
-  </div>
-  <div class="gallery-wrap" id="gallery-wrap" style="display:none">
-    <div class="masonry" id="masonry-grid"></div>
-  </div>
-  <div class="error-state" id="error-state" style="display:none">
-    <div class="error-icon">⬜</div>
-    <div class="error-text">Album is being prepared — check back shortly</div>
-  </div>
-</div>
-
-<div class="album-footer">
-  <a class="footer-back" href="../index.html#frame">All albums</a>
-  <span class="footer-credit">© Raziul Hasnain</span>
-</div>
-
-<script type="module">
-  import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe-lightbox.esm.min.js';
-  import PhotoSwipe from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.3/photoswipe.esm.min.js';
-
-  const ALBUMS = [
-    {slug:"bedni-bugyal",title:"Bedni Bugyal",sub:"High altitude meadows in the Garhwal Himalayas",cat:"Trek",folder:"Bedni Bugyal"},
-    {slug:"bhutan",title:"Bhutan",sub:"The last Himalayan kingdom, unfiltered",cat:"Travel",folder:"Bhutan"},
-    {slug:"centering-europe",title:"Center-ing Europe",sub:"Finding the middle in unexpected places",cat:"Travel",folder:"Center-ing Europe"},
-    {slug:"corbett",title:"Corbett",sub:"India's oldest national park through a lens",cat:"Wildlife",folder:"Corbett"},
-    {slug:"denmark",title:"Denmark",sub:"Nordic light and quiet architecture",cat:"Travel",folder:"Denmark"},
-    {slug:"derwentwater",title:"Derwentwater",sub:"The Lake District at its most elemental",cat:"Landscape",folder:"Derwentwater"},
-    {slug:"dudhwa",title:"Dudhwa",sub:"Grasslands, tigers and the Terai frontier",cat:"Wildlife",folder:"Dudhwa"},
-    {slug:"ebc-2017",title:"EBC 2017",sub:"The road to 5364 m. Solo. Unguided.",cat:"Trek",folder:"EBC 2017"},
-    {slug:"experience-uk",title:"Experience United Kingdom",sub:"Britain through foreign eyes",cat:"Travel",folder:"Experience United Kingdom"},
-    {slug:"ibiza",title:"Ibiza",sub:"Beyond the noise, an island reveals itself",cat:"Travel",folder:"Ibiza"},
-    {slug:"into-darkness",title:"Into Darkness",sub:"When the sky becomes the subject",cat:"Astrophotography",folder:"Into Darkness (astrophotography)"},
-    {slug:"kheerganga",title:"Kheerganga",sub:"The trail that ends in a hot spring",cat:"Trek",folder:"Kheerganga"},
-    {slug:"lake-vyrnwy",title:"Lake Vyrnwy",sub:"A Welsh reservoir and its quiet drama",cat:"Landscape",folder:"Lake Vyrnwy"},
-    {slug:"lakshadweep",title:"Lakshadweep",sub:"Coral atolls at the edge of India",cat:"Travel",folder:"Lakshadweep"},
-    {slug:"llansteffan",title:"Llansteffan",sub:"A Welsh village, a castle, and the sea",cat:"Landscape",folder:"Llansteffan"},
-    {slug:"lunar-scope",title:"Lunar Scope",sub:"The moon, magnified",cat:"Astrophotography",folder:"Lunar scope"},
-    {slug:"meghalaya",title:"Meghalaya",sub:"Living root bridges and clouds that stay",cat:"Travel",folder:"Meghalaya"},
-    {slug:"munsiyari",title:"Munsiyari",sub:"The frontier town beneath Panchachuli",cat:"Trek",folder:"Munsiyari"},
-    {slug:"other-shots",title:"Other Shots",sub:"What does not fit in a box still fits in a frame",cat:"Miscellaneous",folder:"Other shots"},
-    {slug:"oxfam-women-lifeline",title:"Oxfam Women Lifeline",sub:"Documentary photo story for a cause",cat:"Documentary",folder:"Oxfam Women Lifeline Photo story"},
-    {slug:"pen-y-fan",title:"Pen y Fan",sub:"The Brecon Beacons in all weathers",cat:"Landscape",folder:"Pen y Fan"},
-    {slug:"pune-cochin",title:"Pune and Cochin",sub:"Two cities. Two rhythms.",cat:"Travel",folder:"Pune & Cochin"},
-    {slug:"rajasthan",title:"Rajasthan",sub:"Colour, geometry and ancient light",cat:"Travel",folder:"Rajasthan"},
-    {slug:"shimla-ladakh",title:"Shimla and Ladakh",sub:"Hill station to high desert in one journey",cat:"Travel",folder:"Shimla-Ladakh"},
-    {slug:"eagle-nest",title:"The Eagle Nest",sub:"A wildlife lodge at altitude",cat:"Wildlife",folder:"The Eagle Nest"},
-    {slug:"triund-snowline",title:"Triund and Snowline",sub:"The ridge above McLeod Ganj, winter 2017",cat:"Trek",folder:"Triund-Snowline(2017)"},
-    {slug:"ty-cipar",title:"Ty Cipar",sub:"A Welsh cottage and the land around it",cat:"Landscape",folder:"Ty Cipar"},
-    {slug:"zoo-day",title:"Zoo Day",sub:"Animals, patience and the right moment",cat:"Wildlife",folder:"Zoo Day"},
-  ];
-
-  const IK_BASE = 'https://ik.imagekit.io/nhraz1u7/views/Challenge';
-  const params = new URLSearchParams(location.search);
-  const slug = params.get('album');
-  const album = ALBUMS.find(a => a.slug === slug);
-
-  if (!album) {
-    document.getElementById('album-title').textContent = 'Album not found';
-    document.getElementById('loading-state').style.display = 'none';
-  } else {
-    document.title = album.title + ' — Raziul Hasnain';
-    document.getElementById('album-title').textContent = album.title;
-    document.getElementById('album-sub').textContent = album.sub;
-    document.getElementById('hero-cat').textContent = album.cat;
-    document.getElementById('nav-cat').textContent = album.cat;
-    loadAlbum(album);
-  }
-
-  async function loadAlbum(album) {
-    try {
-      const res = await fetch('../views/manifest.json');
-      if (!res.ok) throw new Error('No manifest');
-      const manifest = await res.json();
-      const files = manifest[album.slug];
-      if (!files || files.length === 0) throw new Error('Empty album');
-      renderGallery(album, files);
-    } catch(e) {
-      document.getElementById('loading-state').style.display = 'none';
-      document.getElementById('error-state').style.display = 'flex';
+{
+  "albums": [
+    {
+      "slug": "bedni-bugyal",
+      "title": "Bedni Bugyal",
+      "subtitle": "High altitude meadows in the Garhwal Himalayas",
+      "category": "Trek",
+      "cover": "images/bedni-bugyal/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "bhutan",
+      "title": "Bhutan",
+      "subtitle": "The last Himalayan kingdom, unfiltered",
+      "category": "Travel",
+      "cover": "images/bhutan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "centering-europe",
+      "title": "Center-ing Europe",
+      "subtitle": "Finding the middle in unexpected places",
+      "category": "Travel",
+      "cover": "images/centering-europe/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "corbett",
+      "title": "Corbett",
+      "subtitle": "India's oldest national park, through a lens",
+      "category": "Wildlife",
+      "cover": "images/corbett/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "denmark",
+      "title": "Denmark",
+      "subtitle": "Nordic light and quiet architecture",
+      "category": "Travel",
+      "cover": "images/denmark/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "derwentwater",
+      "title": "Derwentwater",
+      "subtitle": "The Lake District at its most elemental",
+      "category": "Landscape",
+      "cover": "images/derwentwater/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "dinapani",
+      "title": "Dinapani",
+      "subtitle": "A Himalayan village at the edge of the trail",
+      "category": "Trek",
+      "cover": "images/dinapani/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "dudhwa",
+      "title": "Dudhwa",
+      "subtitle": "Grasslands, tigers and the Terai frontier",
+      "category": "Wildlife",
+      "cover": "images/dudhwa/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "ebc-2017",
+      "title": "EBC 2017",
+      "subtitle": "The road to 5364m. Solo. Unguided.",
+      "category": "Trek",
+      "cover": "images/ebc-2017/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "experience-uk",
+      "title": "Experience United Kingdom",
+      "subtitle": "Britain through foreign eyes",
+      "category": "Travel",
+      "cover": "images/experience-uk/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "ibiza",
+      "title": "Ibiza",
+      "subtitle": "Beyond the noise, an island reveals itself",
+      "category": "Travel",
+      "cover": "images/ibiza/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "into-darkness",
+      "title": "Into Darkness",
+      "subtitle": "Astrophotography \u2014 when the sky becomes the subject",
+      "category": "Astrophotography",
+      "cover": "images/into-darkness/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "kheerganga",
+      "title": "Kheerganga",
+      "subtitle": "The trail that ends in a hot spring",
+      "category": "Trek",
+      "cover": "images/kheerganga/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "lake-vyrnwy",
+      "title": "Lake Vyrnwy",
+      "subtitle": "A Welsh reservoir and its quiet drama",
+      "category": "Landscape",
+      "cover": "images/lake-vyrnwy/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "lakshadweep",
+      "title": "Lakshadweep",
+      "subtitle": "Coral atolls at the edge of India",
+      "category": "Travel",
+      "cover": "images/lakshadweep/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "llansteffan",
+      "title": "Llansteffan",
+      "subtitle": "A Welsh village, a castle, and the sea",
+      "category": "Landscape",
+      "cover": "images/llansteffan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "lunar-scope",
+      "title": "Lunar Scope",
+      "subtitle": "The moon, magnified",
+      "category": "Astrophotography",
+      "cover": "images/lunar-scope/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "meghalaya",
+      "title": "Meghalaya",
+      "subtitle": "Living root bridges and clouds that stay",
+      "category": "Travel",
+      "cover": "images/meghalaya/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "moon-phases",
+      "title": "Moon Phases",
+      "subtitle": "One subject. Infinite expressions.",
+      "category": "Astrophotography",
+      "cover": "images/moon-phases/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "munsiyari",
+      "title": "Munsiyari",
+      "subtitle": "The frontier town beneath Panchachuli",
+      "category": "Trek",
+      "cover": "images/munsiyari/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "other-shots",
+      "title": "Other Shots",
+      "subtitle": "What doesn't fit in a box still fits in a frame",
+      "category": "Miscellaneous",
+      "cover": "images/other-shots/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "oxfam-women-lifeline",
+      "title": "Oxfam Women Lifeline",
+      "subtitle": "Documentary photo story for a cause",
+      "category": "Documentary",
+      "cover": "images/oxfam-women-lifeline/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "pen-y-fan",
+      "title": "Pen y Fan",
+      "subtitle": "The Brecon Beacons in all weathers",
+      "category": "Landscape",
+      "cover": "images/pen-y-fan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "phase-compiled",
+      "title": "Phase Compiled",
+      "subtitle": "The complete lunar archive, assembled",
+      "category": "Astrophotography",
+      "cover": "images/phase-compiled/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "pune-cochin",
+      "title": "Pune & Cochin",
+      "subtitle": "Two cities. Two rhythms.",
+      "category": "Travel",
+      "cover": "images/pune-cochin/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "rajasthan",
+      "title": "Rajasthan",
+      "subtitle": "Colour, geometry and ancient light",
+      "category": "Travel",
+      "cover": "images/rajasthan/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "shimla-ladakh",
+      "title": "Shimla / Ladakh",
+      "subtitle": "Hill station to high desert in one journey",
+      "category": "Travel",
+      "cover": "images/shimla-ladakh/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "eagle-nest",
+      "title": "The Eagle Nest",
+      "subtitle": "A wildlife lodge at altitude",
+      "category": "Wildlife",
+      "cover": "images/eagle-nest/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "triund-snowline",
+      "title": "Triund / Snowline",
+      "subtitle": "The ridge above McLeod Ganj, winter 2017",
+      "category": "Trek",
+      "cover": "images/triund-snowline/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "ty-cipar",
+      "title": "Ty Cipar",
+      "subtitle": "A Welsh cottage and the land around it",
+      "category": "Landscape",
+      "cover": "images/ty-cipar/cover.jpg",
+      "photos": []
+    },
+    {
+      "slug": "zoo-day",
+      "title": "Zoo Day",
+      "subtitle": "Animals, patience and the right moment",
+      "category": "Wildlife",
+      "cover": "images/zoo-day/cover.jpg",
+      "photos": []
     }
-  }
-
-  function renderGallery(album, files) {
-    const grid = document.getElementById('masonry-grid');
-    document.getElementById('photo-count').textContent = files.length + ' photographs';
-    files.forEach((filename, i) => {
-      const url = `${IK_BASE}/${encodeURIComponent(album.folder)}/${filename}`;
-      const thumb = `${IK_BASE}/${encodeURIComponent(album.folder)}/tr:w-600,q-80/${filename}`;
-      const item = document.createElement('a');
-      item.className = 'photo-item';
-      item.href = url;
-      item.dataset.pswpWidth = '2000';
-      item.dataset.pswpHeight = '1333';
-      item.style.transitionDelay = (i % 4) * 40 + 'ms';
-      item.innerHTML = `<img src="${thumb}" alt="${album.title} ${i+1}" loading="lazy" onerror="this.src='${url}'">
-        <div class="photo-overlay"><div class="photo-expand"><svg viewBox="0 0 24 24"><path d="M15 3h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm18 0v6h-6v-2h4v-4h2zM5 3h6v2H5v4H3V3h2z"/></svg></div></div>`;
-      grid.appendChild(item);
-    });
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('gallery-wrap').style.display = 'block';
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
-    }, { threshold: 0.05 });
-    document.querySelectorAll('.photo-item').forEach(el => obs.observe(el));
-    const lightbox = new PhotoSwipeLightbox({
-      gallery: '#masonry-grid', children: 'a.photo-item', pswpModule: PhotoSwipe,
-      padding: { top: 20, bottom: 20, left: 20, right: 20 }, bgOpacity: 0.95,
-    });
-    lightbox.init();
-  }
-</script>
-</body>
-</html>
+  ]
+}

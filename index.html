@@ -77,7 +77,6 @@
 
       /* ── HOVER CARD — show states ── */
       .hit-zone:hover .hover-card,
-      .hover-card:hover,
       .hit-zone.active .hover-card { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(5px); }
 
       .hit-zone:hover .hover-card.card-up,
@@ -86,7 +85,6 @@
 
       /* left-edge show */
       .hit-zone:hover .hover-card.card-left,
-      .hover-card.card-left:hover,
       .hit-zone.active .hover-card.card-left { transform: translateX(0) translateY(5px); }
       .hit-zone:hover .hover-card.card-left.card-up,
       .hover-card.card-left.card-up:hover,
@@ -94,10 +92,8 @@
 
       /* right-edge show */
       .hit-zone:hover .hover-card.card-right,
-      .hover-card.card-right:hover,
       .hit-zone.active .hover-card.card-right { transform: translateX(0) translateY(5px); }
       .hit-zone:hover .hover-card.card-right.card-up,
-      .hover-card.card-right.card-up:hover,
       .hit-zone.active .hover-card.card-right.card-up { transform: translateX(0) translateY(-5px); }
 
       .hover-card::before { content: ""; position: absolute; top: -30px; left: 0; width: 100%; height: 30px; }
@@ -512,7 +508,7 @@
           }
           card.innerHTML = hcInner;
           z.appendChild(card);
-          z.addEventListener("mouseenter", () => enterStar(i));
+          z.addEventListener("mouseenter", () => { if (window.matchMedia("(hover: hover)").matches) enterStar(i); });
           z.addEventListener("mouseleave", () => { if (window.matchMedia("(hover: hover)").matches) { z.classList.remove("active"); leaveStar(); } });
           z.addEventListener("touchstart", (e) => {
             if (!e.target.closest(".hover-card")) {
@@ -651,7 +647,12 @@
       }
       document.body.addEventListener("click",      handleFirstInteraction);
       document.body.addEventListener("touchstart", handleFirstInteraction, { passive: true });
-
+document.addEventListener("touchstart", (e) => {
+  if (!e.target.closest(".hit-zone")) {
+    document.querySelectorAll(".hit-zone").forEach((hz) => hz.classList.remove("active"));
+    leaveStar();
+  }
+}, { passive: true });
       window.addEventListener("scroll", () => {
         const navL = document.querySelector(".n-l");
         if (navL) { if (window.scrollY > window.innerHeight * 0.8) navL.classList.add("hidden"); else navL.classList.remove("hidden"); }
