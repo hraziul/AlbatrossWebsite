@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
+<head>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
     <script>
       try {
         const _fetch = window.fetch;
@@ -14,7 +14,28 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ALBATROSS | Raziul Hasnain</title>
+   <title>Raziul Hasnain — Director, Photographer & Creative</title>
+<meta name="description" content="Film director, photographer and creative based in India. Campaigns, brand films, visual stories and more. Clients include AWS, WhatsApp, Amazon Prime, Infosys.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Raziul Hasnain">
+<meta name="theme-color" content="#0b1d3a">
+<link rel="canonical" href="https://www.albatrossamaze.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.albatrossamaze.com/">
+<meta property="og:title" content="Raziul Hasnain — Director & Creative">
+<meta property="og:description" content="Film director, photographer and creative. Campaigns, brand films, motion and more. Clients include AWS, WhatsApp, Amazon Prime & Infosys.">
+<meta property="og:image" content="https://www.albatrossamaze.com/images/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Albatross by Raziul Hasnain">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Albatross by Raziul Hasnain — Director & Creative">
+<meta name="twitter:description" content="Film director, photographer and creative. Campaigns, brand films, motion and more.">
+<meta name="twitter:image" content="https://www.albatrossamaze.com/images/preview.png">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet" />
@@ -105,6 +126,71 @@
       .hc-cta { display: inline-block; font-size: 0.75rem; font-weight: 600; color: #fff; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; transition: background 0.3s; }
       .hc-cta:hover { background: rgba(255,255,255,0.2); }
       .hc-cta-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
+      .hover-card { overflow: visible; }
+
+.hc-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.hit-zone.active .hc-close {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hc-close:active { transform: scale(0.92); }
+
+
+
+  position: absolute;
+  top: 85px;
+  right: 85px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 25;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hc-close:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.hc-close:active {
+  transform: scale(0.96);
+}
+
+.hc-close:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.75);
+  outline-offset: 2px;
+}
+
 
       /* ── AUDIO HINT — bolder, more visible ── */
       #audio-hint {
@@ -206,6 +292,18 @@
       }
       .c-img-c { object-fit: contain !important; padding: 20px; }
     </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Raziul Hasnain",
+  "url": "https://www.albatrossamaze.com",
+  "jobTitle": "Film Director & Photographer",
+  "worksFor": { "@type": "Organization", "name": "Albatross Amaze" },
+  "description": "Film director, photographer and creative based in India.",
+  "knowsAbout": ["Film Direction", "Photography", "Brand Films", "Visual Storytelling", "Campaigns"]
+}
+</script>
   </head>
   <body>
     <div id="loader">
@@ -319,7 +417,7 @@
 
       const starsData = [
         {
-          id: 'main', x: 0.55, y: 0.6,
+          id: 'main', x: 0.55, y: 0.61,
           thumb: 'images/directors%20cut-cover.png',
           cat: 'Videos', label: "Director's Cut",
           desc: 'Campaigns, brand films, motion and more.',
@@ -330,7 +428,7 @@
           scale: 1.2, cta: 'Explore Here',
         },
         {
-          id: 'views', x: 0.7, y: 0.5,
+          id: 'views', x: 0.71, y: 0.5,
           thumb: 'images/views-cover.png',
           cat: 'Photographs', label: 'Views',
           desc: 'Through a different lens.',
@@ -494,6 +592,7 @@
           else if (s.x > 0.7) card.classList.add("card-right");
 
           let hcInner = `
+
       <img src="${s.thumb || ''}" class="hc-img" alt="" onerror="this.style.display='none'">
       <div class="hc-cat" style="color:#${s.color}">${s.cat}</div>
       <div class="hc-title sg">${s.label}</div>
@@ -507,6 +606,22 @@
             hcInner += `<div class="hc-cta">${s.cta}</div>`;
           }
           card.innerHTML = hcInner;
+const closeBtn = document.createElement('button');
+closeBtn.className = 'hc-close';
+closeBtn.setAttribute('aria-label', 'Close card');
+closeBtn.innerHTML = '&#x2715;';
+closeBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  z.classList.remove('active');
+  leaveStar();
+});
+closeBtn.addEventListener('touchstart', e => {
+  e.stopPropagation();
+  e.preventDefault();
+  document.querySelectorAll('.hit-zone').forEach(hz => hz.classList.remove('active'));
+  leaveStar();
+}, { passive: false });
+card.appendChild(closeBtn);
           z.appendChild(card);
           z.addEventListener("mouseenter", () => { if (window.matchMedia("(hover: hover)").matches) enterStar(i); });
           z.addEventListener("mouseleave", () => { if (window.matchMedia("(hover: hover)").matches) { z.classList.remove("active"); leaveStar(); } });
@@ -539,16 +654,29 @@
       document.addEventListener("click",      initAudio, { once: true });
 
       function playNote(hz) {
-        if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-        if (actx.state === "suspended") actx.resume();
-        const t = actx.currentTime, o1 = actx.createOscillator(), g1 = actx.createGain();
-        o1.type = "sine"; o1.frequency.value = hz;
-        o1.connect(g1); g1.connect(actx.destination);
-        g1.gain.setValueAtTime(0, t);
-        g1.gain.linearRampToValueAtTime(0.15, t + 0.05);
-        g1.gain.exponentialRampToValueAtTime(0.001, t + 2.0);
-        o1.start(t); o1.stop(t + 2.1);
-      }
+  if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+  const _fire = () => {
+    try {
+      const t = actx.currentTime,
+            o1 = actx.createOscillator(),
+            g1 = actx.createGain();
+      o1.type = "sine";
+      o1.frequency.value = hz;
+      o1.connect(g1);
+      g1.connect(actx.destination);
+      g1.gain.setValueAtTime(0, t);
+      g1.gain.linearRampToValueAtTime(0.15, t + 0.05);
+      g1.gain.exponentialRampToValueAtTime(0.001, t + 2.0);
+      o1.start(t);
+      o1.stop(t + 2.1);
+    } catch(e) {}
+  };
+  if (actx.state === "suspended") {
+    actx.resume().then(_fire).catch(() => {});
+  } else {
+    _fire();
+  }
+}
 
       let targetRot = 0, currentRot = 0;
       function enterStar(i) {
@@ -658,5 +786,7 @@ document.addEventListener("touchstart", (e) => {
         if (navL) { if (window.scrollY > window.innerHeight * 0.8) navL.classList.add("hidden"); else navL.classList.remove("hidden"); }
       });
     </script>
-  </body>
+<button id="gc" class="hc-close" aria-label="Close">&#x2715;</button>
+  
+</body>
 </html>
