@@ -54,7 +54,7 @@ def list_folder(folder_name):
         parts = line.split()
         if len(parts) < 4:
             continue
-        filename = " ".join(parts[3:])
+        filename = ' '.join(parts[3:])
         _, ext = os.path.splitext(filename)
         if ext in IMAGE_EXTS:
             keys.append(f"{folder_name}/{filename}")
