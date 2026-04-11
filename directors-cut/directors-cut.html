@@ -316,7 +316,7 @@
 
 <script>
 const videos = [
-  { span:'span-8', cat:'Government Campaign', filter:'government', title:'30 Years of Telecom — National DVC', client:'TRAI / Government of India', tags:['Campaign','Direction','National'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/afua4dRLqAI' },
+  { span:'span-8', cat:'Government Campaign', filter:'government', title:'30 Years of Telecom in India', client:'TRAI / Government of India', tags:['Campaign','Direction','National'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/afua4dRLqAI' },
   { span:'span-4', cat:'Government Campaign', filter:'government', title:'National DVC', client:'TRAI / Government of India', tags:['Campaign','DVC'], ytId:'F3gUBE9h3Us', short:false, link:'https://youtu.be/F3gUBE9h3Us' },
   { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Basement', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'7aKFbNXiRMI', short:true, link:'https://youtube.com/shorts/7aKFbNXiRMI' },
   { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Elevator', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'hNdnw19aK7s', short:true, link:'https://youtube.com/shorts/hNdnw19aK7s' },
@@ -334,6 +334,7 @@ const videos = [
   { span:'span-3', cat:'Corporate', filter:'corporate', title:'AWS Live Edit', client:'Amazon Web Services', tags:['Short','Live'], ytId:'ly7X5WMtMzA', short:true, link:'https://youtube.com/shorts/ly7X5WMtMzA' },
   { span:'span-6', cat:'Corporate', filter:'corporate', title:'Infosys', client:'Infosys', tags:['Short','Corporate'], ytId:'dGz9E3-AqMQ', short:true, link:'https://youtube.com/shorts/dGz9E3-AqMQ' },
   { span:'span-6', cat:'Corporate', filter:'corporate', title:'British Council — Five Films Event', client:'British Council India', tags:['Short','Event','Live Edit'], ytId:'OQvFNv2ykqw', short:true, link:'https://youtube.com/shorts/OQvFNv2ykqw' },
+  { span:'span-8', cat:'Brand Film', filter:'brand-film', title:'Studex — Brand Film', client:'Studex', tags:['Brand Film','Direction','Launch'], igReel:'DOomj0ZjJIK', customThumb:'../images/studex.png', short:false, link:'https://www.instagram.com/reel/DOomj0ZjJIK/' },
   { span:'span-8', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 1', client:'Shunya Films', tags:['Digital Ad','Direction'], ytId:'Ozz9D7G5Lsw', short:false, link:'https://www.youtube.com/watch?v=Ozz9D7G5Lsw' },
   { span:'span-4', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 2', client:'Shunya Films', tags:['Digital Ad','Direction'], ytId:'BmnyEf8fXsw', short:false, link:'https://www.youtube.com/watch?v=BmnyEf8fXsw' },
   { span:'span-6', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 3', client:'Shunya Films', tags:['Digital Ad'], ytId:'qta3me2o1nU', short:false, link:'https://www.youtube.com/watch?v=qta3me2o1nU' },
@@ -345,6 +346,7 @@ const videos = [
 
 function getThumb(v) {
   if (v.customThumb !== undefined && v.customThumb === '') return '';
+  if (v.customThumb) return v.customThumb;
   if (v.ytId) return `https://img.youtube.com/vi/${v.ytId}/maxresdefault.jpg`;
   return '';
 }
@@ -381,7 +383,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-const mqStr = ('TRAI &nbsp;·&nbsp; AWS &nbsp;·&nbsp; BRITISH COUNCIL &nbsp;·&nbsp; PRODAPT &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; INFOSYS &nbsp;·&nbsp; WHATFIX &nbsp;·&nbsp; SHUNYA FILMS &nbsp;·&nbsp; GREYORANGE &nbsp;·&nbsp; BAMBOOBOX &nbsp;·&nbsp; ').repeat(4);
+const mqStr = (' ·TRAI &nbsp;·&nbsp; AWS &nbsp;·&nbsp; BRITISH COUNCIL &nbsp;·&nbsp; PRODAPT &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; INFOSYS &nbsp;·&nbsp; WHATFIX &nbsp;·&nbsp; SHUNYA FILMS &nbsp;·&nbsp; GREYORANGE &nbsp;·&nbsp; BAMBOOBOX &nbsp;·&nbsp; STUDEX APP &nbsp;').repeat(4);
 document.getElementById('mq-text').innerHTML = mqStr;
 
 const observer = new IntersectionObserver(entries => {
