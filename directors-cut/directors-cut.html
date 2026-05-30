@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
 <head>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Director's Cut — Raziul Hasnain</title>
@@ -283,6 +282,7 @@
   <button class="filter-btn" data-filter="corporate">Corporate</button>
   <button class="filter-btn" data-filter="brand-film">Brand Film</button>
   <button class="filter-btn" data-filter="channel">Channel</button>
+  <button class="filter-btn" data-filter="ai">AI</button>
 </div>
 
 <div class="grid-wrap">
@@ -316,14 +316,15 @@
 
 <script>
 const videos = [
-  { span:'span-8', cat:'Government Campaign', filter:'government', title:'30 Years of Telecom in India', client:'Introduced AI production workflows at TRAI / Government of India with benchmarking 30 years of telecom in India', tags:['Campaign','Direction','National'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/afua4dRLqAI' },
-  { span:'span-4', cat:'Government Campaign', filter:'government', title:'National DVC', client:'TTRAI DND Awareness Campaign — Concept, Script & DirectionA 55-second UGC-style film that drove 170M+ views in 3 months on India’s Central Bureau of Communication channel. Concept originated from the insight that users block spam but rarely report it - a behaviour gap the film directly addresses. ', tags:['Campaign','DVC'], ytId:'F3gUBE9h3Us', short:false, link:'https://www.youtube.com/watch?v=XIhJhkC-YAI' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Basement', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'7aKFbNXiRMI', short:true, link:'https://youtube.com/shorts/7aKFbNXiRMI' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Elevator', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'hNdnw19aK7s', short:true, link:'https://youtube.com/shorts/hNdnw19aK7s' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Highway', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'3SI3MgQRPL0', short:true, link:'https://youtube.com/shorts/3SI3MgQRPL0' },
-  { span:'span-3', cat:'Government Campaign', filter:'government', title:'DCR — Stadium', client:'TRAI / Government of India', tags:['Short','Campaign'], ytId:'aoC3o6wJGAs', short:true, link:'https://youtube.com/shorts/aoC3o6wJGAs' },
-  { span:'span-6', cat:'Government Campaign', filter:'government', title:'1600 OTP Fraud Awareness', client:'TRAI / Government of India', tags:['Short','Awareness'], ytId:'-BDP6jkhRZc', short:true, link:'https://youtube.com/shorts/-BDP6jkhRZc' },
-  { span:'span-6', cat:'Government Campaign', filter:'government', title:'1600 Pension Fraud Awareness', client:'TRAI / Government of India', tags:['Short','Awareness'], ytId:'JKOtfcDHl0Y', short:true, link:'https://youtube.com/shorts/JKOtfcDHl0Y' },
+{ span:'span-8', cat:'Government Campaign', filter:'government, ai', title:'30 Years of Telecom — National DVC', client:'TRAI / Government of India', tags:['Campaign','Direction','National','AI'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/afua4dRLqAI' },
+{ span:'span-4', cat:'Government Campaign', filter:'government', title:'National DVC', client:'TRAI / Government of India', tags:['Campaign','DVC'], ytId:'F3gUBE9h3Us', short:false, link:'https://youtu.be/F3gUBE9h3Us' },
+{ span:'span-3', cat:'Government Campaign', filter:'government ai', title:'DCR — Basement', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'7aKFbNXiRMI', short:true, link:'https://youtube.com/shorts/7aKFbNXiRMI' },
+{ span:'span-3', cat:'Government Campaign', filter:'government ai', title:'DCR — Elevator', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'hNdnw19aK7s', short:true, link:'https://youtube.com/shorts/hNdnw19aK7s' },
+{ span:'span-3', cat:'Government Campaign', filter:'government ai', title:'TRAI DND Comic Animation — Spam Awareness Short', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'mGfaHe9zQt8', short:true, link:'https://youtube.com/shorts/mGfaHe9zQt8' },
+{ span:'span-3', cat:'Government Campaign', filter:'government ai', title:'DCR — Highway', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'3SI3MgQRPL0', short:true, link:'https://youtube.com/shorts/3SI3MgQRPL0' },
+{ span:'span-3', cat:'Government Campaign', filter:'government ai', title:'DCR — Stadium', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'aoC3o6wJGAs', short:true, link:'https://youtube.com/shorts/aoC3o6wJGAs' },
+{ span:'span-6', cat:'Government Campaign', filter:'government ai', title:'1600 OTP Fraud Awareness', client:'TRAI / Government of India', tags:['Short','Awareness','AI'], ytId:'-BDP6jkhRZc', short:true, link:'https://youtube.com/shorts/-BDP6jkhRZc' },
+{ span:'span-6', cat:'Government Campaign', filter:'government ai', title:'1600 Pension Fraud Awareness', client:'TRAI / Government of India', tags:['Short','Awareness','AI'], ytId:'JKOtfcDHl0Y', short:true, link:'https://youtube.com/shorts/JKOtfcDHl0Y' },
   { span:'span-8', cat:'Corporate', filter:'corporate', title:'WhatFix — Product Film', client:'WhatFix', tags:['Brand Film','Product','Direction'], ytId:'UH9TQGBB6og', short:false, link:'https://youtu.be/UH9TQGBB6og' },
   { span:'span-4', cat:'Corporate', filter:'corporate', title:'Prodapt Brand Film', client:'Prodapt', tags:['Brand Film','Direction'], ytId:'jT62SF0q-5c', short:false, link:'https://youtu.be/jT62SF0q-5c' },
   { span:'span-4', cat:'Corporate', filter:'corporate', title:'WhatsApp Pitch Video', client:'WhatsApp', tags:['Pitch','Direction'], ytId:'rPxwlqdnraQ', short:false, link:'https://youtu.be/rPxwlqdnraQ' },
@@ -334,19 +335,17 @@ const videos = [
   { span:'span-3', cat:'Corporate', filter:'corporate', title:'AWS Live Edit', client:'Amazon Web Services', tags:['Short','Live'], ytId:'ly7X5WMtMzA', short:true, link:'https://youtube.com/shorts/ly7X5WMtMzA' },
   { span:'span-6', cat:'Corporate', filter:'corporate', title:'Infosys', client:'Infosys', tags:['Short','Corporate'], ytId:'dGz9E3-AqMQ', short:true, link:'https://youtube.com/shorts/dGz9E3-AqMQ' },
   { span:'span-6', cat:'Corporate', filter:'corporate', title:'British Council — Five Films Event', client:'British Council India', tags:['Short','Event','Live Edit'], ytId:'OQvFNv2ykqw', short:true, link:'https://youtube.com/shorts/OQvFNv2ykqw' },
-  { span:'span-8', cat:'Brand Film', filter:'brand-film', title:'Studex — Brand Film', client:'Studex', tags:['Brand Film','Direction','Launch'], igReel:'DOomj0ZjJIK', customThumb:'../images/studex.png', short:false, link:'https://www.instagram.com/reel/DOomj0ZjJIK/' },
   { span:'span-8', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 1', client:'Shunya Films', tags:['Digital Ad','Direction'], ytId:'Ozz9D7G5Lsw', short:false, link:'https://www.youtube.com/watch?v=Ozz9D7G5Lsw' },
   { span:'span-4', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 2', client:'Shunya Films', tags:['Digital Ad','Direction'], ytId:'BmnyEf8fXsw', short:false, link:'https://www.youtube.com/watch?v=BmnyEf8fXsw' },
   { span:'span-6', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 3', client:'Shunya Films', tags:['Digital Ad'], ytId:'qta3me2o1nU', short:false, link:'https://www.youtube.com/watch?v=qta3me2o1nU' },
   { span:'span-6', cat:'Brand Film', filter:'brand-film', title:'Shunya Films — Digital Ad Vol. 4', client:'Shunya Films', tags:['Digital Ad'], ytId:'ajvDRcKvEoI', short:false, link:'https://www.youtube.com/watch?v=ajvDRcKvEoI' },
-  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:'Project Who', client:'Original Channel', tags:['Channel','Direction','Concept','Series'], ytId:'', short:false, link:'https://www.youtube.com/@ProjectWho63', customThumb:'' },
-  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:'Somewhere There', client:'Original Channel', tags:['Channel','Music Videos'], ytId:'', short:false, link:'https://www.youtube.com/@somewherethere9046', customThumb:'' },
-  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:"Flippin' Fridays", client:'Original Short Film', tags:['Short Film','Script and Visual Effects'], ytId:'-t0FIXXnevg', short:false, link:'https://www.youtube.com/watch?v=-t0FIXXnevg' }
+  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:'Project Who', client:'Original Channel', tags:['Channel','Direction','Concept'], ytId:'', short:false, link:'https://www.youtube.com/@ProjectWho63', customThumb:'' },
+  { span:'span-4', cat:'YouTube Channel', filter:'channel', title:'Somewhere There', client:'Original Channel', tags:['Channel','Documentary'], ytId:'', short:false, link:'https://www.youtube.com/@somewherethere9046', customThumb:'' },
+  { span:'span-4', cat:'Short Film', filter:'channel', title:"Flippin' Fridays", client:'Original Short Film', tags:['Writing','Direction'], ytId:'-t0FIXXnevg', short:false, link:'https://www.youtube.com/watch?v=-t0FIXXnevg' }
 ];
 
 function getThumb(v) {
   if (v.customThumb !== undefined && v.customThumb === '') return '';
-  if (v.customThumb) return v.customThumb;
   if (v.ytId) return `https://img.youtube.com/vi/${v.ytId}/maxresdefault.jpg`;
   return '';
 }
@@ -378,7 +377,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.add('active');
     const f = btn.dataset.filter;
     document.querySelectorAll('.v-card').forEach(card => {
-      card.classList.toggle('hidden', f !== 'all' && card.dataset.filter !== f);
+      card.classList.toggle('hidden', f !== 'all' && !card.dataset.filter.split(' ').includes(f));
     });
   });
 });
