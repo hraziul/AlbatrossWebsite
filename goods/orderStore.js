@@ -17,8 +17,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ORDERS_PATH = path.join(__dirname, 'server-data', 'orders.json');
+// Named uniquely (not __dirname) — see loadEnv.js for why: colliding names
+// across files that all end up in the same Netlify function bundle broke
+// the live function with a 502.
+const orderStoreDir = path.dirname(fileURLToPath(import.meta.url));
+const ORDERS_PATH = path.join(orderStoreDir, 'server-data', 'orders.json');
 
 function readAll() {
   try {

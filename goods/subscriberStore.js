@@ -18,8 +18,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SUBSCRIBERS_PATH = path.join(__dirname, 'server-data', 'subscribers.json');
+// Named uniquely (not __dirname) — see loadEnv.js for why: colliding names
+// across files that all end up in the same Netlify function bundle broke
+// the live function with a 502.
+const subscriberStoreDir = path.dirname(fileURLToPath(import.meta.url));
+const SUBSCRIBERS_PATH = path.join(subscriberStoreDir, 'server-data', 'subscribers.json');
 
 function readAll() {
   try {
