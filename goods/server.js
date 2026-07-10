@@ -4,7 +4,7 @@ import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { savePendingOrder, findByRazorpayOrderId, updateOrder } from './orderStore.js';
-import { sendOrderConfirmationEmail, sendReturnRequestEmails, isEmailConfigured } from './emailService.js';
+import { sendOrderConfirmationEmail, sendReturnRequestEmails, sendSubscriberWelcomeEmail, isEmailConfigured } from './emailService.js';
 import { addSubscriber } from './subscriberStore.js';
 import { saveReturnRequest } from './returnStore.js';
 
@@ -93,7 +93,14 @@ app.post('/api/newsletter/subscribe', (req, res) => {
     if (result.alreadySubscribed) {
       return res.json({ status: 'already_subscribed' });
     }
+    // Respond as soon as the signup is durably saved — the customer shouldn't
+    // wait on a full Gmail SMTP round-trip (can be 1-3+ seconds) just to see
+    // "You're in". The welcome email fires in the background; its outcome is
+    // still logged, it just doesn't hold up the response.
     res.json({ status: 'subscribed' });
+    sendSubscriberWelcomeEmail({ to: email })
+      .then((sent) => console.log(`[Albatross Server] New subscriber ${email} (source: ${source || 'welcome_modal'}) — welcome email sent: ${sent}`))
+      .catch((err) => console.error('[Albatross Server] Welcome email failed to send:', err));
   } catch (err) {
     console.error('[Albatross Server] Newsletter signup rejected:', err.message);
     res.status(400).json({ error: err.message || 'Invalid email address.' });

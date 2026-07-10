@@ -103,3 +103,17 @@ export async function sendReturnRequestEmails({ referenceNumber, orderId, reason
 
   return { merchantNotified, customerNotified };
 }
+
+/**
+ * Sent once, right after a NEW newsletter signup (not on "already subscribed"
+ * re-submits — no need to re-welcome someone already on the list). Matches
+ * the popup/footer's own "Inner Circle" copy so the email doesn't feel like
+ * a generic form-confirmation bolted onto a premium brand.
+ */
+export async function sendSubscriberWelcomeEmail({ to }) {
+  return send({
+    to,
+    subject: `Welcome to the Subculture`,
+    text: `You've discovered something rare.\n\nAlbatross makes limited-run apparel for people who take culture seriously. Each piece is numbered. Once a drop sells out, it's retired — forever.\n\nYou'll hear about new drops before anyone else, straight to this inbox.\n\nNo spam, unsubscribe anytime by replying to this email.\n\n— ${BRAND_NAME}`,
+  });
+}
