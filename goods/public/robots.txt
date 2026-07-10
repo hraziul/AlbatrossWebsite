@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /goods/
+Disallow: /goods/checkout
+
+Sitemap: https://albatrossamaze.com/goods/sitemap.xml

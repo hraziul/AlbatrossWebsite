@@ -1,0 +1,108 @@
+{
+  "_readme": "Price and category overrides for synced products. Keyed by provider product ID (string). Edit values here to update prices or categories. Keep this file as the single pricing source for storefront syncs now and for future Qikink syncs. Do NOT edit the 'name' fields; they are purely for your reference.",
+  "_schema": {
+    "price": "Storefront selling price in INR (integer). Required — set to 0 if unsure.",
+    "category": "Optional storefront category override. If omitted, the sync auto-assigns from garment type. Use values like: 'Cult Cinema', 'Music Inspired', 'Comics & Art', 'Trending', 'Everyday Basics', 'Tote Bags'."
+  },
+
+  "843948": {
+    "_name": "Hello Monday, Beautiful Friend (Jim Morrison Mosaic)",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838707": {
+    "_name": "Superman Comic Collage T-Shirt",
+    "price": 999,
+    "category": "Comics & Art"
+  },
+  "838698": {
+    "_name": "Adventures of Tintin Inspired Tote Bag",
+    "price": 499,
+    "category": "Comics & Art"
+  },
+  "838691": {
+    "_name": "Batman Beyond Tote Bag",
+    "price": 499,
+    "category": "Comics & Art"
+  },
+  "838690": {
+    "_name": "Film Crew Humor Tee",
+    "price": 699,
+    "category": "Cult Cinema"
+  },
+  "838689": {
+    "_name": "Mr. A-Z Crossword T-Shirt (Jason Mraz)",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838688": {
+    "_name": "The Doors — Riders on the Storm Graphic Tee",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838686": {
+    "_name": "Allow Me To Introduce Myself (Rolling Stones)",
+    "price": 699,
+    "category": "Music Inspired"
+  },
+  "838684": {
+    "_name": "Simon & Garfunkel — Sounds of Silence Waveform Tee",
+    "price": 699,
+    "category": "Music Inspired"
+  },
+  "838683": {
+    "_name": "Jim Morrison Mosaic Art T-Shirt",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838680": {
+    "_name": "Room for Squares (John Mayer)",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838678": {
+    "_name": "Melting Clock Surreal Scene T-Shirt",
+    "price": 999,
+    "category": "Cult Cinema"
+  },
+  "838677": {
+    "_name": "Pink Floyd 'Dogs' Lyrics Graphic Tee",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838672": {
+    "_name": "Jim Morrison Live — The Doors Line Art Tee",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838669": {
+    "_name": "Break On Through T-Shirt (Jim Morrison / The Doors)",
+    "price": 899,
+    "category": "Music Inspired"
+  },
+  "838661": {
+    "_name": "Here Comes the Sun — Minimalist Rising Sun Tee",
+    "price": 699,
+    "category": "Music Inspired"
+  },
+  "837951": {
+    "_name": "Never Stop Believing 80s Synthwave Tee",
+    "price": 699,
+    "category": "Music Inspired"
+  },
+  "837949": {
+    "_name": "More Than a Feeling — Girl with Headphones",
+    "price": 699,
+    "category": "Music Inspired"
+  },
+  "837947": {
+    "_name": "Brightside / Jealousy Lyrics Tee",
+    "price": 699,
+    "category": "Music Inspired"
+  },
+  "837944": {
+    "_name": "Fate of Ophelia in Ink Black River T-Shirt",
+    "price": 999,
+    "category": "Cult Cinema"
+  }
+}

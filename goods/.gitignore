@@ -1,0 +1,15 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+# Order records contain customer PII (name, email, address) — never commit.
+server-data/
+# products-cache.json and products-cache.backup.json are intentionally tracked.
+# They serve as the seed data and fallback for the site.
+# `npm run sync` overwrites products-cache.json with live Printrove data.
+!public/products-cache.json
+!public/products-cache.backup.json

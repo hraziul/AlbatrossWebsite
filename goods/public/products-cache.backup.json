@@ -1,0 +1,392 @@
+{
+  "syncedAt": "2026-07-09T15:50:48.427Z",
+  "source": "printrove",
+  "products": [
+    {
+      "id": "843948",
+      "name": "Hello Monday, Beautiful Friend",
+      "price": 899,
+      "description": "Hello Monday, Beautiful Friend — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69de15f760d00-Black_XL_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69de15f760d00-Black_XL_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "hello-monday-beautiful-friend",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838707",
+      "name": "Superman Comic Collage T-Shirt",
+      "price": 999,
+      "description": "Superman Comic Collage T-Shirt — a limited-edition piece from our Comics & Art collection. Crafted for collectors who take quality seriously.",
+      "category": "Comics & Art",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc529680ade-White_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc529680ade-White_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "superman-comic-collage-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838698",
+      "name": "Adventures of Tintin Inspired Tote Bag",
+      "price": 499,
+      "description": "Adventures of Tintin Inspired Tote Bag — a limited-edition piece from our Comics & Art collection. Crafted for collectors who take quality seriously.",
+      "category": "Comics & Art",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc41065b4c5-Half_White_Tote_Bag_With_Zipper.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc41065b4c5-Half_White_Tote_Bag_With_Zipper.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "adventures-of-tintin-inspired-tote-bag",
+      "details": [
+        "Tote Bags"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838691",
+      "name": "Batman Beyond Tote Bag",
+      "price": 499,
+      "description": "Batman Beyond Tote Bag — a limited-edition piece from our Comics & Art collection. Crafted for collectors who take quality seriously.",
+      "category": "Comics & Art",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc39b47cd1f-Black_Tote_Bag_With_Zipper.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc39b47cd1f-Black_Tote_Bag_With_Zipper.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "batman-beyond-tote-bag",
+      "details": [
+        "Tote Bags"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838690",
+      "name": "Film Crew Humor Tee",
+      "price": 699,
+      "description": "Film Crew Humor Tee — a limited-edition piece from our Cult Cinema collection. Crafted for collectors who take quality seriously.",
+      "category": "Cult Cinema",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc37bf26384-Black_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc37bf26384-Black_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "film-crew-humor-tee",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838689",
+      "name": "Mr. A-Z Crossword T-Shirt",
+      "price": 899,
+      "description": "Mr. A-Z Crossword T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc380442c67-White_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc380442c67-White_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "mr-a-z-crossword-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838688",
+      "name": "The Doors Riders on the Storm Graphic Tee - Unisex Cotton",
+      "price": 899,
+      "description": "The Doors Riders on the Storm Graphic Tee - Unisex Cotton — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc3680cf7d5-White_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc3680cf7d5-White_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "the-doors-riders-on-the-storm-graphic-tee-unisex-cotton",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838686",
+      "name": "Funny Rock Music T-Shirt – \"Allow Me To Introduce Myself\" Rolling Stones",
+      "price": 699,
+      "description": "Funny Rock Music T-Shirt – \"Allow Me To Introduce Myself\" Rolling Stones — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc342374475-Black_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc342374475-Black_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "funny-rock-music-t-shirt-allow-me-to-introduce-myself-rolling-stones",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838684",
+      "name": "Simon Garfunkel Sounds of Silence Tee – Music Waveform Cotton Shirt",
+      "price": 699,
+      "description": "Simon Garfunkel Sounds of Silence Tee – Music Waveform Cotton Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc3207a2c73-Black_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc3207a2c73-Black_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "simon-garfunkel-sounds-of-silence-tee-music-waveform-cotton-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838683",
+      "name": "Jim Morrison Mosaic Art T-Shirt",
+      "price": 899,
+      "description": "Jim Morrison Mosaic Art T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc30afd2dc4-White_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc30afd2dc4-White_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "jim-morrison-mosaic-art-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838680",
+      "name": "Room for Squares T-Shirt",
+      "price": 899,
+      "description": "Room for Squares T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc2f3172d42-Red_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc2f3172d42-Red_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "room-for-squares-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838678",
+      "name": "Melting Clock Surreal Scene T-Shirt",
+      "price": 999,
+      "description": "Melting Clock Surreal Scene T-Shirt — a limited-edition piece from our Cult Cinema collection. Crafted for collectors who take quality seriously.",
+      "category": "Cult Cinema",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc2a51d0538-White_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc2a51d0538-White_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "melting-clock-surreal-scene-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838677",
+      "name": "Pink Floyd \"Dogs\" Lyrics Graphic Tee",
+      "price": 899,
+      "description": "Pink Floyd \"Dogs\" Lyrics Graphic Tee — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc295b2cb6d-Black_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc295b2cb6d-Black_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "pink-floyd-dogs-lyrics-graphic-tee",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838672",
+      "name": "Jim Morrison Live T-Shirt",
+      "price": 899,
+      "description": "Jim Morrison Live T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc1e469fd24-White_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc1e469fd24-White_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "jim-morrison-live-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838669",
+      "name": "Break On Through T-Shirt",
+      "price": 899,
+      "description": "Break On Through T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc1cdadbc0e-Black_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc1cdadbc0e-Black_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "break-on-through-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "838661",
+      "name": "Here Comes the Sun minimalist rising sun tee",
+      "price": 699,
+      "description": "Here Comes the Sun minimalist rising sun tee — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc17908f98f-Melange_Grey_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc17908f98f-Melange_Grey_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "here-comes-the-sun-minimalist-rising-sun-tee",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "837951",
+      "name": "Never Stop Believing 80s Synthwave Tee",
+      "price": 699,
+      "description": "Never Stop Believing 80s Synthwave Tee — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc188125bb3-Black_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc188125bb3-Black_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "never-stop-believing-80s-synthwave-tee",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "837949",
+      "name": "More Than a Feeling girl with headphones T-Shirt",
+      "price": 699,
+      "description": "More Than a Feeling girl with headphones T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc19a7861dc-Golden_Yellow_XS_Women_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc19a7861dc-Golden_Yellow_XS_Women_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "more-than-a-feeling-girl-with-headphones-t-shirt",
+      "details": [
+        "Women's Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": true
+    },
+    {
+      "id": "837947",
+      "name": "Brightside Jealousy Lyrics Tee",
+      "price": 699,
+      "description": "Brightside Jealousy Lyrics Tee — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc1a2273eb0-Iris_Lavender_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc1a2273eb0-Iris_Lavender_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "brightside-jealousy-lyrics-tee",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    },
+    {
+      "id": "837944",
+      "name": "Fate of Ophelia in Ink Black River T-Shirt",
+      "price": 999,
+      "description": "Fate of Ophelia in Ink Black River T-Shirt — a limited-edition piece from our Cult Cinema collection. Crafted for collectors who take quality seriously.",
+      "category": "Cult Cinema",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc1a67dcd30-Charcoal_Grey_S_Women_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc1a67dcd30-Charcoal_Grey_S_Women_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "fate-of-ophelia-in-ink-black-river-t-shirt",
+      "details": [
+        "Women's Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": true
+    },
+    {
+      "id": "837868",
+      "name": "Escher Maze Another Brick in the Wall T-Shirt",
+      "price": 0,
+      "description": "Escher Maze Another Brick in the Wall T-Shirt — a limited-edition piece from our Music Inspired collection. Crafted for collectors who take quality seriously.",
+      "category": "Music Inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc1ace0dc18-Almond_S_Men_Round.jpg",
+      "hoverImage": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/back-69bc1ace0dc18-Almond_S_Men_Round.jpg",
+      "isNew": false,
+      "isTrending": false,
+      "isBasic": false,
+      "slug": "escher-maze-another-brick-in-the-wall-t-shirt",
+      "details": [
+        "Half Sleeve Round Neck T-Shirt"
+      ],
+      "isWomens": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-music-inspired",
+      "name": "Music Inspired",
+      "slug": "music-inspired",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69de15f760d00-Black_XL_Men_Round.jpg",
+      "accent": "#d946ef",
+      "glyph": "♫",
+      "tagline": "Audio-visual culture"
+    },
+    {
+      "id": "cat-comics-art",
+      "name": "Comics & Art",
+      "slug": "comics-art",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc529680ade-White_S_Men_Round.jpg",
+      "accent": "#facc15",
+      "glyph": "⚡",
+      "tagline": "Panel to pavement"
+    },
+    {
+      "id": "cat-cult-cinema",
+      "name": "Cult Cinema",
+      "slug": "cult-cinema",
+      "image": "https://s3.ap-south-1.amazonaws.com/dodatafiles/public/mockups/front-69bc37bf26384-Black_S_Men_Round.jpg",
+      "accent": "#22d3ee",
+      "glyph": "🎞",
+      "tagline": "Screen-born legends"
+    }
+  ]
+}

@@ -1,3 +1,22 @@
 [build]
   publish = "."
-  command = ""
+  # The main site is static HTML/assets published as-is — unchanged.
+  # The goods/ storefront is a separate Vite/React app; it has to be built,
+  # and its output relocated into goods/ (replacing the source folder in
+  # this build only) so it ends up published at /goods. Without this,
+  # goods/ would publish its raw, unbuilt source with nothing working.
+  command = "npm --prefix goods ci && npm --prefix goods run build && rm -rf goods_build && mv goods/dist goods_build && rm -rf goods && mv goods_build goods"
+
+# Direct navigation and refreshes on nested goods routes (e.g. /goods/product/x,
+# /goods/collection) must serve the SPA shell so React Router can take over
+# client-side — otherwise Netlify 404s on any /goods/* path that isn't a real
+# file on disk. Scoped to /goods/* only; does not affect any other route.
+[[redirects]]
+  from = "/goods"
+  to = "/goods/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/goods/*"
+  to = "/goods/index.html"
+  status = 200

@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Homemade+Apple&family=Russo+One&family=Special+Elite&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "DM Serif Display", serif;
+  --font-display: var(--theme-font-display, "Syne"), sans-serif;
+  --font-mono: "Space Mono", monospace;
+  --font-sans: var(--theme-font-sans, "Outfit"), sans-serif;
+  --font-poetry: "Homemade Apple", cursive;
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5;
+  }
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-sm border border-white/5;
+  }
+}
+
+/* Theme variables definitions */
+.theme-prism {
+  --theme-bg-gradient: linear-gradient(135deg, #04040e 0%, #0a0c20 50%, #15091c 100%);
+  --theme-accent: #22d3ee;
+  --theme-accent-rgb: 34, 211, 238;
+  --theme-accent-secondary: #d946ef;
+  --theme-accent-secondary-rgb: 217, 70, 239;
+  --theme-font-display: "Syne";
+  --theme-font-sans: "Outfit";
+}
+
+.theme-poetry {
+  --theme-bg-gradient: linear-gradient(135deg, #0f0b08 0%, #1f1812 50%, #0d0c08 100%);
+  --theme-accent: #f59e0b;
+  --theme-accent-rgb: 245, 158, 11;
+  --theme-accent-secondary: #ca8a04;
+  --theme-accent-secondary-rgb: 202, 138, 4;
+  --theme-font-display: "Playfair Display";
+  --theme-font-sans: "Outfit";
+}
+
+.theme-comic {
+  --theme-bg-gradient: linear-gradient(135deg, #0a0b0f 0%, #151824 50%, #0e0f14 100%);
+  --theme-accent: #eab308;
+  --theme-accent-rgb: 234, 179, 8;
+  --theme-accent-secondary: #ef4444;
+  --theme-accent-secondary-rgb: 239, 68, 68;
+  --theme-font-display: "Russo One";
+  --theme-font-sans: "Outfit";
+}
+
+.theme-noir {
+  --theme-bg-gradient: linear-gradient(135deg, #050608 0%, #121417 50%, #0b0c0d 100%);
+  --theme-accent: #10b981;
+  --theme-accent-rgb: 16, 185, 129;
+  --theme-accent-secondary: #f3f4f6;
+  --theme-accent-secondary-rgb: 243, 244, 246;
+  --theme-font-display: "Special Elite";
+  --theme-font-sans: "Space Mono";
+}
+
+body {
+  background: #030303;
+  color: #ffffff;
+  font-family: var(--theme-font-sans, "Outfit"), sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Theme containers and dynamic styling overrides */
+.theme-container {
+  background: var(--theme-bg-gradient);
+  transition: background 1s ease-in-out, font-family 0.8s ease-in-out;
+  min-height: 100vh;
+}
+
+/* Dynamic colors hook for elements using themes values */
+.theme-text-accent {
+  color: var(--theme-accent);
+}
+.theme-border-accent {
+  border-color: var(--theme-accent);
+}
+.theme-bg-accent {
+  background-color: var(--theme-accent);
+}
+
+/* Grid overlay */
+.grid-mesh {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.004) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Halftone comic texture overlay */
+.halftone-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 0);
+  background-size: 16px 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Noir venetian blinds horizontal bars */
+.noir-blinds-overlay {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 10px,
+    transparent 10px,
+    transparent 35px
+  );
+  filter: blur(1px);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.25;
+}
+
+/* Poetry handwriting overlays */
+.poetry-handwritten-text {
+  position: fixed;
+  font-family: "Homemade Apple", cursive;
+  font-size: 2.5rem;
+  color: rgba(245, 158, 11, 0.02);
+  pointer-events: none;
+  z-index: 1;
+  transform: rotate(-12deg);
+  user-select: none;
+}
+
+/* Custom scroll bar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #030303;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent, #22d3ee);
+}

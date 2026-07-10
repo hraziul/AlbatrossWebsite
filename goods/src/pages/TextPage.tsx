@@ -1,0 +1,21 @@
+import { ReactNode, useEffect } from 'react';
+import SEO from '../components/SEO';
+
+export default function TextPage({ title, description = '', children }: { title: string, description?: string, children: ReactNode }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [title]);
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-24">
+      <SEO 
+        title={`${title} | Albatross Goods India`} 
+        description={description || `${title} - Learn more about Albatross Goods India custom streetwear and premium clothing drops.`} 
+      />
+      <h1 className="text-4xl md:text-5xl font-extrabold tracking-tighter uppercase mb-12 border-b border-white/10 pb-8">{title}</h1>
+      <div className="space-y-8 text-white/70 leading-relaxed text-sm">
+        {children}
+      </div>
+    </div>
+  );
+}
