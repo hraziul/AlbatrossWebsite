@@ -20,7 +20,17 @@ import { fileURLToPath } from 'url';
 // Named uniquely (not __dirname) — see loadEnv.js for why: colliding names
 // across files that all end up in the same Netlify function bundle broke
 // the live function with a 502.
-const orderStoreDir = path.dirname(fileURLToPath(import.meta.url));
+//
+// Also crash-proofed against import.meta.url being empty/undefined — true
+// when Netlify's bundler outputs CommonJS (see loadEnv.js for the full
+// explanation). Falls back to process.cwd() rather than throwing.
+let orderStoreDir;
+try {
+  if (!import.meta.url) throw new Error('import.meta.url unavailable (bundled as CJS)');
+  orderStoreDir = path.dirname(fileURLToPath(import.meta.url));
+} catch {
+  orderStoreDir = process.cwd();
+}
 const ORDERS_PATH = path.join(orderStoreDir, 'server-data', 'orders.json');
 
 function readAll() {
@@ -35,8 +45,17 @@ function readAll() {
 }
 
 function writeAll(orders) {
-  fs.mkdirSync(path.dirname(ORDERS_PATH), { recursive: true });
-  fs.writeFileSync(ORDERS_PATH, JSON.stringify(orders, null, 2), 'utf-8');
+  try {
+    fs.mkdirSync(path.dirname(ORDERS_PATH), { recursive: true });
+    fs.writeFileSync(ORDERS_PATH, JSON.stringify(orders, null, 2), 'utf-8');
+  } catch (err) {
+    // Netlify Functions run on a read-only filesystem outside /tmp — this
+    // JSON-file log only actually persists for traditional/local hosting.
+    // A write failure here must not crash checkout: the Razorpay order
+    // itself already succeeded by the time this runs, so surfacing this as
+    // a 500 would tell the customer their payment failed when it didn't.
+    console.error('[OrderStore] Could not persist to server-data/orders.json (read-only filesystem?):', err.message);
+  }
 }
 
 /** Called right after a Razorpay order is created, before payment happens. */

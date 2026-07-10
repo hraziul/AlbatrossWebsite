@@ -21,7 +21,17 @@ import { fileURLToPath } from 'url';
 // Named uniquely (not __dirname) — see loadEnv.js for why: colliding names
 // across files that all end up in the same Netlify function bundle broke
 // the live function with a 502.
-const subscriberStoreDir = path.dirname(fileURLToPath(import.meta.url));
+//
+// Also crash-proofed against import.meta.url being empty/undefined — true
+// when Netlify's bundler outputs CommonJS (see loadEnv.js for the full
+// explanation). Falls back to process.cwd() rather than throwing.
+let subscriberStoreDir;
+try {
+  if (!import.meta.url) throw new Error('import.meta.url unavailable (bundled as CJS)');
+  subscriberStoreDir = path.dirname(fileURLToPath(import.meta.url));
+} catch {
+  subscriberStoreDir = process.cwd();
+}
 const SUBSCRIBERS_PATH = path.join(subscriberStoreDir, 'server-data', 'subscribers.json');
 
 function readAll() {
@@ -36,8 +46,16 @@ function readAll() {
 }
 
 function writeAll(subscribers) {
-  fs.mkdirSync(path.dirname(SUBSCRIBERS_PATH), { recursive: true });
-  fs.writeFileSync(SUBSCRIBERS_PATH, JSON.stringify(subscribers, null, 2), 'utf-8');
+  try {
+    fs.mkdirSync(path.dirname(SUBSCRIBERS_PATH), { recursive: true });
+    fs.writeFileSync(SUBSCRIBERS_PATH, JSON.stringify(subscribers, null, 2), 'utf-8');
+  } catch (err) {
+    // Netlify Functions run on a read-only filesystem outside /tmp — this
+    // JSON-file log only actually persists for traditional/local hosting.
+    // Must not crash the signup request — the welcome email still fires
+    // regardless (see appCore.js), so the signup isn't a silent no-op either.
+    console.error('[SubscriberStore] Could not persist to server-data/subscribers.json (read-only filesystem?):', err.message);
+  }
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

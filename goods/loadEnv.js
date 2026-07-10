@@ -21,5 +21,20 @@ import { config } from 'dotenv';
 // modules each declaring `const __dirname = ...` at top level collide in
 // the flattened scope: "Identifier '__dirname' has already been declared".
 // This broke the live function with a 502 until each file got its own name.
-const envDir = path.dirname(fileURLToPath(import.meta.url));
+//
+// Netlify's function bundler outputs CommonJS, not ESM — import.meta.url is
+// empty/undefined there (esbuild warns "import.meta is not available with
+// the cjs output format"), so fileURLToPath(import.meta.url) throws a
+// TypeError. That crashed the live function a second time after the rename
+// above. Fall back to process.cwd() instead of assuming ESM always applies;
+// it doesn't matter much here anyway — .env is gitignored and never reaches
+// Netlify, so this call is a harmless no-op in that environment regardless
+// of what path it resolves to.
+let envDir;
+try {
+  if (!import.meta.url) throw new Error('import.meta.url unavailable (bundled as CJS)');
+  envDir = path.dirname(fileURLToPath(import.meta.url));
+} catch {
+  envDir = process.cwd();
+}
 config({ path: path.join(envDir, '.env') });

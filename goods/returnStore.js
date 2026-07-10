@@ -13,7 +13,17 @@ import { fileURLToPath } from 'url';
 // Named uniquely (not __dirname) — see loadEnv.js for why: colliding names
 // across files that all end up in the same Netlify function bundle broke
 // the live function with a 502.
-const returnStoreDir = path.dirname(fileURLToPath(import.meta.url));
+//
+// Also crash-proofed against import.meta.url being empty/undefined — true
+// when Netlify's bundler outputs CommonJS (see loadEnv.js for the full
+// explanation). Falls back to process.cwd() rather than throwing.
+let returnStoreDir;
+try {
+  if (!import.meta.url) throw new Error('import.meta.url unavailable (bundled as CJS)');
+  returnStoreDir = path.dirname(fileURLToPath(import.meta.url));
+} catch {
+  returnStoreDir = process.cwd();
+}
 const RETURNS_PATH = path.join(returnStoreDir, 'server-data', 'returns.json');
 
 function readAll() {
@@ -28,8 +38,16 @@ function readAll() {
 }
 
 function writeAll(returns) {
-  fs.mkdirSync(path.dirname(RETURNS_PATH), { recursive: true });
-  fs.writeFileSync(RETURNS_PATH, JSON.stringify(returns, null, 2), 'utf-8');
+  try {
+    fs.mkdirSync(path.dirname(RETURNS_PATH), { recursive: true });
+    fs.writeFileSync(RETURNS_PATH, JSON.stringify(returns, null, 2), 'utf-8');
+  } catch (err) {
+    // Netlify Functions run on a read-only filesystem outside /tmp — this
+    // JSON-file log only actually persists for traditional/local hosting.
+    // Must not crash the request: the merchant/customer emails still fire
+    // regardless (see appCore.js), so the return request isn't silently lost.
+    console.error('[ReturnStore] Could not persist to server-data/returns.json (read-only filesystem?):', err.message);
+  }
 }
 
 export function saveReturnRequest({ referenceNumber, orderId, reason, contact, comments }) {
