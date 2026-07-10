@@ -583,4 +583,14 @@ app.post('/api/orders/return', async (req, res) => {
   });
 });
 
-export default app;
+// Named export, not default: Netlify's Function bundler ("nft") transpiles
+// each ESM file to CJS separately instead of merging them into one bundle,
+// so importers requiring this file cross a real module boundary at runtime.
+// esbuild's default-import interop helper wraps an ENTIRE required CJS
+// module as `.default` in that situation instead of unwrapping it — so a
+// `import app from './appCore.js'` importer got the whole module object
+// (`{ default: app, logConfigStatus }`), not the Express app itself, and
+// serverless-http rejected it with "Unsupported framework". Named
+// imports/exports resolve via plain property access instead, which isn't
+// affected by that interop path.
+export { app };

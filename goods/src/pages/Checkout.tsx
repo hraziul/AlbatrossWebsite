@@ -134,8 +134,13 @@ export default function Checkout() {
         // backend, it just isn't configured to accept payments yet (missing
         // Razorpay keys) — surface that distinction rather than a generic message.
         console.error('[Albatross Checkout] Backend reached but rejected order creation:', errData);
+        // appCore.js uses `message` for the 503 gateway_not_configured case but
+        // `error` for the 401 (bad keys) and 500 (generic) cases — reading only
+        // `message` silently discarded the real reason for those two and always
+        // fell back to the same generic banner, making all three failure modes
+        // look identical on screen. Read both so the actual backend reason shows.
         throw new Error(
-          errData.message || 'Payment gateway is not available right now. Please try again shortly or contact support.'
+          errData.message || errData.error || 'Payment gateway is not available right now. Please try again shortly or contact support.'
         );
       }
 

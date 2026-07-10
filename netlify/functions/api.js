@@ -1,5 +1,16 @@
 import serverless from 'serverless-http';
-import app, { logConfigStatus } from '../../goods/appCore.js';
+// Named import, not default (and appCore.js exports `app` as named, not
+// default — see the comment there). Netlify's function bundler (zip-it-and-
+// ship-it, bundler "nft") transpiles each ESM file to CJS SEPARATELY instead
+// of merging them into one bundle, so this file's require of appCore.js
+// happens across a real module boundary at runtime. esbuild's default-import
+// interop helper wraps an ENTIRE required CJS module as `.default` in that
+// situation instead of unwrapping it — a default (or `import * as`) import
+// here got the whole module object, not the Express app itself, and
+// serverless-http rejected it with "Unsupported framework" because that
+// wrapper object matches none of its Express/Koa/Fastify shape checks.
+// Named imports resolve via plain property access, unaffected by that path.
+import { app, logConfigStatus } from '../../goods/appCore.js';
 
 /**
  * api.js — Netlify Function

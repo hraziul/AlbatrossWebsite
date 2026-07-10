@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import app, { logConfigStatus } from './appCore.js';
+import { app, logConfigStatus } from './appCore.js';
 
 /**
  * server.js
