@@ -2,10 +2,34 @@
   publish = "."
   # The main site is static HTML/assets published as-is — unchanged.
   # The goods/ storefront is a separate Vite/React app; it has to be built,
-  # and its output relocated into goods/ (replacing the source folder in
-  # this build only) so it ends up published at /goods. Without this,
-  # goods/ would publish its raw, unbuilt source with nothing working.
-  command = "npm --prefix goods ci && npm --prefix goods run build && rm -rf goods_build && mv goods/dist goods_build && rm -rf goods && mv goods_build goods"
+  # and its output copied into goods/ (alongside the backend source already
+  # there) so the built frontend publishes at /goods. This is additive, not
+  # destructive — appCore.js and friends must survive this step, because the
+  # Netlify Function below imports appCore.js directly from goods/ at
+  # deploy time. (An earlier version of this command deleted goods/ and
+  # replaced it with just the dist output — that broke the function import.)
+  command = "npm --prefix goods ci && npm --prefix goods run build && cp -r goods/dist/. goods/ && rm -rf goods/dist"
+
+[functions]
+  directory = "netlify/functions"
+
+# Backend API — previously nothing was deployed here at all, so every
+# /api/* call from the live site 404'd (confirmed by testing the live URL
+# directly). This routes /api/* to the Netlify Function that wraps the same
+# Express app (appCore.js) used locally, so checkout/newsletter/returns work
+# identically to `npm run dev:full`.
+#
+# No :splat here deliberately — for a rewrite (status 200) to a function,
+# Netlify preserves the ORIGINAL request path in the function's event, so
+# Express sees "/api/checkout/create-order" unchanged, matching appCore.js's
+# routes with no path rewriting needed. (netlify/functions/api.js also
+# defensively normalizes the path in case this behaves differently than
+# expected — untested against a live Netlify deploy, worth confirming in the
+# deploy's function logs after the first real request.)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api"
+  status = 200
 
 # Direct navigation and refreshes on nested goods routes (e.g. /goods/product/x,
 # /goods/collection) must serve the SPA shell so React Router can take over

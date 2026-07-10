@@ -1,13 +1,13 @@
 {
   "landscape": [
-    "/goods/themes/landscape_darkside.png",
-    "/goods/themes/landscape_dreams.png",
-    "/goods/themes/landscape_jim1.jpg",
-    "/goods/themes/landscape_odyssey.png",
-    "/goods/themes/landscape_wes.png",
-    "/goods/themes/lanscape_odyssey2.jpg"
+    "/themes/landscape_darkside.png",
+    "/themes/landscape_dreams.png",
+    "/themes/landscape_jim1.jpg",
+    "/themes/landscape_odyssey.png",
+    "/themes/landscape_wes.png",
+    "/themes/lanscape_odyssey2.jpg"
   ],
   "vertical": [
-    "/goods/themes/vertical_swift1.jpg"
+    "/themes/vertical_swift1.jpg"
   ]
 }
