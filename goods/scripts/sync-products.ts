@@ -50,6 +50,9 @@ const BASE_URL = 'https://api.printrove.com';
 const CACHE_PATH = path.join(ROOT, 'public', 'products-cache.json');
 const BACKUP_PATH = path.join(ROOT, 'public', 'products-cache.backup.json');
 const OVERRIDES_PATH = path.join(ROOT, 'scripts', 'price-overrides.json');
+const SITEMAP_PATH = path.join(ROOT, 'public', 'sitemap.xml');
+// Overridable via .env in case the deployed path/domain ever changes again.
+const SITE_URL = (process.env.SITE_URL || 'https://albatrossamaze.com/goods').replace(/\/$/, '');
 
 // ── Price + Category override map ────────────────────────────────────────────
 // Loaded once at startup from scripts/price-overrides.json.
@@ -402,6 +405,22 @@ function buildDescription(p: PrintroveProduct, finalCategory: string): string {
   return `${name} — a limited-edition piece from our ${finalCategory} collection.${gsmNote} Crafted for collectors who take quality seriously.`;
 }
 
+/**
+ * Printrove's API never returns pricing for any product (verified — every
+ * field we've ever seen: selling_price/mrp/base_price is always undefined).
+ * price-overrides.json is the real pricing source of truth. This is a LAST
+ * resort for a product that's missing from that file too — a rough,
+ * garment-aware default so the storefront can never show "Price on Request"
+ * on a live page, which is worse for conversion than a slightly-off price
+ * that gets corrected shortly after. Calibrated against this catalog's own
+ * existing override prices (tees cluster at ₹899, totes flat at ₹499).
+ */
+function resolveFallbackPrice(p: PrintroveProduct): number {
+  const garment = (p.product?.name ?? '').toLowerCase();
+  if (garment.includes('tote') || garment.includes('bag')) return 499;
+  return 899;
+}
+
 /** Transform a raw Printrove product into the site's CachedProduct shape */
 function transformProduct(p: PrintroveProduct): CachedProduct {
   const tags = p.tags ?? [];
@@ -409,17 +428,24 @@ function transformProduct(p: PrintroveProduct): CachedProduct {
   const fullName = cleanName(p.name);
   const override = OVERRIDES[id];
 
-  // Price: Printrove API price (>0) takes precedence → override map fallback → 0
+  // Price: Printrove API price (>0) takes precedence → override map → garment fallback.
+  // The fallback path should be rare — it means a product shipped without a
+  // real price ever being set, which is itself worth fixing at the source.
   const apiPrice = resolvePrice(p);
-  const price = apiPrice > 0 ? apiPrice : (override?.price ?? 0);
+  let price = apiPrice > 0 ? apiPrice : (override?.price ?? 0);
+  const isFallbackPrice = price === 0;
+  if (isFallbackPrice) {
+    price = resolveFallbackPrice(p);
+  }
 
   // Category: override map → garment-type inference
   const autoCategory = resolveCategoryName(p);
   const category = override?.category ?? autoCategory;
 
-  if (price === 0) {
-    console.warn(`  ⚠  No price returned from Printrove or override map for product ${id} ("${displayName(fullName).slice(0, 40)}")` +
-      ` — add it to scripts/price-overrides.json`);
+  if (isFallbackPrice) {
+    console.warn(`  ⚠⚠⚠  NO PRICE for product ${id} ("${displayName(fullName).slice(0, 40)}") — Printrove returned none and no override exists.`);
+    console.warn(`       Applied a fallback price of ₹${price} so the storefront never shows "Price on Request" on a live page.`);
+    console.warn(`       Set the REAL price in scripts/price-overrides.json for "${id}" as soon as possible.`);
   }
 
   const finalName = displayName(fullName);
@@ -476,6 +502,10 @@ function deriveCategories(products: CachedProduct[]): CachedCategory[] {
     'jackets':       { accent: '#facc15', glyph: '◈',  tagline: 'Layer with intention' },
     'polo':          { accent: '#4ade80', glyph: '◈',  tagline: 'Refined casual' },
     'long-sleeve':   { accent: '#fb923c', glyph: '◈',  tagline: 'Extended edition' },
+    // resolveCategoryName()'s fallback for designs that don't match any
+    // known keyword set — gets real styling so a new, hard-to-classify
+    // product doesn't look broken/unstyled the moment it syncs in.
+    'pop-culture':   { accent: '#a78bfa', glyph: '✦',  tagline: 'Everything else worth wearing' },
   };
 
   const seen = new Map<string, CachedCategory>();
@@ -493,6 +523,38 @@ function deriveCategories(products: CachedProduct[]): CachedCategory[] {
     });
   }
   return Array.from(seen.values());
+}
+
+/**
+ * Regenerates public/sitemap.xml from the actual synced catalog every sync
+ * run. Previously this was a hand-written, one-time file — it still listed
+ * six made-up product slugs that never matched any real product, while the
+ * real catalog had grown to 21+. A sitemap search engines can't trust is
+ * worse than no sitemap; tying it to real data means it can't go stale again.
+ */
+function generateSitemap(products: CachedProduct[]): void {
+  const today = new Date().toISOString().split('T')[0];
+  const staticPages: Array<{ path: string; changefreq: string; priority: string }> = [
+    { path: '/', changefreq: 'daily', priority: '1.0' },
+    { path: '/collection', changefreq: 'weekly', priority: '0.8' },
+    { path: '/request-design', changefreq: 'monthly', priority: '0.7' },
+    { path: '/about', changefreq: 'monthly', priority: '0.5' },
+    { path: '/help', changefreq: 'monthly', priority: '0.5' },
+    { path: '/shipping', changefreq: 'monthly', priority: '0.5' },
+    { path: '/contact', changefreq: 'monthly', priority: '0.5' },
+  ];
+
+  const urlEntry = (loc: string, changefreq: string, priority: string) =>
+    `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+
+  const entries = [
+    ...staticPages.map(p => urlEntry(`${SITE_URL}${p.path}`, p.changefreq, p.priority)),
+    ...products.map(p => urlEntry(`${SITE_URL}/product/${p.slug}`, 'weekly', '0.7')),
+  ];
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`;
+  fs.writeFileSync(SITEMAP_PATH, xml, 'utf-8');
+  console.log(`  ✓ Sitemap regenerated: ${staticPages.length} static pages + ${products.length} products`);
 }
 
 // ── API calls ─────────────────────────────────────────────────────────────────
@@ -622,6 +684,22 @@ async function main() {
     console.log('\n  → Transforming products...');
     const products = rawProducts.map(transformProduct);
 
+    // Product pages are looked up by slug (products.find(p => p.slug === slug))
+    // — a collision would make the second product silently unreachable at its
+    // own URL, with no error anywhere. Two designs with very similar names
+    // (e.g. two "Retro Sunset Tee" variants) would hit this as the catalog
+    // grows, so de-dupe defensively rather than assume it can't happen.
+    const seenSlugs = new Map<string, number>();
+    for (const product of products) {
+      const originalSlug = product.slug;
+      const count = seenSlugs.get(originalSlug) ?? 0;
+      if (count > 0) {
+        product.slug = `${originalSlug}-${product.id}`;
+        console.warn(`  ⚠  Duplicate slug "${originalSlug}" — product ${product.id} renamed to "${product.slug}" to stay reachable.`);
+      }
+      seenSlugs.set(originalSlug, count + 1);
+    }
+
     const categories = deriveCategories(products);
     console.log(`  ✓ ${products.length} products → ${categories.length} categories`);
 
@@ -650,6 +728,7 @@ async function main() {
 
     fs.mkdirSync(path.dirname(CACHE_PATH), { recursive: true });
     fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf-8');
+    generateSitemap(products);
 
     console.log(`\n✓ Sync complete at ${cache.syncedAt}`);
     console.log(`  Written: public/products-cache.json`);

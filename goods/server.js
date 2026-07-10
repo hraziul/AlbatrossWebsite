@@ -1,13 +1,14 @@
+import './loadEnv.js';
 import express from 'express';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
-import { config } from 'dotenv';
 import { savePendingOrder, findByRazorpayOrderId, updateOrder } from './orderStore.js';
-import { sendOrderConfirmationEmail, isEmailConfigured } from './emailService.js';
+import { sendOrderConfirmationEmail, sendReturnRequestEmails, isEmailConfigured } from './emailService.js';
+import { addSubscriber } from './subscriberStore.js';
+import { saveReturnRequest } from './returnStore.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 // Capture the raw request body alongside the parsed JSON — Razorpay webhook
@@ -69,12 +70,35 @@ function logConfigStatus() {
   }
 
   if (isEmailConfigured()) {
-    console.log(`✓ Order-confirmation email configured (SMTP: ${process.env.SMTP_HOST})`);
+    console.log(`✓ Email configured (SMTP: ${process.env.SMTP_HOST}, from: ${process.env.FROM_EMAIL || process.env.SMTP_USER}, merchant notifications: ${process.env.MERCHANT_EMAIL || process.env.SMTP_USER})`);
   } else {
-    console.warn('⚠  Order-confirmation email not configured — missing SMTP_HOST / SMTP_USER / SMTP_PASS.');
-    console.warn('   Orders will still be confirmed and fulfilled; customers just won\'t get a confirmation email until these are set.');
+    console.warn('⚠  Email not configured — missing SMTP_HOST / SMTP_USER / SMTP_PASS.');
+    console.warn('   Orders still confirm/fulfill and returns still get recorded without this — customers just won\'t get order-confirmation or return-request emails, and you won\'t get return-request notifications, until these are set.');
   }
 }
+
+// ── Newsletter Signup ─────────────────────────────────────────────────────────
+
+/**
+ * Durable signup capture for the welcome popup. Previously this only wrote
+ * to the visitor's own browser localStorage — nothing ever reached the
+ * business. This is the durability floor (a real file the business can read),
+ * not a full ESP — see subscriberStore.js for what's still missing
+ * (unsubscribe handling, actual campaign sending, list segmentation).
+ */
+app.post('/api/newsletter/subscribe', (req, res) => {
+  const { email, source } = req.body;
+  try {
+    const result = addSubscriber(email, source || 'welcome_modal');
+    if (result.alreadySubscribed) {
+      return res.json({ status: 'already_subscribed' });
+    }
+    res.json({ status: 'subscribed' });
+  } catch (err) {
+    console.error('[Albatross Server] Newsletter signup rejected:', err.message);
+    res.status(400).json({ error: err.message || 'Invalid email address.' });
+  }
+});
 
 // ── Webhook / Payment API routes ─────────────────────────────────────────────
 
@@ -523,13 +547,22 @@ app.post('/api/orders/return', async (req, res) => {
     });
   }
 
-  // Return request accepted successfully
-  console.log(`[Albatross Server] Return Request Accepted for Order ${id}:`, { reason, contact, comments });
-  
+  // Return request accepted — persist it (previously console.log only, with
+  // no admin dashboard to ever see it again) and notify both the merchant
+  // (the only way the business currently learns a return came in) and the
+  // customer (if their contact info is an email).
+  const referenceNumber = `RET-${Date.now().toString().slice(-6)}`;
+  saveReturnRequest({ referenceNumber, orderId: id, reason, contact, comments });
+
+  const { merchantNotified, customerNotified } = await sendReturnRequestEmails({
+    referenceNumber, orderId: id, reason, contact, comments,
+  });
+  console.log(`[Albatross Server] Return Request ${referenceNumber} for order ${id} — merchant notified: ${merchantNotified}, customer notified: ${customerNotified}`);
+
   res.json({
     status: 'success',
     message: 'Return / Replacement request submitted successfully.',
-    reference_number: `RET-${Date.now().toString().slice(-6)}`
+    reference_number: referenceNumber
   });
 });
 

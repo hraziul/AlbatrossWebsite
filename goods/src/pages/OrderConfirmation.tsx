@@ -45,7 +45,7 @@ export default function OrderConfirmation() {
         <span className="text-3xl font-serif italic text-white/30">No recent order found</span>
         <p className="text-white/40 text-xs max-w-sm leading-relaxed">
           If you just completed a payment and landed here without details, check your email for a confirmation, or contact{' '}
-          <span className="text-cyan-400">studio@albatrossgoods.in</span> with your payment ID and we'll confirm it manually.
+          <span className="text-cyan-400">ArtsyCheezein@gmail.com</span> with your payment ID and we'll confirm it manually.
         </p>
         <Link to="/collection" className="text-cyan-400 hover:text-white transition-colors text-[9px] tracking-[0.2em] uppercase border border-white/10 px-5 py-2.5">
           BACK TO CATALOG

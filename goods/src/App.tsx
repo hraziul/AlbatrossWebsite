@@ -86,7 +86,7 @@ export default function App() {
               >
                 <h2 className="text-xl font-bold uppercase text-white tracking-widest mt-12 mb-4">Get In Touch</h2>
                 <p>For support, general inquiries, or press, please email us at:</p>
-                <p className="text-cyan-400 font-mono">studio@albatrossgoods.in</p>
+                <p className="text-cyan-400 font-mono">ArtsyCheezein@gmail.com</p>
                 <p className="mt-8">We aim to respond to all inquiries within 24 hours during business days.</p>
               </TextPage>
             } />

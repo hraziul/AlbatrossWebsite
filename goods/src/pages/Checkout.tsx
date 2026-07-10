@@ -205,7 +205,7 @@ export default function Checkout() {
             } catch (err) {
               console.error('[Checkout] verify-payment fetch failed to connect — payment succeeded but we could not reach the backend to confirm it.', err);
               throw new Error(
-                `Your payment was received, but we couldn't reach our server to confirm it. Please save this payment ID and email studio@albatrossgoods.in: ${paymentId}`
+                `Your payment was received, but we couldn't reach our server to confirm it. Please save this payment ID and email ArtsyCheezein@gmail.com: ${paymentId}`
               );
             }
 
@@ -213,7 +213,7 @@ export default function Checkout() {
               const errData = await verifyRes.json().catch(() => ({} as any));
               console.error('[Checkout] verify-payment reached the backend but it rejected the request:', verifyRes.status, errData);
               throw new Error(
-                `${errData.error || 'Payment verification failed.'} Please save this payment ID and email studio@albatrossgoods.in so we can confirm your order: ${paymentId}`
+                `${errData.error || 'Payment verification failed.'} Please save this payment ID and email ArtsyCheezein@gmail.com so we can confirm your order: ${paymentId}`
               );
             }
 

@@ -7,6 +7,8 @@ export default function WelcomeModal() {
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     const seen = sessionStorage.getItem('ag_welcome_seen');
@@ -18,20 +20,31 @@ export default function WelcomeModal() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!email.trim() || isSubmitting) return;
+    setIsSubmitting(true);
+    setErrorMsg(null);
     try {
-      const stored = localStorage.getItem('ag_collected_emails');
-      const emailList = stored ? JSON.parse(stored) : [];
-      if (!emailList.includes(email.trim())) {
-        emailList.push(email.trim());
-        localStorage.setItem('ag_collected_emails', JSON.stringify(emailList));
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'welcome_modal' }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({} as any));
+        throw new Error(data.error || 'Could not save your email. Please try again.');
       }
-    } catch (err) {
-      console.error('Failed to save email to localStorage:', err);
+      setSubmitted(true);
+    } catch (err: any) {
+      // Never silently drop a signup — if the backend is unreachable, say so
+      // rather than showing a fake "You're in" success state for data that
+      // never actually got saved anywhere.
+      console.error('[WelcomeModal] Newsletter signup failed:', err);
+      setErrorMsg(err.message || 'Could not reach our server. Please try again in a moment.');
+    } finally {
+      setIsSubmitting(false);
     }
-    setSubmitted(true);
   };
 
   const close = () => setVisible(false);
@@ -129,15 +142,25 @@ export default function WelcomeModal() {
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="your@email.com"
                           required
-                          className="w-full bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-cyan-500/60 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.08)] transition-all font-mono"
+                          disabled={isSubmitting}
+                          className="w-full bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder-white/20 outline-none focus:border-cyan-500/60 focus:shadow-[0_0_0_3px_rgba(34,211,238,0.08)] transition-all font-mono disabled:opacity-50"
                         />
                         <button
                           type="submit"
                           id="modal-join-cta"
-                          className="w-full py-4 bg-white text-black text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-cyan-400 transition-colors duration-200"
+                          disabled={isSubmitting}
+                          className="w-full py-4 bg-white text-black text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-cyan-400 transition-colors duration-200 disabled:opacity-60 disabled:cursor-wait"
                         >
-                          Join the Inner Circle
+                          {isSubmitting ? 'Joining…' : 'Join the Inner Circle'}
                         </button>
+                        {errorMsg && (
+                          <p className="text-red-400 text-[10px] text-center leading-relaxed" role="alert">
+                            {errorMsg}
+                          </p>
+                        )}
+                        <p className="text-white/20 text-[9px] text-center leading-relaxed">
+                          Drop announcements only. No spam. Unsubscribe anytime.
+                        </p>
                       </form>
 
                       <button

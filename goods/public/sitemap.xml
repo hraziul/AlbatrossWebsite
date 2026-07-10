@@ -2,79 +2,169 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://albatrossamaze.com/goods/</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://albatrossamaze.com/goods/collection</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://albatrossamaze.com/goods/request-design</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://albatrossamaze.com/goods/about</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://albatrossamaze.com/goods/help</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://albatrossamaze.com/goods/shipping</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://albatrossamaze.com/goods/contact</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://albatrossamaze.com/goods/product/akira-cyberpunk-tee</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://albatrossamaze.com/goods/product/hello-monday-beautiful-friend</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://albatrossamaze.com/goods/product/vintage-vinyl-echoes</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://albatrossamaze.com/goods/product/superman-comic-collage-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://albatrossamaze.com/goods/product/noir-detective-edition</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://albatrossamaze.com/goods/product/adventures-of-tintin-inspired-tote-bag</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://albatrossamaze.com/goods/product/cosmic-horror-hoodie</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://albatrossamaze.com/goods/product/batman-beyond-tote-bag</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://albatrossamaze.com/goods/product/synthwave-sunset</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://albatrossamaze.com/goods/product/film-crew-humor-tee</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://albatrossamaze.com/goods/product/kurosawa-samurai-silhouette</loc>
-    <lastmod>2026-06-24</lastmod>
+    <loc>https://albatrossamaze.com/goods/product/mr-a-z-crossword-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/the-doors-riders-on-the-storm-graphic-tee-unisex-cotton</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/funny-rock-music-t-shirt-allow-me-to-introduce-myself-rolling-stones</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/simon-garfunkel-sounds-of-silence-tee-music-waveform-cotton-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/jim-morrison-mosaic-art-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/room-for-squares-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/melting-clock-surreal-scene-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/pink-floyd-dogs-lyrics-graphic-tee</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/jim-morrison-live-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/break-on-through-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/here-comes-the-sun-minimalist-rising-sun-tee</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/never-stop-believing-80s-synthwave-tee</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/more-than-a-feeling-girl-with-headphones-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/brightside-jealousy-lyrics-tee</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/fate-of-ophelia-in-ink-black-river-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://albatrossamaze.com/goods/product/escher-maze-another-brick-in-the-wall-t-shirt</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

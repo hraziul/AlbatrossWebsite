@@ -125,7 +125,7 @@ export default function RequestDesign() {
                 Retry
               </button>
               <a
-                href="mailto:studio@albatrossgoods.in"
+                href="mailto:ArtsyCheezein@gmail.com"
                 className="flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-black hover:bg-orange-400 hover:text-black text-[9px] font-display font-bold uppercase tracking-wider transition-colors rounded-sm cursor-pointer"
               >
                 <Send className="w-3 h-3" />

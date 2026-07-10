@@ -18,6 +18,17 @@ function setMeta(attrName: 'name' | 'property', attrValue: string, content: stri
   tag.setAttribute('content', content);
 }
 
+/** Create (if missing) and set the canonical <link> tag */
+function setCanonical(href: string) {
+  let tag = document.querySelector('link[rel="canonical"]');
+  if (!tag) {
+    tag = document.createElement('link');
+    tag.setAttribute('rel', 'canonical');
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute('href', href);
+}
+
 export default function SEO({ title, description, image, schema }: SEOProps) {
   useEffect(() => {
     // Set dynamic document title
@@ -32,6 +43,10 @@ export default function SEO({ title, description, image, schema }: SEOProps) {
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:site_name', 'Albatross Goods India');
     setMeta('property', 'og:url', window.location.href);
+
+    // Canonical — strips query params/hash so tracking params (?ref=, #, etc.)
+    // never look like separate pages to search engines.
+    setCanonical(window.location.origin + window.location.pathname);
 
     // Twitter Card
     setMeta('name', 'twitter:card', image ? 'summary_large_image' : 'summary');

@@ -1,6 +1,76 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Youtube, ExternalLink, Lock, Package, RotateCcw, MapPin } from 'lucide-react';
 import { categories, products } from '../data';
+
+/**
+ * The welcome popup is the only other signup path, and it's a one-time,
+ * per-session prompt — anyone who dismisses it has no other way to join
+ * short of clearing their session. This is the persistent, always-available
+ * fallback, present on every page. Shares the same backend endpoint (and
+ * therefore the same durable server-side storage) as the popup.
+ */
+function FooterNewsletter() {
+  const [email, setEmail] = useState('');
+  const [state, setState] = useState<'idle' | 'submitting' | 'done' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || state === 'submitting') return;
+    setState('submitting');
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'footer' }),
+      });
+      if (!res.ok) throw new Error('failed');
+      setState('done');
+    } catch (err) {
+      console.error('[Footer] Newsletter signup failed:', err);
+      setState('error');
+    }
+  };
+
+  if (state === 'done') {
+    return (
+      <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-400 font-bold">
+        ✓ You're on the list — welcome to the collective.
+      </p>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-xs">
+      <div className="flex gap-2">
+        <label htmlFor="footer-email" className="sr-only">Email address</label>
+        <input
+          id="footer-email"
+          type="email"
+          required
+          disabled={state === 'submitting'}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="your@email.com"
+          className="flex-1 min-w-0 bg-white/5 border border-white/10 px-3 py-2.5 text-xs text-white placeholder-white/20 outline-none focus:border-cyan-500/60 transition-all font-mono disabled:opacity-50"
+        />
+        <button
+          type="submit"
+          disabled={state === 'submitting'}
+          className="shrink-0 px-4 py-2.5 bg-white text-black text-[9px] font-bold uppercase tracking-[0.2em] hover:bg-cyan-400 transition-colors disabled:opacity-60"
+        >
+          {state === 'submitting' ? '...' : 'Join'}
+        </button>
+      </div>
+      {state === 'error' && (
+        <p className="text-red-400 text-[9px]" role="alert">Could not save that — please try again.</p>
+      )}
+      <p className="text-white/20 text-[9px] leading-relaxed">
+        First word on numbered drops. No spam, unsubscribe anytime.
+      </p>
+    </form>
+  );
+}
 
 const paymentMethods = ['UPI', 'Visa', 'Mastercard', 'RuPay', 'COD'];
 
@@ -50,7 +120,7 @@ export default function Footer() {
       </div>
 
       {/* Main footer columns */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-10">
         {/* Brand column */}
         <div className="col-span-1 sm:col-span-2">
           <Link to="/" className="flex items-center gap-2 mb-4" aria-label="Albatross Goods India home">
@@ -125,6 +195,17 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
+        </div>
+
+        {/* Newsletter column */}
+        <div>
+          <h4 className="text-[9px] font-bold uppercase tracking-[0.25em] text-white mb-5">
+            Inner Circle
+          </h4>
+          <p className="text-[10px] text-white/35 leading-relaxed mb-4 max-w-xs">
+            Numbered runs sell out. Join the list to hear about a drop before it's retired for good.
+          </p>
+          <FooterNewsletter />
         </div>
 
         {/* Support & Policy column */}
