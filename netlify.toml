@@ -45,6 +45,151 @@
   to = "/.netlify/functions/api"
   status = 200
 
+# The build command above deliberately keeps goods/appCore.js and friends
+# (backend source, npm dependency tree, raw TS source, sync scripts) sitting
+# alongside the built frontend after copying goods/dist/ back in — required
+# so the Netlify Function can still import appCore.js at deploy time (see
+# the build command comment). With publish = ".", that means all of it is
+# otherwise directly downloadable at /goods/*.js, /goods/node_modules/*, etc.
+# None of it contains secrets (verified — see project history), and none of
+# it is ever requested by the built frontend, which only ever fetches its
+# own hashed assets/, /goods/products-cache*.json, /goods/themes/manifest.json,
+# /goods/images/*, /goods/sitemap.xml, /goods/robots.txt. This is a source-
+# exposure hardening, not a secrets fix — deny the backend-only paths so
+# only the actual public site surface is servable. Placed before the SPA
+# catch-all below so these take precedence (Netlify uses first-match-wins).
+[[redirects]]
+  from = "/goods/node_modules/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/src/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/scripts/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/appCore.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/server.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/loadEnv.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/orderStore.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/returnStore.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/subscriberStore.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/emailService.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/test-browser.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/test-render.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/test-render2.js"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/test-render2.tsx"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/test-render3.tsx"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/package.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/package-lock.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/tsconfig.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/vite.config.ts"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/metadata.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/goods/.env.example"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Direct navigation and refreshes on nested goods routes (e.g. /goods/product/x,
 # /goods/collection) must serve the SPA shell so React Router can take over
 # client-side — otherwise Netlify 404s on any /goods/* path that isn't a real
