@@ -10,6 +10,20 @@
   # replaced it with just the dist output — that broke the function import.)
   command = "npm --prefix goods ci && npm --prefix goods run build && cp -r goods/dist/. goods/ && rm -rf goods/dist"
 
+[build.environment]
+  # ArtsyCheezein@gmail.com is shown on purpose in the storefront (footer
+  # contact, checkout error-recovery messages, order confirmation page,
+  # RequestDesign mailto: link) — real support UX, not an accident. It's
+  # ALSO the literal value of these four env vars (used server-side as an
+  # SMTP/Printrove login username and notification-routing address, not as
+  # a password). Netlify's build-time secrets scan flags any configured env
+  # var value found in public output regardless of whether that value is
+  # actually sensitive, so it fails the build on this public, intentional
+  # email address. Omit only these four non-password keys — the real
+  # secrets (RAZORPAY_KEY_SECRET, RAZORPAY_WEBHOOK_SECRET, SMTP_PASS,
+  # PRINTROVE_PASSWORD, GEMINI_API_KEY) stay fully covered by the scan.
+  SECRETS_SCAN_OMIT_KEYS = "PRINTROVE_EMAIL,SMTP_USER,FROM_EMAIL,MERCHANT_EMAIL"
+
 [functions]
   directory = "netlify/functions"
 
