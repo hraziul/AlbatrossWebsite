@@ -84,16 +84,17 @@
   .h-stat-lbl { font-size: 0.78rem; color: var(--t-mut); font-weight: 500; margin-top: 6px; }
 
   .marquee {
-    height: 52px; background: var(--surface);
+    height: clamp(38px, 10vw, 52px); background: var(--surface);
     border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle);
     display: flex; align-items: center; overflow: hidden; white-space: nowrap;
   }
   .mq-in {
-    display: inline-block; font-size: 0.75rem; letter-spacing: 0.2em;
-    color: var(--t-mut); font-weight: 600; animation: scrollMq 40s linear infinite;
-    text-transform: uppercase;
+    display: flex; align-items: center; gap: clamp(14px, 5vw, 48px);
+    animation: scrollMq 40s linear infinite;
   }
   @keyframes scrollMq { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .mq-item { display: flex; align-items: center; flex-shrink: 0; }
+  .mq-item img { height: clamp(18px, 6vw, 26px); width: auto; object-fit: contain; display: block; }
 
   .filters {
     padding: 48px 48px 32px; max-width: 1400px; margin: 0 auto;
@@ -316,8 +317,9 @@
 
 <script>
 const videos = [
-{ span:'span-8', cat:'Government Campaign', filter:'government, ai', title:'30 Years of Telecom — National DVC', client:'TRAI / Government of India', tags:['Campaign','Direction','National','AI'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/XIhJhkC-YAI?si=EE37ZFiYxNlsJbUE' },
-{ span:'span-4', cat:'Government Campaign', filter:'government', title:'National DVC', client:'TRAI / Government of India', tags:['Campaign','DVC'], ytId:'F3gUBE9h3Us', short:false, link:'https://youtu.be/F3gUBE9h3Us' },
+{ span:'span-4', cat:'Government Campaign', filter:'government ai', title:'National DVC - Broadcast and Cable Service', client:'TRAI / Government of India', tags:['DVC'], ytId:'SMA6Jwbz4qk', short:false, link:'https://youtu.be/SMA6Jwbz4qk' },
+{ span:'span-8', cat:'Government Campaign', filter:'government ai', title:'30 Years of Telecom — National DVC', client:'TRAI / Government of India', tags:['Campaign','Direction','National','AI'], ytId:'afua4dRLqAI', short:false, link:'https://youtu.be/afua4dRLqAI' },
+{ span:'span-4', cat:'Government Campaign', filter:'government', title:'National DVC - Spam', client:'TRAI / Government of India', tags:['Campaign','DVC'], ytId:'XIhJhkC-YAI', short:false, link:'https://youtu.be/XIhJhkC-YAI?si=Ofih1XQ4E5coNSgf' },
 { span:'span-3', cat:'Government Campaign', filter:'government ai', title:'DCR — Basement', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'7aKFbNXiRMI', short:true, link:'https://youtube.com/shorts/7aKFbNXiRMI' },
 { span:'span-3', cat:'Government Campaign', filter:'government ai', title:'DCR — Elevator', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'hNdnw19aK7s', short:true, link:'https://youtube.com/shorts/hNdnw19aK7s' },
 { span:'span-3', cat:'Government Campaign', filter:'government ai', title:'TRAI DND Comic Animation — Spam Awareness Short', client:'TRAI / Government of India', tags:['Short','Campaign','AI'], ytId:'mGfaHe9zQt8', short:true, link:'https://youtube.com/shorts/mGfaHe9zQt8' },
@@ -382,8 +384,22 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-const mqStr = (' ·TRAI &nbsp;·&nbsp; AWS &nbsp;·&nbsp; BRITISH COUNCIL &nbsp;·&nbsp; PRODAPT &nbsp;·&nbsp; WHATSAPP &nbsp;·&nbsp; INFOSYS &nbsp;·&nbsp; WHATFIX &nbsp;·&nbsp; SHUNYA FILMS &nbsp;·&nbsp; GREYORANGE &nbsp;·&nbsp; BAMBOOBOX &nbsp;·&nbsp; STUDEX APP &nbsp;').repeat(4);
-document.getElementById('mq-text').innerHTML = mqStr;
+const mqLogos = [
+  { name: 'TRAI', src: '../logos/TRAI.png', w: 21, h: 26 },
+  { name: 'AWS', src: '../logos/AWS.png', w: 44, h: 26 },
+  { name: 'British Council', src: '../logos/BritishCouncil.png', w: 26, h: 26 },
+  { name: 'Prodapt', src: '../logos/Prodapt.png', w: 54, h: 26 },
+  { name: 'WhatsApp', src: '../logos/Whatsapp.png', w: 26, h: 26 },
+  { name: 'Infosys', src: '../logos/Infosys.png', w: 70, h: 26 },
+  { name: 'WhatFix', src: '../logos/whatfix.png', w: 91, h: 26 },
+  { name: 'Shunya Films', src: '../logos/Shunyafilms.png', w: 26, h: 26 },
+  { name: 'GreyOrange', src: '../logos/GreyOrange.png', w: 26, h: 26 },
+  { name: 'BambooBox', src: '../logos/Bamboobox.png', w: 136, h: 26 },
+  { name: 'Studex', src: '../logos/Studex.png', w: 90, h: 26 },
+  { name: 'Amazon Prime', src: '../logos/Amazon%20Prime.png', w: 85, h: 26 }
+];
+const mqHTML = mqLogos.map(l => `<div class="mq-item"><img src="${l.src}" alt="${l.name}" width="${l.w}" height="${l.h}"></div>`).join('');
+document.getElementById('mq-text').innerHTML = mqHTML.repeat(4);
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });

@@ -221,9 +221,11 @@
       .si-l::after { content: ""; position: absolute; top: -20px; left: 0; width: 1px; height: 20px; background: var(--c-main); animation: scrollDrop 2s infinite; }
       @keyframes scrollDrop { 0%{top:-20px} 100%{top:40px} }
 
-      #marquee { height: 60px; background: var(--surface); border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle); display: flex; align-items: center; overflow: hidden; white-space: nowrap; }
-      .mq-in { display: inline-block; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--t-mut); font-weight: 500; animation: scrollMq 40s linear infinite; }
+      #marquee { height: clamp(44px, 10vw, 60px); background: var(--surface); border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle); display: flex; align-items: center; overflow: hidden; white-space: nowrap; }
+      .mq-in { display: flex; align-items: center; gap: clamp(16px, 5vw, 48px); animation: scrollMq 40s linear infinite; }
       @keyframes scrollMq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+      .mq-item { display: flex; align-items: center; flex-shrink: 0; }
+      .mq-item img { height: clamp(20px, 6vw, 28px); width: auto; object-fit: contain; display: block; }
 
       .sec { padding: 100px 48px; max-width: 1400px; margin: 0 auto; }
       .s-head { margin-bottom: 64px; opacity: 0; transform: translateY(24px); transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94); text-align: center; }
@@ -525,8 +527,22 @@
       }
       requestAnimationFrame(animLoad);
 
-      const mqStr = "AWS &middot; BRITISH COUNCIL &middot; PRODAPT &middot; WHATSAPP &middot; TRAI &middot; INFOSYS &middot; WHATFIX &middot; AMAZON PRIME &middot; SHUNYA FILMS &middot; STUDEX APP &middot;".repeat(4);
-      document.getElementById("mq-text").innerHTML = mqStr;
+      const mqLogos = [
+        { name: 'TRAI', src: 'logos/TRAI.png', w: 23, h: 28 },
+        { name: 'AWS', src: 'logos/AWS.png', w: 48, h: 28 },
+        { name: 'British Council', src: 'logos/BritishCouncil.png', w: 28, h: 28 },
+        { name: 'Prodapt', src: 'logos/Prodapt.png', w: 59, h: 28 },
+        { name: 'WhatsApp', src: 'logos/Whatsapp.png', w: 28, h: 28 },
+        { name: 'Infosys', src: 'logos/Infosys.png', w: 76, h: 28 },
+        { name: 'WhatFix', src: 'logos/whatfix.png', w: 98, h: 28 },
+        { name: 'Shunya Films', src: 'logos/Shunyafilms.png', w: 28, h: 28 },
+        { name: 'GreyOrange', src: 'logos/GreyOrange.png', w: 28, h: 28 },
+        { name: 'BambooBox', src: 'logos/Bamboobox.png', w: 146, h: 28 },
+        { name: 'Studex', src: 'logos/Studex.png', w: 97, h: 28 },
+        { name: 'Amazon Prime', src: 'logos/Amazon%20Prime.png', w: 91, h: 28 }
+      ];
+      const mqHTML = mqLogos.map(l => `<div class="mq-item"><img src="${l.src}" alt="${l.name}" width="${l.w}" height="${l.h}" loading="lazy"></div>`).join('');
+      document.getElementById("mq-text").innerHTML = mqHTML.repeat(4);
 
       const bento = document.getElementById("bento");
       starsData.forEach((s) => {
@@ -681,6 +697,7 @@ card.appendChild(closeBtn);
       let targetRot = 0, currentRot = 0;
       function enterStar(i) {
         hovIdx = i; hovProg = 0; playNote(starsData[i].note);
+        if (audioClicked) hideHoverHint();
         if (charHead) {
           const hr = charHead.getBoundingClientRect();
           const hx = hr.left + hr.width/2, hy = hr.top + hr.height/2;
@@ -694,7 +711,7 @@ card.appendChild(closeBtn);
           targetRot = rot;
         }
       }
-      function leaveStar() { hovIdx = -1; targetRot = 0; }
+      function leaveStar() { hovIdx = -1; targetRot = 0; if (audioClicked) scheduleHoverHint(); }
 
       window.addEventListener("mousemove", (e) => { mx = e.clientX; my = e.clientY; });
 
@@ -755,26 +772,46 @@ card.appendChild(closeBtn);
       );
       document.querySelectorAll(".obs").forEach((el) => observer.observe(el));
 
-      // ── HINT TEXT — bold, 3.5s fade, tap-aware
+      // ── HINT TEXT — bold, tap-aware; after unlock, hint hides on star hover and
+      // fades back in after HINT_IDLE_MS of no star hover (incl. tab-hidden time)
       const hint = document.getElementById("audio-hint");
       const isTouch = window.matchMedia("(hover: none)").matches;
       if (hint) hint.textContent = isTouch ? "Tap anywhere to play sound" : "Click anywhere to play sound";
 
       let audioClicked = false;
+      let hintTimer = null;
+      const HINT_IDLE_MS = 3000;
       setTimeout(() => { if (!audioClicked && hint) hint.style.animation = "none"; }, 3000);
+
+      function showHoverHint() {
+        if (!audioClicked || hovIdx !== -1 || document.hidden || !hint) return;
+        hint.textContent = isTouch ? "Tap stars to play" : "Hover over stars to play";
+        hint.style.opacity = "1";
+      }
+      function hideHoverHint() {
+        clearTimeout(hintTimer);
+        if (hint) hint.style.opacity = "0";
+      }
+      function scheduleHoverHint() {
+        clearTimeout(hintTimer);
+        hintTimer = setTimeout(showHoverHint, HINT_IDLE_MS);
+      }
 
       function handleFirstInteraction() {
         if (audioClicked) return;
         audioClicked = true;
         if (hint) {
           hint.style.animation = "none";
-          hint.style.opacity = "1";
-          hint.textContent = isTouch ? "Tap stars to explore" : "Hover stars to explore";
-          setTimeout(() => { hint.style.opacity = "0"; }, 3500);
+          showHoverHint();
         }
       }
       document.body.addEventListener("click",      handleFirstInteraction);
       document.body.addEventListener("touchstart", handleFirstInteraction, { passive: true });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) clearTimeout(hintTimer);
+        else if (audioClicked && hovIdx === -1) scheduleHoverHint();
+      });
 document.addEventListener("touchstart", (e) => {
   if (!e.target.closest(".hit-zone")) {
     document.querySelectorAll(".hit-zone").forEach((hz) => hz.classList.remove("active"));
