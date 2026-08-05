@@ -439,7 +439,7 @@
           scale: 0.85, cta: 'View Gallery',
         },
         {
-          id: 'notes', x: 0.8, y: 0.25,
+          id: 'notes', x: 0.8, y: 0.25, mobileX: 0.80, mobileY: 0.38,
           thumb: 'images/Shuffling%20Notes-cover.png',
           thumbBg: '#ffffff',
           cat: 'Podcast', label: 'Shuffling Notes',
@@ -451,7 +451,7 @@
           scale: 0.9, cta: 'Listen Now', ext: true,
         },
         {
-          id: 'write', x: 0.25, y: 0.45,
+          id: 'write', x: 0.25, y: 0.45, mobileX: 0.32, mobileY: 0.45,
           thumb: 'images/writings-cover.png',
           cat: 'Blog', label: 'Writings',
           desc: 'Poetry. Prose. Essays.',
@@ -499,7 +499,7 @@
           scale: 0.8, cta: 'Try WebAR', ext: true,
         },
         {
-          id: 'sites', x: 0.20, y: 0.325,
+          id: 'sites', x: 0.20, y: 0.325, mobileX: 0.12, mobileY: 0.39,
           thumb: 'images/sites.jpg',
           thumbBg: 'images/sites.jpg',
           cat: 'Web Design', label: 'Albatross Sites',
@@ -586,6 +586,22 @@
       let W, H, bgStars = [], mx = window.innerWidth / 2, my = window.innerHeight / 2, hovIdx = -1, hovProg = 0;
       const charHead = document.getElementById("char-head");
 
+      // Below 640px, the hero title/name/tagline text stack grows tall
+      // enough (relative to a narrow-tall phone viewport) to collide with
+      // several stars' desktop positions — mobileX/mobileY give just those
+      // stars a phone-only position, verified clear of both the text block
+      // and every other star from 320px to 640px wide. Tablets (768px+)
+      // measure fine with the desktop positions as-is. Single source of
+      // truth for star position — used by the hit-zone div, the canvas
+      // dot/constellation-line render, and the character look-at rotation,
+      // so all three always agree regardless of viewport width.
+      function starPx(s) {
+        const isPhoneWidth = W <= 640;
+        const px = isPhoneWidth && s.mobileX != null ? s.mobileX : s.x;
+        const py = isPhoneWidth && s.mobileY != null ? s.mobileY : s.y;
+        return { x: px * W, y: py * H };
+      }
+
       function resize() {
         W = cvs.width = window.innerWidth;
         H = cvs.height = window.innerHeight;
@@ -600,10 +616,11 @@
       function posZones() {
         zones.innerHTML = "";
         starsData.forEach((s, i) => {
+          const { x: px, y: py } = starPx(s);
           const z = document.createElement("div");
           z.className = "hit-zone";
-          z.style.left = s.x * W + "px";
-          z.style.top  = s.y * H + "px";
+          z.style.left = px + "px";
+          z.style.top  = py + "px";
           const isMultiLink = !!s.links;
           const card = document.createElement(isMultiLink ? "div" : "a");
           card.className = "hover-card";
@@ -731,7 +748,7 @@ card.appendChild(closeBtn);
         if (charHead) {
           const hr = charHead.getBoundingClientRect();
           const hx = hr.left + hr.width/2, hy = hr.top + hr.height/2;
-          const sx = starsData[i].x * W, sy = starsData[i].y * H;
+          const { x: sx, y: sy } = starPx(starsData[i]);
           let angle = Math.atan2(sy - hy, sx - hx) * (180 / Math.PI);
           let rot = angle + 90;
           if (rot > 180) rot -= 360;
@@ -763,7 +780,7 @@ card.appendChild(closeBtn);
           ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
         });
         starsData.forEach((s, i) => {
-          const sx = s.x * W, sy = s.y * H;
+          const { x: sx, y: sy } = starPx(s);
           const isHov = i === hovIdx;
           const scale = isHov ? 1 + 0.5 * hovProg : 1;
           ctx.globalAlpha = isHov ? 0.6 : 0.2;

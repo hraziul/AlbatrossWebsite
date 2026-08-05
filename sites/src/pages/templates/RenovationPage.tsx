@@ -142,7 +142,12 @@ export default function RenovationPage() {
   return (
     <div className="relative w-full bg-[#07080A]">
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+        {/* dpr capped at 2 (was uncapped — full devicePixelRatio, up to 3x on
+            high-end phones, for a full-viewport shader every frame during
+            scroll) and antialias off (a single flat screen-quad plane has no
+            geometry silhouette to alias) — meaningful GPU/battery savings on
+            mobile with no visible quality loss. */}
+        <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 2]} gl={{ antialias: false }}>
           <PhotorealReveal scrollProgress={scrollYProgress} isModalOpen={isModalOpen} />
         </Canvas>
       </div>
@@ -194,8 +199,8 @@ export default function RenovationPage() {
               style={{ opacity: opacityRender, y: yRender }}
               className="absolute inset-0 flex flex-col items-center justify-center text-center"
             >
-              <span className="font-sans text-4xl font-bold uppercase text-[#E0A16E] md:text-6xl">{copyRendered}</span>
-              <span className="font-mono text-2xl md:text-4xl font-bold tracking-[0.2em] text-white mt-6 md:mt-10 uppercase">BY {brandName}</span>
+              <span className="font-sans text-4xl font-bold uppercase text-[#E0A16E] md:text-6xl [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.6))_drop-shadow(0_16px_32px_rgba(0,0,0,0.55))]">{copyRendered}</span>
+              <span className="font-mono text-3xl md:text-5xl font-bold tracking-[0.2em] text-white mt-6 md:mt-10 uppercase [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.6))_drop-shadow(0_16px_32px_rgba(0,0,0,0.55))]">BY {brandName}</span>
             </motion.div>
           </div>
 

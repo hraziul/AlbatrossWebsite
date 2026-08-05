@@ -1,12 +1,20 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { BusinessProvider } from './context/BusinessContext';
 import { useLenis } from './hooks/useLenis';
 import { GlobalCanvas } from './components/3d/GlobalCanvas';
 import Gallery from './pages/Gallery';
-import DentalPage from './pages/templates/DentalPage';
-import MarriageHallPage from './pages/templates/MarriageHallPage';
-import RenovationPage from './pages/templates/RenovationPage';
-import FitnessPage from './pages/templates/FitnessPage';
+
+// Lazy-loaded per route: each template page pulls in its own Three.js/GSAP
+// weight (the single-bundle build was 1.5MB+ minified). Gallery — the
+// landing route every visitor hits first, mobile included — no longer has
+// to download code for templates the visitor may never open, including
+// the three (dental/marriage-hall/fitness) currently on hold and unlinked
+// from the Gallery grid entirely.
+const DentalPage = lazy(() => import('./pages/templates/DentalPage'));
+const MarriageHallPage = lazy(() => import('./pages/templates/MarriageHallPage'));
+const RenovationPage = lazy(() => import('./pages/templates/RenovationPage'));
+const FitnessPage = lazy(() => import('./pages/templates/FitnessPage'));
 
 const ROUTER_BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
 
@@ -20,14 +28,16 @@ export default function App() {
             route-aware 3D content) but outside <Routes> — persists across
             route changes rather than remounting per page. */}
         <GlobalCanvas />
-        <Routes>
-          <Route path="/" element={<Gallery />} />
-          <Route path="/dental" element={<DentalPage />} />
-          <Route path="/marriage-hall" element={<MarriageHallPage />} />
-          <Route path="/renovation" element={<RenovationPage />} />
-          <Route path="/fitness" element={<FitnessPage />} />
-          <Route path="*" element={<Gallery />} />
-        </Routes>
+        <Suspense fallback={<div className="fixed inset-0 bg-[#07080A]" />}>
+          <Routes>
+            <Route path="/" element={<Gallery />} />
+            <Route path="/dental" element={<DentalPage />} />
+            <Route path="/marriage-hall" element={<MarriageHallPage />} />
+            <Route path="/renovation" element={<RenovationPage />} />
+            <Route path="/fitness" element={<FitnessPage />} />
+            <Route path="*" element={<Gallery />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </BusinessProvider>
   );

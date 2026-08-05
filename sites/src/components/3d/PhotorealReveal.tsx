@@ -91,8 +91,8 @@ export function PhotorealReveal({ scrollProgress, isModalOpen }: PhotorealReveal
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const viewport = useThree((state) => state.viewport);
   const [wireTex, renderedTex] = useTexture([
-    `${import.meta.env.BASE_URL}textures/renovation-wire.png`,
-    `${import.meta.env.BASE_URL}textures/renovation-rendered.png`,
+    `${import.meta.env.BASE_URL}textures/renovation-wire.webp`,
+    `${import.meta.env.BASE_URL}textures/renovation-rendered.webp`,
   ]);
   // Cinematic base offset: locked at 0.0 (pure wireframe) while the
   // modal is open, damping to 0.12 (a scroll affordance peek) once it

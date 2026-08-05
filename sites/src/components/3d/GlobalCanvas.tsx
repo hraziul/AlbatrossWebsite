@@ -1,11 +1,19 @@
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import { useLocation } from 'react-router-dom';
 import { useBusiness } from '../../context/BusinessContext';
 import { ParticleNeuralMatrix } from './ParticleNeuralMatrix';
-import { NicheShaderHero_Dental } from './NicheShaderHero_Dental';
-import { NicheShaderHero_Venue } from './NicheShaderHero_Venue';
+
+// Lazy: each is only ever rendered on its own single (currently unlinked,
+// on-hold) route, but this component mounts once at the app root, so a
+// static import here would ship both to every visitor regardless of route.
+const NicheShaderHero_Dental = lazy(() =>
+  import('./NicheShaderHero_Dental').then((m) => ({ default: m.NicheShaderHero_Dental })),
+);
+const NicheShaderHero_Venue = lazy(() =>
+  import('./NicheShaderHero_Venue').then((m) => ({ default: m.NicheShaderHero_Venue })),
+);
 
 /**
  * A single, fixed, full-viewport WebGL canvas mounted once at the app
