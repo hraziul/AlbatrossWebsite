@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", sans-serif;
+  --font-serif: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+:root {
+  --obsidian: #07080a;
+  --obsidian-surface: #13151a;
+  --glass-bg: rgba(19, 21, 26, 0.55);
+  --glass-bg-strong: rgba(19, 21, 26, 0.78);
+  --glass-border: rgba(102, 252, 241, 0.14);
+  --text-primary: #f5f5f7;
+  --text-muted: rgba(245, 245, 247, 0.64);
+  --text-faint: rgba(245, 245, 247, 0.38);
+  --accent: #66fcf1;
+  --accent-teal: #45a29e;
+}
+
+body {
+  background: var(--obsidian);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Reusable glass-panel surface — the base "card" treatment for the dark theme. */
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-panel-strong {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* IBM Plex Mono, tabular figures — for metrics, timestamps, technical labels. */
+.text-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* Lenis injects this on <html> while an inertial scroll is in flight. */
+html.lenis {
+  height: auto;
+}
+html.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+html.lenis.lenis-stopped {
+  overflow: hidden;
+}

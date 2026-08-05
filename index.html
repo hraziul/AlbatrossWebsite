@@ -254,9 +254,7 @@
       .c-goods { grid-column: span 4; aspect-ratio: 1/1; }
       .c-verse { grid-column: span 4; aspect-ratio: 1/1; }
       .c-write { grid-column: span 4; aspect-ratio: 1/1; }
-      .c-exp { grid-column: span 12; aspect-ratio: 21/9; flex-direction: row; }
-      .c-exp .c-img-w { height: 100%; width: 50%; }
-      .c-exp .c-body { height: 100%; width: 50%; justify-content: center; padding: 48px; }
+      .c-exp, .c-sites { grid-column: span 6; aspect-ratio: 4/3; }
 
       .stats-sec { padding: 80px 48px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--b-subtle); border-bottom: 1px solid var(--b-subtle); display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; text-align: center; }
       .stat { opacity: 0; transform: translateY(28px); transition: all 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
@@ -276,14 +274,14 @@
       .ft-bot { margin-top: 40px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--t-faint); font-weight: 500; }
 
       @media (max-width: 1024px) {
-        .c-main, .c-exp { flex-direction: column; aspect-ratio: auto; }
-        .c-main .c-img-w, .c-exp .c-img-w { width: 100%; height: 300px; }
-        .c-main .c-body, .c-exp .c-body { width: 100%; height: auto; }
+        .c-main { flex-direction: column; aspect-ratio: auto; }
+        .c-main .c-img-w { width: 100%; height: 300px; }
+        .c-main .c-body { width: 100%; height: auto; }
         .c-goods, .c-verse, .c-write { grid-column: span 6; aspect-ratio: 4/3; }
       }
       @media (max-width: 768px) {
         .grid { display: flex; flex-direction: column; }
-        .c-views, .c-notes, .c-goods, .c-verse, .c-write, .c-exp { aspect-ratio: auto; min-height: 450px; }
+        .c-views, .c-notes, .c-goods, .c-verse, .c-write, .c-exp, .c-sites { aspect-ratio: auto; min-height: 450px; }
         .c-img-w { height: 250px; }
         .c-body { height: auto; padding: 24px; }
         .stats-sec { grid-template-columns: 1fr; gap: 64px; }
@@ -500,6 +498,18 @@
           eds: [[0,1],[2,3],[4,5],[6,7]],
           scale: 0.8, cta: 'Try WebAR', ext: true,
         },
+        {
+          id: 'sites', x: 0.20, y: 0.325,
+          thumb: 'images/sites.jpg',
+          thumbBg: 'images/sites.jpg',
+          cat: 'Web Design', label: 'Albatross Sites',
+          desc: "Websites for businesses that deserve better than a Facebook page.",
+          link: 'sites/index.html',
+          color: 'D946EF', note: 294,
+          pts: [[-19.2,-12.8],[19.2,-12.8],[19.2,12.8],[-19.2,12.8],[-19.2,-6.4],[19.2,-6.4]],
+          eds: [[0,1],[1,2],[2,3],[3,0],[4,5]],
+          scale: 1.1, cta: 'Explore the Gallery',
+        },
       ];
 
       const words = document.querySelectorAll(".l-word");
@@ -609,7 +619,7 @@
 
           let hcInner = `
 
-      <img src="${s.thumb || ''}" class="hc-img" alt="" onerror="this.style.display='none'">
+      ${s.thumb ? '<img src="' + s.thumb + '" class="hc-img" alt="" onerror="this.style.display=\'none\'">' : (s.thumbBg ? '<div class="hc-img" style="background:' + s.thumbBg + '"></div>' : '')}
       <div class="hc-cat" style="color:#${s.color}">${s.cat}</div>
       <div class="hc-title sg">${s.label}</div>
       <div class="hc-desc">${s.desc}</div>
@@ -638,8 +648,23 @@ closeBtn.addEventListener('touchstart', e => {
   leaveStar();
 }, { passive: false });
 card.appendChild(closeBtn);
+          // Card intercepts its own clicks/hovers so they don't bleed through
+          // to whatever hit-zone happens to sit underneath it on screen. The
+          // close button's own stopPropagation (registered on closeBtn
+          // itself, above) still fires first and prevents this from
+          // triggering when the user is just dismissing the card.
+          card.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Sound already played on hover-in (see mouseenter below), so
+            // clicking the card/CTA just navigates via its native href —
+            // no note, no artificial delay.
+          });
+          card.addEventListener('mouseover', (e) => e.stopPropagation());
           z.appendChild(card);
-          z.addEventListener("mouseenter", () => { if (window.matchMedia("(hover: hover)").matches) enterStar(i); });
+          // Audio is strictly hover-triggered — the tiny 60px dot itself
+          // does nothing on click; mouseenter both reveals the card and
+          // plays the note, in one gesture.
+          z.addEventListener("mouseenter", () => { if (window.matchMedia("(hover: hover)").matches) { enterStar(i); playNote(starsData[i].note); } });
           z.addEventListener("mouseleave", () => { if (window.matchMedia("(hover: hover)").matches) { z.classList.remove("active"); leaveStar(); } });
           z.addEventListener("touchstart", (e) => {
             if (!e.target.closest(".hover-card")) {
@@ -651,6 +676,7 @@ card.appendChild(closeBtn);
                 document.querySelectorAll(".hit-zone").forEach((hz) => hz.classList.remove("active"));
                 z.classList.add("active");
                 enterStar(i);
+                playNote(starsData[i].note);
               }
             }
           });
@@ -685,10 +711,14 @@ card.appendChild(closeBtn);
       g1.gain.exponentialRampToValueAtTime(0.001, t + 2.0);
       o1.start(t);
       o1.stop(t + 2.1);
-    } catch(e) {}
+    } catch (error) {
+      console.error("Audio playback blocked or failed:", error);
+    }
   };
   if (actx.state === "suspended") {
-    actx.resume().then(_fire).catch(() => {});
+    actx.resume().then(_fire).catch(error => {
+      console.error("Audio playback blocked or failed:", error);
+    });
   } else {
     _fire();
   }
@@ -696,7 +726,7 @@ card.appendChild(closeBtn);
 
       let targetRot = 0, currentRot = 0;
       function enterStar(i) {
-        hovIdx = i; hovProg = 0; playNote(starsData[i].note);
+        hovIdx = i; hovProg = 0;
         if (audioClicked) hideHoverHint();
         if (charHead) {
           const hr = charHead.getBoundingClientRect();

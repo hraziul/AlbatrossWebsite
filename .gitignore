@@ -6,3 +6,13 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Claude Code tooling — worktrees used to build/test the sites/ app carry
+# full duplicate node_modules trees (2GB+) and must never be committed.
+.claude/
+index.html.backup-*
+
+# Local-only preview tooling (double-click launcher for testing /sites
+# without hitting the file:// limitation) — not part of the deployed site.
+preview-local-server.py
+Preview Website.command
