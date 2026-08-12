@@ -417,7 +417,7 @@
 
       const starsData = [
         {
-          id: 'main', x: 0.55, y: 0.61,
+          id: 'main', x: 0.55, y: 0.61, mobileX: 0.14, mobileY: 0.47,
           thumb: 'images/directors%20cut-cover.png',
           cat: 'Videos', label: "Director's Cut",
           desc: 'Campaigns, brand films, motion and more.',
@@ -428,7 +428,7 @@
           scale: 1.2, cta: 'Explore Here',
         },
         {
-          id: 'views', x: 0.71, y: 0.5,
+          id: 'views', x: 0.71, y: 0.5, mobileX: 0.52, mobileY: 0.44,
           thumb: 'images/views-cover.png',
           cat: 'Photographs', label: 'Views',
           desc: 'Through a different lens.',
@@ -439,7 +439,7 @@
           scale: 0.85, cta: 'View Gallery',
         },
         {
-          id: 'notes', x: 0.8, y: 0.25, mobileX: 0.80, mobileY: 0.38,
+          id: 'notes', x: 0.8, y: 0.25, mobileX: 0.85, mobileY: 0.48,
           thumb: 'images/Shuffling%20Notes-cover.png',
           thumbBg: '#ffffff',
           cat: 'Podcast', label: 'Shuffling Notes',
@@ -451,7 +451,7 @@
           scale: 0.9, cta: 'Listen Now', ext: true,
         },
         {
-          id: 'write', x: 0.25, y: 0.45, mobileX: 0.32, mobileY: 0.45,
+          id: 'write', x: 0.25, y: 0.45, mobileX: 0.30, mobileY: 0.58,
           thumb: 'images/writings-cover.png',
           cat: 'Blog', label: 'Writings',
           desc: 'Poetry. Prose. Essays.',
@@ -462,7 +462,7 @@
           scale: 0.9, cta: 'Read Blog',
         },
         {
-          id: 'goods', x: 0.2, y: 0.65,
+          id: 'goods', x: 0.2, y: 0.65, mobileX: 0.68, mobileY: 0.60,
           thumb: 'images/albatrossgoods%20splash%20design-cover.jpeg',
           cat: 'Merchandise', label: 'Albatross Goods',
           desc: 'T-shirt designs. India and international.',
@@ -476,7 +476,7 @@
           scale: 0.85,
         },
         {
-          id: 'verse', x: 0.15, y: 0.2,
+          id: 'verse', x: 0.15, y: 0.2, mobileX: 0.10, mobileY: 0.68,
           thumb: 'https://images-na.ssl-images-amazon.com/images/P/9334333944.01.L.jpg',
           thumbContain: true,
           cat: 'Published Book', label: 'Journey Through Verse',
@@ -488,7 +488,7 @@
           scale: 0.85, cta: 'Get the Book', ext: true,
         },
         {
-          id: 'exp', x: 0.85, y: 0.75,
+          id: 'exp', x: 0.85, y: 0.75, mobileX: 0.90, mobileY: 0.70,
           thumb: 'images/exp-cover.png',
           cat: 'Web-AR', label: 'Experience',
           desc: 'WebAR. No interface. Just your hands. Camera access will be needed and no data is stored.',
@@ -499,7 +499,7 @@
           scale: 0.8, cta: 'Try WebAR', ext: true,
         },
         {
-          id: 'sites', x: 0.20, y: 0.325, mobileX: 0.12, mobileY: 0.39,
+          id: 'sites', x: 0.20, y: 0.325, mobileX: 0.45, mobileY: 0.71,
           thumb: 'images/sites.jpg',
           thumbBg: 'images/sites.jpg',
           cat: 'Web Design', label: 'Albatross Sites',
@@ -587,14 +587,18 @@
       const charHead = document.getElementById("char-head");
 
       // Below 640px, the hero title/name/tagline text stack grows tall
-      // enough (relative to a narrow-tall phone viewport) to collide with
-      // several stars' desktop positions — mobileX/mobileY give just those
-      // stars a phone-only position, verified clear of both the text block
-      // and every other star from 320px to 640px wide. Tablets (768px+)
-      // measure fine with the desktop positions as-is. Single source of
-      // truth for star position — used by the hit-zone div, the canvas
-      // dot/constellation-line render, and the character look-at rotation,
-      // so all three always agree regardless of viewport width.
+      // enough (relative to a narrow-tall phone viewport) that the desktop
+      // star layout collides with it — every star defines mobileX/mobileY,
+      // a hand-placed scatter (min ~85px center-to-center, well clear of
+      // the fixed 60px circle diameter) spread across the full width so
+      // the sky reads as organic rather than gridded, while staying out of
+      // the text block (y<0.44), the left-aligned audio hint (narrow band
+      // around y=0.5, x<0.55), and the bottom character/scroll indicator
+      // (y>0.83). Verified clear from 320px to 640px wide. Tablets (768px+)
+      // measure fine with the desktop positions as-is.
+      // Single source of truth for star position — used by the hit-zone
+      // div, the canvas dot/constellation-line render, and the character
+      // look-at rotation, so all three always agree regardless of width.
       function starPx(s) {
         const isPhoneWidth = W <= 640;
         const px = isPhoneWidth && s.mobileX != null ? s.mobileX : s.x;

@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5;
+  }
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-sm border border-white/5;
+  }
+}
+
+body {
+  @apply bg-[#050505] text-white antialiased selection:bg-fuchsia-500/30;
+  overflow-x: hidden;
+}

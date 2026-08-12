@@ -1,0 +1,6 @@
+{
+  "name": "Albatross Goods India",
+  "description": "Premium, art-led T-shirts and lifestyle products inspired by music, cinema, comics, and visual culture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

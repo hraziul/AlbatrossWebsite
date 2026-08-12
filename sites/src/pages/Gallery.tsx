@@ -25,12 +25,31 @@ const GALLERY_DISPLAY = {
   },
 };
 
-const NICHES = (Object.keys(GALLERY_DISPLAY) as (keyof typeof GALLERY_DISPLAY)[]).map((id) => ({
+const TEMPLATE_NICHES = (Object.keys(GALLERY_DISPLAY) as (keyof typeof GALLERY_DISPLAY)[]).map((id) => ({
   id,
   to: TEMPLATE_META[id].route,
   title: TEMPLATE_META[id].label,
   ...GALLERY_DISPLAY[id],
 }));
+
+// Bespoke flagship prototypes: fully custom design, not driven by
+// copySchemas.ts's TemplateCopy/business-name personalization — so route
+// and title are supplied directly here instead of via TEMPLATE_META.
+const FLAGSHIP_NICHES = [
+  {
+    id: 'real-estate',
+    to: '/real-estate',
+    title: 'Luxury Property Tour',
+    tag: 'Real Estate',
+    pitch: 'Cinematic scroll-linked architecture showcase.',
+    accent: '#8A8578',
+    span: 'lg' as const,
+    // High-end architecture placeholder — TODO: swap for a licensed asset before ship.
+    image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg',
+  },
+];
+
+const NICHES = [...TEMPLATE_NICHES, ...FLAGSHIP_NICHES];
 
 const TAGS = Array.from(new Set(NICHES.map((n) => n.tag)));
 

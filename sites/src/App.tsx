@@ -15,6 +15,11 @@ const DentalPage = lazy(() => import('./pages/templates/DentalPage'));
 const MarriageHallPage = lazy(() => import('./pages/templates/MarriageHallPage'));
 const RenovationPage = lazy(() => import('./pages/templates/RenovationPage'));
 const FitnessPage = lazy(() => import('./pages/templates/FitnessPage'));
+// Named export, not a page module under templates/ — RealEstateLuxury is a
+// bespoke flagship component rather than a TemplateCopy-driven niche page.
+const RealEstateLuxuryPage = lazy(() =>
+  import('./components/RealEstateLuxury').then((m) => ({ default: m.RealEstateLuxury })),
+);
 
 const ROUTER_BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
 
@@ -35,6 +40,7 @@ export default function App() {
             <Route path="/marriage-hall" element={<MarriageHallPage />} />
             <Route path="/renovation" element={<RenovationPage />} />
             <Route path="/fitness" element={<FitnessPage />} />
+            <Route path="/real-estate" element={<RealEstateLuxuryPage />} />
             <Route path="*" element={<Gallery />} />
           </Routes>
         </Suspense>
