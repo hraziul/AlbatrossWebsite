@@ -49,6 +49,11 @@ export default function AmazeHub() {
             onMouseLeave={() => star.active && setHoveredId((current) => (current === star.id ? null : current))}
           >
             <div
+              onClick={(e) => {
+                if (!star.active) return;
+                e.stopPropagation();
+                setHoveredId((current) => (current === star.id ? null : star.id));
+              }}
               className={`-translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-300 ${
                 star.active
                   ? `h-3 w-3 cursor-pointer bg-[#66FCF1] ${isHovered ? 'scale-150 shadow-[0_0_16px_4px_rgba(102,252,241,0.6)]' : 'shadow-[0_0_8px_2px_rgba(102,252,241,0.4)]'}`
@@ -57,19 +62,31 @@ export default function AmazeHub() {
             />
 
             {star.active && isHovered && (
-              <div className="glass-panel absolute left-1/2 top-full z-30 mt-4 w-56 -translate-x-1/2 rounded-2xl border border-white/10 p-5 text-center">
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-white">{star.title}</p>
-                <button
-                  type="button"
+              <>
+                {/* Mobile-only backdrop: tapping outside the centered card closes it. */}
+                <div
+                  className="fixed inset-0 z-30 md:hidden"
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (star.path) navigate(star.path);
+                    setHoveredId(null);
                   }}
-                  className="mt-4 w-full cursor-pointer rounded-full border border-white/20 py-2 font-mono text-[10px] uppercase tracking-widest text-white transition-colors hover:bg-white/5 hover:text-[#66FCF1]"
-                >
-                  Initialize ➔
-                </button>
-              </div>
+                />
+                {/* Centered fixed popup on mobile (never clips off-screen near edge
+                    stars); anchored under the dot on desktop, as before. */}
+                <div className="glass-panel fixed left-1/2 top-1/2 z-40 w-[85vw] max-w-56 -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/10 p-5 text-center md:absolute md:top-full md:z-30 md:mt-4 md:w-56 md:max-w-none md:translate-y-0">
+                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-white">{star.title}</p>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (star.path) navigate(star.path);
+                    }}
+                    className="mt-4 w-full cursor-pointer rounded-full border border-white/20 py-2 font-mono text-[10px] uppercase tracking-widest text-white transition-colors hover:bg-white/5 hover:text-[#66FCF1]"
+                  >
+                    Initialize ➔
+                  </button>
+                </div>
+              </>
             )}
           </div>
         );
