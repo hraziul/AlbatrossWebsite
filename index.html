@@ -156,6 +156,58 @@
 }
 .hc-close:active { transform: scale(0.92); }
 
+      /* ── HOVER CARD — mobile override ──
+         Below 640px the star's hit-zone can sit close to any screen edge
+         (see mobileX/mobileY in starsData below), so the desktop
+         edge-alignment classes (card-left/card-right/card-up) aren't
+         enough to guarantee the 280px-wide card stays fully on-screen.
+         Force it to a fixed, viewport-centered position instead — this
+         wins over every card-left/right/up variant above regardless of
+         which star opened it, and a capped max-height with its own
+         scroll keeps tall content from ever clipping off the bottom. */
+      @media (max-width: 640px) {
+        /* .hit-zone's own centering transform creates a CSS containing
+           block for any position:fixed descendant, which would make the
+           card below center on the 60px hit-zone box instead of the
+           viewport. Swap the transform for equivalent negative margins
+           (hit-zone is a fixed 60x60px circle) so position:fixed on the
+           card resolves against the real viewport. */
+        .hit-zone {
+          transform: none;
+          margin: -30px 0 0 -30px;
+        }
+        .hover-card,
+        .hover-card.card-up,
+        .hover-card.card-left,
+        .hover-card.card-left.card-up,
+        .hover-card.card-right,
+        .hover-card.card-right.card-up {
+          position: fixed;
+          top: 50%; left: 50%; right: auto; bottom: auto;
+          transform: translate(-50%, -50%) scale(0.95);
+          width: min(86vw, 320px);
+          max-height: 80vh;
+          overflow-y: auto;
+        }
+        .hit-zone:hover .hover-card,
+        .hit-zone.active .hover-card,
+        .hit-zone:hover .hover-card.card-up,
+        .hover-card.card-up:hover,
+        .hit-zone.active .hover-card.card-up,
+        .hit-zone:hover .hover-card.card-left,
+        .hit-zone.active .hover-card.card-left,
+        .hit-zone:hover .hover-card.card-left.card-up,
+        .hover-card.card-left.card-up:hover,
+        .hit-zone.active .hover-card.card-left.card-up,
+        .hit-zone:hover .hover-card.card-right,
+        .hit-zone.active .hover-card.card-right,
+        .hit-zone:hover .hover-card.card-right.card-up,
+        .hover-card.card-right.card-up:hover,
+        .hit-zone.active .hover-card.card-right.card-up {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
 
 
   position: absolute;
