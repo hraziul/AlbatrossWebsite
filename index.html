@@ -157,15 +157,18 @@
 .hc-close:active { transform: scale(0.92); }
 
       /* ── HOVER CARD — mobile override ──
-         Below 640px the star's hit-zone can sit close to any screen edge
+         Below 768px the star's hit-zone can sit close to any screen edge
          (see mobileX/mobileY in starsData below), so the desktop
          edge-alignment classes (card-left/card-right/card-up) aren't
          enough to guarantee the 280px-wide card stays fully on-screen.
-         Force it to a fixed, viewport-centered position instead — this
-         wins over every card-left/right/up variant above regardless of
-         which star opened it, and a capped max-height with its own
-         scroll keeps tall content from ever clipping off the bottom. */
-      @media (max-width: 640px) {
+         Force it to a fixed, viewport-centered modal instead — this wins
+         over every card-left/right/up variant above regardless of which
+         star opened it, and a capped max-height with its own scroll keeps
+         tall content from ever clipping off the bottom. !important is used
+         on the positioning properties because this must win outright over
+         the desktop dynamic-positioning rules above (same selectors,
+         several equal-specificity variants) with no ambiguity. */
+      @media (max-width: 768px) {
         /* .hit-zone's own centering transform creates a CSS containing
            block for any position:fixed descendant, which would make the
            card below center on the 60px hit-zone box instead of the
@@ -182,11 +185,15 @@
         .hover-card.card-left.card-up,
         .hover-card.card-right,
         .hover-card.card-right.card-up {
-          position: fixed;
-          top: 50%; left: 50%; right: auto; bottom: auto;
-          transform: translate(-50%, -50%) scale(0.95);
-          width: min(86vw, 320px);
-          max-height: 80vh;
+          position: fixed !important;
+          top: 50% !important;
+          left: 50% !important;
+          right: auto !important;
+          bottom: auto !important;
+          transform: translate(-50%, -50%) scale(0.95) !important;
+          width: 90vw;
+          max-width: 380px;
+          max-height: 85vh;
           overflow-y: auto;
         }
         .hit-zone:hover .hover-card,
@@ -204,7 +211,16 @@
         .hit-zone:hover .hover-card.card-right.card-up,
         .hover-card.card-right.card-up:hover,
         .hit-zone.active .hover-card.card-right.card-up {
-          transform: translate(-50%, -50%) scale(1);
+          transform: translate(-50%, -50%) scale(1) !important;
+        }
+        /* Desktop hangs the close button just outside the card's edge
+           (top:-14px;right:-14px). With overflow-y:auto now clipping
+           anything outside the box, that offset would cut the button off
+           on scroll — pull it inside the padding box so it stays visible
+           and clickable at the top-right corner on every mobile screen. */
+        .hc-close {
+          top: 12px !important;
+          right: 12px !important;
         }
       }
 
